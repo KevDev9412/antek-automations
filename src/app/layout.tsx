@@ -20,9 +20,9 @@ const playfairDisplay = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Antek Automations",
+  title: "Antek Automations: Business Process Automation",
   description:
-    "Workflow automation for custom home builders. Eliminate the manual chaos and save hours.",
+    "Antek Automations helps project-driven businesses in the residential space streamline chaotic workflows, automate manual tasks, and scale operations smoothly.",
 };
 
 export default function RootLayout({
