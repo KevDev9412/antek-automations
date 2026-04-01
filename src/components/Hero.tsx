@@ -29,23 +29,20 @@ export function Hero() {
           className="flex items-center gap-0 text-stone-950 hover:text-stone-700 transition-colors duration-200"
           aria-label="Antek Automations — home"
         >
-          {/* mask-image recolors the PNG to exact brand orange regardless of source color */}
-          <div
+          <Image
+            src="/images/Icon.png"
+            alt=""
+            width={36}
+            height={36}
             className="flex-shrink-0"
             style={{
-              width: "36px",
               height: "36px",
-              backgroundColor: "var(--color-brand)",
-              maskImage: "url('/images/Icon.png')",
-              maskSize: "cover",
-              maskRepeat: "no-repeat",
-              maskPosition: "center",
-              WebkitMaskImage: "url('/images/Icon.png')",
-              WebkitMaskSize: "cover",
-              WebkitMaskRepeat: "no-repeat",
-              WebkitMaskPosition: "center",
+              width: "auto",
+              filter:
+                "brightness(0) saturate(100%) invert(62%) sepia(80%) saturate(700%) hue-rotate(345deg) brightness(102%)",
             }}
             aria-hidden="true"
+            unoptimized
           />
           <span className="font-extrabold tracking-tight text-base leading-none font-serif">
             Antek Automations
