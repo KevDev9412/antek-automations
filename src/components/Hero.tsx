@@ -30,17 +30,12 @@ export function Hero() {
           aria-label="Antek Automations — home"
         >
           <Image
-            src="/images/Icon.png"
+            src="/Icon.png"
             alt=""
             width={36}
             height={36}
             className="flex-shrink-0"
-            style={{
-              height: "36px",
-              width: "auto",
-              filter:
-                "brightness(0) saturate(100%) invert(62%) sepia(80%) saturate(700%) hue-rotate(345deg) brightness(102%)",
-            }}
+            style={{ height: "36px", width: "auto" }}
             aria-hidden="true"
             unoptimized
           />

@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   description:
     "Antek Automations helps project-driven businesses in the residential space streamline chaotic workflows, automate manual tasks, and scale operations smoothly.",
   icons: {
-    icon: "/images/Icon.png",
+    icon: "/Icon.png",
   },
 };
 
