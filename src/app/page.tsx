@@ -7,7 +7,6 @@ import { Capabilities } from "@/components/Capabilities";
 import { WhyAntek } from "@/components/WhyAntek";
 import { Faq } from "@/components/Faq";
 import { CtaCloser } from "@/components/CtaCloser";
-import { Footer } from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -21,7 +20,6 @@ export default function Home() {
       <WhyAntek />
       <Faq />
       <CtaCloser />
-      <Footer />
     </main>
   );
 }

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 import Script from "next/script";
+import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -46,7 +48,9 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col">
+        <Navbar />
         {children}
+        <Footer />
         {/* Calendly popup widget script — loaded after page is interactive */}
         <Script
           src="https://assets.calendly.com/assets/external/widget.js"
