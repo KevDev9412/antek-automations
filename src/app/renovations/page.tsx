@@ -10,6 +10,20 @@ export const metadata: Metadata = {
     "Construction Workflow Systems",
     "Margin Protection for GCs",
   ],
+  openGraph: {
+    title: "Renovation Operations Automation | Antek Automations",
+    description:
+      "Stop losing margins to admin overhead. We build custom workflow systems for renovation firms with 10–50 employees — automatically bridging your field team, project software, and finance.",
+    type: "website",
+    url: "https://www.antekautomations.com/renovations",
+    images: [{ url: "https://www.antekautomations.com/Icon.png" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Renovation Operations Automation | Antek Automations",
+    description:
+      "Stop losing margins to admin overhead. We build custom workflow systems for renovation firms with 10–50 employees — automatically bridging your field team, project software, and finance.",
+  },
 };
 
 /* ─────────────────────────────────────────────────────────────────────────

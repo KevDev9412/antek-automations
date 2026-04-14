@@ -22,11 +22,25 @@ const playfairDisplay = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Antek Automations: Business Process Automation",
+  title: "Antek Automations | Custom AI Automation for Growing Businesses",
   description:
-    "Antek Automations helps project-driven businesses in the residential space streamline chaotic workflows, automate manual tasks, and scale operations smoothly.",
+    "We design and build custom AI automation systems that eliminate operational chaos for service businesses. Less manual work. Tighter margins. Scalable operations.",
   icons: {
     icon: "/Icon.png",
+  },
+  openGraph: {
+    title: "Antek Automations | Custom AI Automation for Growing Businesses",
+    description:
+      "We design and build custom AI automation systems that eliminate operational chaos for service businesses. Less manual work. Tighter margins. Scalable operations.",
+    type: "website",
+    url: "https://www.antekautomations.com/",
+    images: [{ url: "https://www.antekautomations.com/Icon.png" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Antek Automations | Custom AI Automation for Growing Businesses",
+    description:
+      "We design and build custom AI automation systems that eliminate operational chaos for service businesses. Less manual work. Tighter margins. Scalable operations.",
   },
 };
 
