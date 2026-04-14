@@ -1,0 +1,17 @@
+{
+  "redirects": [
+    { "source": "/partnerprogram",                                                         "destination": "/", "permanent": true },
+    { "source": "/post/transforming-custom-home-building-with-ai-automations",             "destination": "/", "permanent": true },
+    { "source": "/post/streamline-renovation-projects-through-intelligent-workflow-solutions", "destination": "/", "permanent": true },
+    { "source": "/service-page/future-trends-workshop",                                    "destination": "/", "permanent": true },
+    { "source": "/blog-feed.xml",                                                          "destination": "/", "permanent": true },
+    { "source": "/blank",                                                                  "destination": "/", "permanent": true },
+    { "source": "/portfolio-collections/my-portfolio/project-title-1",                    "destination": "/", "permanent": true },
+    { "source": "/portfolio-collections/my-portfolio/project-title-4",                    "destination": "/", "permanent": true },
+    { "source": "/portfolio-collections/my-portfolio/project-title-5",                    "destination": "/", "permanent": true },
+    { "source": "/portfolio-collections/my-portfolio/project-title-6",                    "destination": "/", "permanent": true },
+    { "source": "/portfolio",                                                              "destination": "/", "permanent": true },
+    { "source": "/_api/one-app-session-web/v3/businesses",                                "destination": "/", "permanent": true },
+    { "source": "/book-online",                                                            "destination": "/", "permanent": true }
+  ]
+}
