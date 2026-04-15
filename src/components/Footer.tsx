@@ -26,7 +26,7 @@ export function Footer() {
               Antek Automations
             </a>
             <p className="text-stone-500 text-sm leading-relaxed max-w-xs">
-              Workflow automation for custom home builders — less manual chaos,
+              Workflow automation for residential construction — less manual chaos,
               more time building.
             </p>
           </div>

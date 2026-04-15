@@ -22,7 +22,7 @@ export function Hero() {
 
             {/* Eyebrow — amber accent, strictly contained */}
             <p className="text-[var(--color-brand)] text-xs font-medium uppercase tracking-[0.18em]">
-              Workflow Automation for Custom Home Builders
+              Workflow Automation for Residential Construction
             </p>
 
             {/* Display headline */}

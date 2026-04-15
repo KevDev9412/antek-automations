@@ -52,7 +52,7 @@ export function PainPoints() {
 
             {/* Section heading — large, left-anchored */}
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-tight">
-              Running a home building company{" "}
+              Running a construction business{" "}
               <span className="text-stone-500">means managing thousands of moving parts.</span>{" "}
               Most of them manually.
             </h2>
