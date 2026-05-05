@@ -1,0 +1,824 @@
+{
+  "name": "Workflow 3 — Invoice Reconciliation",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "id": "trg-001",
+      "name": "Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": { "__rl": true, "mode": "id", "value": "YOUR_GOOGLE_SHEET_ID" },
+        "sheetName": { "__rl": true, "mode": "name", "value": "Pending_Invoices" },
+        "range": "A:Z",
+        "filtersUI": {
+          "values": [
+            { "lookupColumn": "invoice_id", "lookupValue": "={{ $('Trigger').first().json.invoice_id }}" }
+          ]
+        },
+        "options": { "returnFirstMatch": true }
+      },
+      "id": "read-inv-hdr",
+      "name": "Read Invoice Header",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [460, 300],
+      "onError": "stopWorkflow"
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": { "__rl": true, "mode": "id", "value": "YOUR_GOOGLE_SHEET_ID" },
+        "sheetName": { "__rl": true, "mode": "name", "value": "Vendors" },
+        "range": "A:Z",
+        "options": {}
+      },
+      "id": "read-vendors",
+      "name": "Read Vendors",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [680, 300],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const _ = $input.all();\nreturn [{ json: { invoice_id: $('Trigger').first().json.invoice_id } }];"
+      },
+      "id": "reset-1",
+      "name": "Collapse 1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": { "__rl": true, "mode": "id", "value": "YOUR_GOOGLE_SHEET_ID" },
+        "sheetName": { "__rl": true, "mode": "name", "value": "Projects" },
+        "range": "A:Z",
+        "options": {}
+      },
+      "id": "read-projects",
+      "name": "Read Projects",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [1120, 300],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const _ = $input.all();\nreturn [{ json: { invoice_id: $('Trigger').first().json.invoice_id } }];"
+      },
+      "id": "reset-2",
+      "name": "Collapse 2",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1340, 300]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": { "__rl": true, "mode": "id", "value": "YOUR_GOOGLE_SHEET_ID" },
+        "sheetName": { "__rl": true, "mode": "name", "value": "Quotes" },
+        "range": "A:Z",
+        "options": {}
+      },
+      "id": "read-quotes",
+      "name": "Read Quotes",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [1560, 300],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const _ = $input.all();\nreturn [{ json: { invoice_id: $('Trigger').first().json.invoice_id } }];"
+      },
+      "id": "reset-3",
+      "name": "Collapse 3",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1780, 300]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": { "__rl": true, "mode": "id", "value": "YOUR_GOOGLE_SHEET_ID" },
+        "sheetName": { "__rl": true, "mode": "name", "value": "Quote_Line_Items" },
+        "range": "A:Z",
+        "options": {}
+      },
+      "id": "read-quote-lines",
+      "name": "Read Quote Lines",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [2000, 300],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const _ = $input.all();\nreturn [{ json: { invoice_id: $('Trigger').first().json.invoice_id } }];"
+      },
+      "id": "reset-4",
+      "name": "Collapse 4",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2220, 300]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": { "__rl": true, "mode": "id", "value": "YOUR_GOOGLE_SHEET_ID" },
+        "sheetName": { "__rl": true, "mode": "name", "value": "POs" },
+        "range": "A:Z",
+        "options": {}
+      },
+      "id": "read-pos",
+      "name": "Read POs",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [2440, 300],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const _ = $input.all();\nreturn [{ json: { invoice_id: $('Trigger').first().json.invoice_id } }];"
+      },
+      "id": "reset-5",
+      "name": "Collapse 5",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2660, 300]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": { "__rl": true, "mode": "id", "value": "YOUR_GOOGLE_SHEET_ID" },
+        "sheetName": { "__rl": true, "mode": "name", "value": "PO_Line_Items" },
+        "range": "A:Z",
+        "options": {}
+      },
+      "id": "read-po-lines",
+      "name": "Read PO Lines",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [2880, 300],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const _ = $input.all();\nreturn [{ json: { invoice_id: $('Trigger').first().json.invoice_id } }];"
+      },
+      "id": "reset-6",
+      "name": "Collapse 6",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [3100, 300]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": { "__rl": true, "mode": "id", "value": "YOUR_GOOGLE_SHEET_ID" },
+        "sheetName": { "__rl": true, "mode": "name", "value": "Books" },
+        "range": "A:Z",
+        "options": {}
+      },
+      "id": "read-books",
+      "name": "Read Books",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [3320, 300],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const _ = $input.all();\nreturn [{ json: { invoice_id: $('Trigger').first().json.invoice_id } }];"
+      },
+      "id": "reset-7",
+      "name": "Collapse 7",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [3540, 300]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": { "__rl": true, "mode": "id", "value": "YOUR_GOOGLE_SHEET_ID" },
+        "sheetName": { "__rl": true, "mode": "name", "value": "Pending_Invoices" },
+        "range": "A:Z",
+        "options": {}
+      },
+      "id": "read-pending-all",
+      "name": "Read All Pending",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [3760, 300],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const _ = $input.all();\nreturn [{ json: { invoice_id: $('Trigger').first().json.invoice_id } }];"
+      },
+      "id": "reset-8",
+      "name": "Collapse 8",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [3980, 300]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": { "__rl": true, "mode": "id", "value": "YOUR_GOOGLE_SHEET_ID" },
+        "sheetName": { "__rl": true, "mode": "name", "value": "Pending_Invoice_Line_Items" },
+        "range": "A:Z",
+        "filtersUI": {
+          "values": [
+            { "lookupColumn": "invoice_id", "lookupValue": "={{ $('Trigger').first().json.invoice_id }}" }
+          ]
+        },
+        "options": { "returnFirstMatch": false }
+      },
+      "id": "read-inv-lines",
+      "name": "Read Invoice Lines",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [4200, 300],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Reconciliation engine — deterministic checks against quote/PO\ntry {\n  const _ = $input.all();\n  const trigger = $('Trigger').first().json;\n  const invoiceId = trigger.invoice_id;\n  const header = $('Read Invoice Header').first().json;\n  const invoiceLines = $('Read Invoice Lines').all().map(i => i.json);\n  const vendors = $('Read Vendors').all().map(i => i.json);\n  const projects = $('Read Projects').all().map(i => i.json);\n  const quotes = $('Read Quotes').all().map(i => i.json);\n  const quoteLines = $('Read Quote Lines').all().map(i => i.json);\n  const pos = $('Read POs').all().map(i => i.json);\n  const poLines = $('Read PO Lines').all().map(i => i.json);\n  const books = $('Read Books').all().map(i => i.json);\n  const pendingAll = $('Read All Pending').all().map(i => i.json);\n\n  const norm = (s) => String(s || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, ' ').trim();\n  const fuzzy = (a, b) => {\n    if (!a || !b) return false;\n    const na = norm(a), nb = norm(b);\n    if (!na || !nb) return false;\n    return na === nb || na.includes(nb) || nb.includes(na);\n  };\n  const matchesAlias = (record, target) => {\n    const fields = ['vendor_name', 'project_name', 'name'];\n    for (const f of fields) {\n      if (record[f] && fuzzy(record[f], target)) return true;\n    }\n    if (record.aliases) {\n      const aliases = String(record.aliases).split(/[,;|]/).map(a => a.trim()).filter(Boolean);\n      if (aliases.some(a => fuzzy(a, target))) return true;\n    }\n    return false;\n  };\n\n  const vendor = vendors.find(v => matchesAlias(v, header.vendor_name)) || null;\n  const project = projects.find(p => matchesAlias(p, header.project_name)) || null;\n\n  const matchingQuotes = quotes.filter(q =>\n    fuzzy(q.vendor_name, header.vendor_name) && fuzzy(q.project_name, header.project_name)\n  ).sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));\n  const quote = matchingQuotes[0] || null;\n  const matchedQuoteLines = quote ? quoteLines.filter(l => l.quote_id === quote.quote_id) : [];\n\n  const matchingPOs = pos.filter(p =>\n    fuzzy(p.vendor_name, header.vendor_name) && fuzzy(p.project_name, header.project_name)\n  ).sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));\n  const po = matchingPOs[0] || null;\n  const matchedPOLines = po ? poLines.filter(l => l.po_id === po.po_id) : [];\n\n  const flags = [];\n  const invoiceTotal = parseFloat(header.total) || 0;\n  let varianceAmount = 0;\n\n  const refDoc = po || quote;\n  const refLines = po ? matchedPOLines : matchedQuoteLines;\n  const refLabel = po ? 'PO' : 'quote';\n\n  if (!quote) {\n    flags.push({ type: 'missing_quote', detail: `No matching quote found for vendor \"${header.vendor_name}\" on project \"${header.project_name}\"`, severity: 'high' });\n  }\n\n  if (refDoc) {\n    const refTotal = parseFloat(refDoc.total) || 0;\n    const tolerance = Math.max(50, refTotal * 0.02);\n    varianceAmount = Number((invoiceTotal - refTotal).toFixed(2));\n    if (Math.abs(varianceAmount) > tolerance) {\n      flags.push({\n        type: 'total_variance',\n        detail: `Invoice total $${invoiceTotal.toFixed(2)} ${varianceAmount > 0 ? 'exceeds' : 'is below'} ${refLabel} total $${refTotal.toFixed(2)} by $${Math.abs(varianceAmount).toFixed(2)} (tolerance $${tolerance.toFixed(2)})`,\n        severity: Math.abs(varianceAmount) > tolerance * 5 ? 'high' : 'medium'\n      });\n    }\n  }\n\n  if (refLines.length > 0) {\n    for (const invLine of invoiceLines) {\n      const matched = refLines.find(rl => fuzzy(rl.description, invLine.description));\n      if (!matched) {\n        flags.push({ type: 'unmatched_line', detail: `Invoice line \"${invLine.description}\" ($${(parseFloat(invLine.line_total)||0).toFixed(2)}) has no matching line on ${refLabel}`, severity: 'medium' });\n      } else {\n        const invAmt = parseFloat(invLine.line_total) || 0;\n        const refAmt = parseFloat(matched.line_total) || 0;\n        const lineTol = Math.max(10, refAmt * 0.02);\n        if (Math.abs(invAmt - refAmt) > lineTol) {\n          flags.push({ type: 'line_amount_variance', detail: `Line \"${invLine.description}\": invoice $${invAmt.toFixed(2)} vs ${refLabel} $${refAmt.toFixed(2)}`, severity: 'low' });\n        }\n      }\n    }\n  }\n\n  const invDate = header.date ? new Date(header.date) : null;\n  const today = new Date();\n  if (invDate && !isNaN(invDate)) {\n    if (invDate > today) {\n      flags.push({ type: 'future_date', detail: `Invoice date ${header.date} is in the future`, severity: 'high' });\n    }\n    if (refDoc && refDoc.date) {\n      const refDate = new Date(refDoc.date);\n      if (!isNaN(refDate) && invDate < refDate) {\n        flags.push({ type: 'date_before_quote', detail: `Invoice date ${header.date} predates ${refLabel} date ${refDoc.date}`, severity: 'medium' });\n      }\n    }\n  }\n\n  if (header.invoice_number) {\n    const dupe = pendingAll.find(p =>\n      p.invoice_id !== invoiceId &&\n      p.invoice_number &&\n      String(p.invoice_number).trim() === String(header.invoice_number).trim() &&\n      fuzzy(p.vendor_name, header.vendor_name)\n    );\n    if (dupe) {\n      flags.push({ type: 'duplicate_invoice', detail: `Invoice number ${header.invoice_number} already exists for vendor \"${header.vendor_name}\" (existing invoice_id ${dupe.invoice_id})`, severity: 'high' });\n    }\n  }\n\n  const lineSum = invoiceLines.reduce((s, l) => s + (parseFloat(l.line_total) || 0), 0);\n  const headerSubtotal = header.subtotal != null && header.subtotal !== '' ? parseFloat(header.subtotal) : null;\n  const headerGst = header.gst != null && header.gst !== '' ? parseFloat(header.gst) : null;\n  if (headerSubtotal != null && Math.abs(lineSum - headerSubtotal) > 1) {\n    flags.push({ type: 'math_subtotal', detail: `Line items sum to $${lineSum.toFixed(2)} but header subtotal is $${headerSubtotal.toFixed(2)}`, severity: 'medium' });\n  }\n  if (headerSubtotal != null && headerGst != null) {\n    const expectedGst = headerSubtotal * 0.05;\n    if (Math.abs(headerGst - expectedGst) > 1) {\n      flags.push({ type: 'math_gst', detail: `GST $${headerGst.toFixed(2)} is not 5% of subtotal $${headerSubtotal.toFixed(2)} (expected $${expectedGst.toFixed(2)})`, severity: 'low' });\n    }\n    if (Math.abs((headerSubtotal + headerGst) - invoiceTotal) > 1) {\n      flags.push({ type: 'math_total', detail: `Subtotal $${headerSubtotal.toFixed(2)} + GST $${headerGst.toFixed(2)} does not equal total $${invoiceTotal.toFixed(2)}`, severity: 'medium' });\n    }\n  }\n\n  let costCode = 'UNCATEGORIZED';\n  if (vendor && vendor.default_cost_code) costCode = vendor.default_cost_code;\n  else if (invoiceLines[0] && invoiceLines[0].cost_code) costCode = invoiceLines[0].cost_code;\n\n  const isClean = flags.length === 0;\n  const flagSummary = flags.length === 0 ? 'no flags' : flags.map((f, i) => `${i + 1}. [${f.severity}] ${f.type}: ${f.detail}`).join('\\n');\n\n  return [{\n    json: {\n      invoice_id: invoiceId,\n      invoice_number: header.invoice_number || '',\n      vendor_name: header.vendor_name || '',\n      project_name: header.project_name || '',\n      invoice_date: header.date || '',\n      invoice_total: invoiceTotal,\n      is_clean: isClean,\n      flags,\n      flags_json: JSON.stringify(flags),\n      flag_summary: flagSummary,\n      variance_amount: varianceAmount,\n      matched_quote_id: quote ? quote.quote_id : '',\n      matched_po_id: po ? po.po_id : '',\n      quote_total: quote ? (parseFloat(quote.total) || 0) : 0,\n      po_total: po ? (parseFloat(po.total) || 0) : 0,\n      ref_label: refLabel,\n      cost_code: costCode,\n      today_iso: today.toISOString().slice(0, 10),\n      today_iso_full: today.toISOString(),\n      invoice_header: header,\n      invoice_lines: invoiceLines,\n      matched_quote: quote,\n      matched_po: po,\n      matched_quote_lines: matchedQuoteLines,\n      matched_po_lines: matchedPOLines,\n      vendor_record: vendor,\n      project_record: project,\n      vendor_email: (vendor && vendor.email) ? vendor.email : ''\n    }\n  }];\n} catch (err) {\n  return [{\n    json: {\n      invoice_id: $('Trigger').first().json.invoice_id,\n      is_clean: false,\n      flags: [{ type: 'reconciliation_error', detail: String(err && err.message || err), severity: 'high' }],\n      flags_json: JSON.stringify([{ type: 'reconciliation_error', detail: String(err && err.message || err), severity: 'high' }]),\n      flag_summary: `Reconciliation error: ${err && err.message || err}`,\n      vendor_name: '', project_name: '', invoice_number: '', invoice_total: 0,\n      matched_quote_id: '', matched_po_id: '', quote_total: 0, po_total: 0,\n      ref_label: 'quote', variance_amount: 0, cost_code: 'UNCATEGORIZED',\n      today_iso: new Date().toISOString().slice(0,10),\n      vendor_email: '', invoice_lines: [], invoice_date: ''\n    }\n  }];\n}"
+      },
+      "id": "reconcile",
+      "name": "Reconcile",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [4420, 300],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict", "version": 2 },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "cond-clean",
+                    "leftValue": "={{ $json.is_clean }}",
+                    "rightValue": true,
+                    "operator": { "type": "boolean", "operation": "true", "singleValue": true }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "clean"
+            },
+            {
+              "conditions": {
+                "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict", "version": 2 },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "cond-flagged",
+                    "leftValue": "={{ $json.is_clean }}",
+                    "rightValue": false,
+                    "operator": { "type": "boolean", "operation": "false", "singleValue": true }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "flagged"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "switch-clean",
+      "name": "Clean or Flagged?",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [4640, 300]
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": { "__rl": true, "mode": "id", "value": "YOUR_GOOGLE_SHEET_ID" },
+        "sheetName": { "__rl": true, "mode": "name", "value": "Pending_Invoices" },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "invoice_id": "={{ $json.invoice_id }}",
+            "status": "auto_approved",
+            "matched_quote_id": "={{ $json.matched_quote_id }}",
+            "matched_po_id": "={{ $json.matched_po_id }}",
+            "date_approved": "={{ $json.today_iso }}",
+            "flags": "",
+            "draft_response": ""
+          },
+          "matchingColumns": ["invoice_id"],
+          "schema": [
+            { "id": "invoice_id", "displayName": "invoice_id", "required": false, "defaultMatch": true, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "status", "displayName": "status", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "matched_quote_id", "displayName": "matched_quote_id", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "matched_po_id", "displayName": "matched_po_id", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "date_approved", "displayName": "date_approved", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "flags", "displayName": "flags", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "draft_response", "displayName": "draft_response", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": { "valueInputMode": "USER_ENTERED" }
+      },
+      "id": "upd-pending-auto",
+      "name": "Update Pending (Auto-Approved)",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [4860, 500],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const r = $input.first().json;\nconst entry_id = (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : ('entry-' + Date.now() + '-' + Math.random().toString(36).slice(2, 10));\nreturn [{\n  json: {\n    entry_id,\n    invoice_id: r.invoice_id,\n    date_approved: r.today_iso,\n    vendor_name: r.vendor_name,\n    project_name: r.project_name,\n    total: r.invoice_total,\n    cost_code: r.cost_code,\n    notes: 'Auto-approved by reconciliation'\n  }\n}];"
+      },
+      "id": "shape-books-auto",
+      "name": "Shape Books Row (Auto)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [5080, 500],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": { "__rl": true, "mode": "id", "value": "YOUR_GOOGLE_SHEET_ID" },
+        "sheetName": { "__rl": true, "mode": "name", "value": "Books" },
+        "range": "A:Z",
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "matchingColumns": []
+        },
+        "options": { "valueInputMode": "USER_ENTERED" }
+      },
+      "id": "append-books-auto",
+      "name": "Append Books (Auto)",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [5300, 500],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const _ = $input.all();\nconst r = $('Reconcile').first().json;\nreturn [{\n  json: {\n    timestamp: new Date().toISOString(),\n    type: 'auto_approved',\n    invoice_id: r.invoice_id,\n    invoice_number: r.invoice_number,\n    vendor_name: r.vendor_name,\n    project_name: r.project_name,\n    message: `Invoice ${r.invoice_number} from ${r.vendor_name} auto-approved. $${Number(r.invoice_total).toFixed(2)} added to Books.`\n  }\n}];"
+      },
+      "id": "shape-notify-auto",
+      "name": "Shape Notification (Auto)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [5520, 500],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": { "__rl": true, "mode": "id", "value": "YOUR_GOOGLE_SHEET_ID" },
+        "sheetName": { "__rl": true, "mode": "name", "value": "Notifications" },
+        "range": "A:Z",
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "matchingColumns": []
+        },
+        "options": { "valueInputMode": "USER_ENTERED" }
+      },
+      "id": "append-notify-auto",
+      "name": "Notify Auto-Approved",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [5740, 500],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "resource": "text",
+        "operation": "message",
+        "modelId": { "__rl": true, "mode": "list", "value": "gpt-4o" },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You are an accounting assistant for a custom home builder. You draft polite, factual emails to vendors when an invoice has discrepancies against the matching quote or PO. Tone: professional, courteous, never accusatory. Reference specific numbers. Ask for clarification on each variance. Output ONLY the email body — no subject line. Begin with a greeting using the vendor's name and end with \"Looking forward to your response.\""
+            },
+            {
+              "role": "user",
+              "content": "=Please draft a follow-up email to this vendor:\n\nVendor: {{ $json.vendor_name }}\nProject: {{ $json.project_name }}\nInvoice number: {{ $json.invoice_number }}\nInvoice date: {{ $json.invoice_date }}\nInvoice total: ${{ $json.invoice_total }}\nReference {{ $json.ref_label }} total: ${{ $json.ref_label === 'PO' ? $json.po_total : $json.quote_total }}\nVariance: ${{ $json.variance_amount }}\n\nDiscrepancies found:\n{{ $json.flag_summary }}\n\nDraft the email body now."
+            }
+          ]
+        },
+        "simplify": true,
+        "options": { "temperature": 0.3 }
+      },
+      "id": "draft-email",
+      "name": "Draft Response Email",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [4860, 100],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const r = $('Reconcile').first().json;\nconst llmOut = $input.first().json || {};\nlet draft = '';\nif (llmOut && typeof llmOut === 'object') {\n  if (llmOut.message && llmOut.message.content) draft = llmOut.message.content;\n  else if (llmOut.content) draft = llmOut.content;\n  else if (llmOut.output) draft = String(llmOut.output);\n  else if (llmOut.text) draft = llmOut.text;\n  else draft = '';\n}\nif (!draft) {\n  draft = `Hi ${r.vendor_name || 'team'},\\n\\nWe've received invoice ${r.invoice_number} for project ${r.project_name} and noticed a few items we'd like to confirm:\\n\\n${r.flag_summary}\\n\\nCould you take a quick look and let us know? Looking forward to your response.`;\n}\nreturn [{ json: Object.assign({}, r, { draft_response: draft }) }];"
+      },
+      "id": "merge-draft",
+      "name": "Merge Draft With Reconcile",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [5080, 100],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": { "__rl": true, "mode": "id", "value": "YOUR_GOOGLE_SHEET_ID" },
+        "sheetName": { "__rl": true, "mode": "name", "value": "Pending_Invoices" },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "invoice_id": "={{ $json.invoice_id }}",
+            "status": "flagged",
+            "matched_quote_id": "={{ $json.matched_quote_id }}",
+            "matched_po_id": "={{ $json.matched_po_id }}",
+            "flags": "={{ $json.flags_json }}",
+            "draft_response": "={{ $json.draft_response }}"
+          },
+          "matchingColumns": ["invoice_id"],
+          "schema": [
+            { "id": "invoice_id", "displayName": "invoice_id", "required": false, "defaultMatch": true, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "status", "displayName": "status", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "matched_quote_id", "displayName": "matched_quote_id", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "matched_po_id", "displayName": "matched_po_id", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "flags", "displayName": "flags", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "draft_response", "displayName": "draft_response", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": { "valueInputMode": "USER_ENTERED" }
+      },
+      "id": "upd-pending-flagged",
+      "name": "Update Pending (Flagged)",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [5300, 100],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const _ = $input.all();\nconst r = $('Reconcile').first().json;\nreturn [{\n  json: {\n    timestamp: new Date().toISOString(),\n    type: 'review_needed',\n    invoice_id: r.invoice_id,\n    invoice_number: r.invoice_number,\n    vendor_name: r.vendor_name,\n    project_name: r.project_name,\n    message: `Review needed for invoice ${r.invoice_number} from ${r.vendor_name}. ${r.flags.length} flag(s): ${r.flags.map(f => f.type).join(', ')}. Approve at: ${$execution.resumeFormUrl}`\n  }\n}];"
+      },
+      "id": "shape-notify-review",
+      "name": "Shape Notification (Review)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [5520, 100],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": { "__rl": true, "mode": "id", "value": "YOUR_GOOGLE_SHEET_ID" },
+        "sheetName": { "__rl": true, "mode": "name", "value": "Notifications" },
+        "range": "A:Z",
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "matchingColumns": []
+        },
+        "options": { "valueInputMode": "USER_ENTERED" }
+      },
+      "id": "append-notify-review",
+      "name": "Notify Review Needed",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [5740, 100],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "resume": "form",
+        "formTitle": "Invoice Review Required",
+        "formDescription": "=<h3>Invoice {{ $('Reconcile').first().json.invoice_number }} — {{ $('Reconcile').first().json.vendor_name }}</h3><p><strong>Project:</strong> {{ $('Reconcile').first().json.project_name }}<br><strong>Invoice total:</strong> ${{ $('Reconcile').first().json.invoice_total }}<br><strong>Reference {{ $('Reconcile').first().json.ref_label }} total:</strong> ${{ $('Reconcile').first().json.ref_label === 'PO' ? $('Reconcile').first().json.po_total : $('Reconcile').first().json.quote_total }}<br><strong>Variance:</strong> ${{ $('Reconcile').first().json.variance_amount }}</p><p><strong>Flags:</strong></p><pre>{{ $('Reconcile').first().json.flag_summary }}</pre><p>Review the AI-drafted response below, edit if needed, then choose Approve or Reject.</p>",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Decision",
+              "fieldName": "decision",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  { "option": "approved" },
+                  { "option": "rejected" }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Email body to send to vendor (edit if needed)",
+              "fieldName": "email_body",
+              "fieldType": "textarea",
+              "defaultValue": "={{ $json.draft_response }}",
+              "requiredField": false
+            },
+            {
+              "fieldLabel": "PM notes (optional)",
+              "fieldName": "pm_notes",
+              "fieldType": "textarea",
+              "requiredField": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "wait-pm",
+      "name": "Wait for PM Review",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [5960, 100],
+      "webhookId": "wf3-pm-review"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": { "caseSensitive": false, "leftValue": "", "typeValidation": "loose", "version": 2 },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "cond-approved",
+                    "leftValue": "={{ $json.decision }}",
+                    "rightValue": "approved",
+                    "operator": { "type": "string", "operation": "equals" }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "approved"
+            },
+            {
+              "conditions": {
+                "options": { "caseSensitive": false, "leftValue": "", "typeValidation": "loose", "version": 2 },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "cond-rejected",
+                    "leftValue": "={{ $json.decision }}",
+                    "rightValue": "rejected",
+                    "operator": { "type": "string", "operation": "equals" }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "rejected"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "switch-pm",
+      "name": "PM Decision",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [6180, 100]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "send",
+        "sendTo": "={{ $('Reconcile').first().json.vendor_email || 'vendor@example.com' }}",
+        "subject": "=Invoice {{ $('Reconcile').first().json.invoice_number }} — clarification needed",
+        "emailType": "text",
+        "message": "={{ $json.email_body }}",
+        "options": {}
+      },
+      "id": "send-vendor-email",
+      "name": "Send Email to Vendor",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [6400, 0],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": { "__rl": true, "mode": "id", "value": "YOUR_GOOGLE_SHEET_ID" },
+        "sheetName": { "__rl": true, "mode": "name", "value": "Pending_Invoices" },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "invoice_id": "={{ $('Reconcile').first().json.invoice_id }}",
+            "status": "human_approved",
+            "date_approved": "={{ $('Reconcile').first().json.today_iso }}",
+            "draft_response": "={{ $('Wait for PM Review').first().json.email_body }}"
+          },
+          "matchingColumns": ["invoice_id"],
+          "schema": [
+            { "id": "invoice_id", "displayName": "invoice_id", "required": false, "defaultMatch": true, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "status", "displayName": "status", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "date_approved", "displayName": "date_approved", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "draft_response", "displayName": "draft_response", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": { "valueInputMode": "USER_ENTERED" }
+      },
+      "id": "upd-pending-human",
+      "name": "Update Pending (Human Approved)",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [6620, 0],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const r = $('Reconcile').first().json;\nconst entry_id = (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : ('entry-' + Date.now() + '-' + Math.random().toString(36).slice(2, 10));\nconst pmNotes = $('Wait for PM Review').first().json.pm_notes || '';\nreturn [{\n  json: {\n    entry_id,\n    invoice_id: r.invoice_id,\n    date_approved: r.today_iso,\n    vendor_name: r.vendor_name,\n    project_name: r.project_name,\n    total: r.invoice_total,\n    cost_code: r.cost_code,\n    notes: 'Human-approved after review' + (pmNotes ? ' — ' + pmNotes : '')\n  }\n}];"
+      },
+      "id": "shape-books-human",
+      "name": "Shape Books Row (Human)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [6840, 0],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": { "__rl": true, "mode": "id", "value": "YOUR_GOOGLE_SHEET_ID" },
+        "sheetName": { "__rl": true, "mode": "name", "value": "Books" },
+        "range": "A:Z",
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "matchingColumns": []
+        },
+        "options": { "valueInputMode": "USER_ENTERED" }
+      },
+      "id": "append-books-human",
+      "name": "Append Books (Human)",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [7060, 0],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const _ = $input.all();\nconst r = $('Reconcile').first().json;\nreturn [{\n  json: {\n    timestamp: new Date().toISOString(),\n    type: 'human_approved',\n    invoice_id: r.invoice_id,\n    invoice_number: r.invoice_number,\n    vendor_name: r.vendor_name,\n    project_name: r.project_name,\n    message: `Invoice ${r.invoice_number} from ${r.vendor_name} approved by PM after review. Email sent to vendor; $${Number(r.invoice_total).toFixed(2)} added to Books.`\n  }\n}];"
+      },
+      "id": "shape-notify-human",
+      "name": "Shape Notification (Human Approved)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [7280, 0],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": { "__rl": true, "mode": "id", "value": "YOUR_GOOGLE_SHEET_ID" },
+        "sheetName": { "__rl": true, "mode": "name", "value": "Notifications" },
+        "range": "A:Z",
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "matchingColumns": []
+        },
+        "options": { "valueInputMode": "USER_ENTERED" }
+      },
+      "id": "append-notify-human",
+      "name": "Notify Human Approved",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [7500, 0],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": { "__rl": true, "mode": "id", "value": "YOUR_GOOGLE_SHEET_ID" },
+        "sheetName": { "__rl": true, "mode": "name", "value": "Pending_Invoices" },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "invoice_id": "={{ $('Reconcile').first().json.invoice_id }}",
+            "status": "disputed"
+          },
+          "matchingColumns": ["invoice_id"],
+          "schema": [
+            { "id": "invoice_id", "displayName": "invoice_id", "required": false, "defaultMatch": true, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "status", "displayName": "status", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": { "valueInputMode": "USER_ENTERED" }
+      },
+      "id": "upd-pending-disputed",
+      "name": "Update Pending (Disputed)",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [6400, 200],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const _ = $input.all();\nconst r = $('Reconcile').first().json;\nconst pmNotes = $('Wait for PM Review').first().json.pm_notes || '';\nreturn [{\n  json: {\n    timestamp: new Date().toISOString(),\n    type: 'disputed',\n    invoice_id: r.invoice_id,\n    invoice_number: r.invoice_number,\n    vendor_name: r.vendor_name,\n    project_name: r.project_name,\n    message: `Invoice ${r.invoice_number} from ${r.vendor_name} marked disputed by PM.${pmNotes ? ' Notes: ' + pmNotes : ''} No email sent; not added to Books.`\n  }\n}];"
+      },
+      "id": "shape-notify-disputed",
+      "name": "Shape Notification (Disputed)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [6620, 200],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": { "__rl": true, "mode": "id", "value": "YOUR_GOOGLE_SHEET_ID" },
+        "sheetName": { "__rl": true, "mode": "name", "value": "Notifications" },
+        "range": "A:Z",
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "matchingColumns": []
+        },
+        "options": { "valueInputMode": "USER_ENTERED" }
+      },
+      "id": "append-notify-disputed",
+      "name": "Notify Disputed",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [6840, 200],
+      "onError": "continueRegularOutput"
+    }
+  ],
+  "connections": {
+    "Trigger": { "main": [[{ "node": "Read Invoice Header", "type": "main", "index": 0 }]] },
+    "Read Invoice Header": { "main": [[{ "node": "Read Vendors", "type": "main", "index": 0 }]] },
+    "Read Vendors": { "main": [[{ "node": "Collapse 1", "type": "main", "index": 0 }]] },
+    "Collapse 1": { "main": [[{ "node": "Read Projects", "type": "main", "index": 0 }]] },
+    "Read Projects": { "main": [[{ "node": "Collapse 2", "type": "main", "index": 0 }]] },
+    "Collapse 2": { "main": [[{ "node": "Read Quotes", "type": "main", "index": 0 }]] },
+    "Read Quotes": { "main": [[{ "node": "Collapse 3", "type": "main", "index": 0 }]] },
+    "Collapse 3": { "main": [[{ "node": "Read Quote Lines", "type": "main", "index": 0 }]] },
+    "Read Quote Lines": { "main": [[{ "node": "Collapse 4", "type": "main", "index": 0 }]] },
+    "Collapse 4": { "main": [[{ "node": "Read POs", "type": "main", "index": 0 }]] },
+    "Read POs": { "main": [[{ "node": "Collapse 5", "type": "main", "index": 0 }]] },
+    "Collapse 5": { "main": [[{ "node": "Read PO Lines", "type": "main", "index": 0 }]] },
+    "Read PO Lines": { "main": [[{ "node": "Collapse 6", "type": "main", "index": 0 }]] },
+    "Collapse 6": { "main": [[{ "node": "Read Books", "type": "main", "index": 0 }]] },
+    "Read Books": { "main": [[{ "node": "Collapse 7", "type": "main", "index": 0 }]] },
+    "Collapse 7": { "main": [[{ "node": "Read All Pending", "type": "main", "index": 0 }]] },
+    "Read All Pending": { "main": [[{ "node": "Collapse 8", "type": "main", "index": 0 }]] },
+    "Collapse 8": { "main": [[{ "node": "Read Invoice Lines", "type": "main", "index": 0 }]] },
+    "Read Invoice Lines": { "main": [[{ "node": "Reconcile", "type": "main", "index": 0 }]] },
+    "Reconcile": { "main": [[{ "node": "Clean or Flagged?", "type": "main", "index": 0 }]] },
+    "Clean or Flagged?": {
+      "main": [
+        [{ "node": "Update Pending (Auto-Approved)", "type": "main", "index": 0 }],
+        [{ "node": "Draft Response Email", "type": "main", "index": 0 }]
+      ]
+    },
+    "Update Pending (Auto-Approved)": { "main": [[{ "node": "Shape Books Row (Auto)", "type": "main", "index": 0 }]] },
+    "Shape Books Row (Auto)": { "main": [[{ "node": "Append Books (Auto)", "type": "main", "index": 0 }]] },
+    "Append Books (Auto)": { "main": [[{ "node": "Shape Notification (Auto)", "type": "main", "index": 0 }]] },
+    "Shape Notification (Auto)": { "main": [[{ "node": "Notify Auto-Approved", "type": "main", "index": 0 }]] },
+    "Draft Response Email": { "main": [[{ "node": "Merge Draft With Reconcile", "type": "main", "index": 0 }]] },
+    "Merge Draft With Reconcile": { "main": [[{ "node": "Update Pending (Flagged)", "type": "main", "index": 0 }]] },
+    "Update Pending (Flagged)": { "main": [[{ "node": "Shape Notification (Review)", "type": "main", "index": 0 }]] },
+    "Shape Notification (Review)": { "main": [[{ "node": "Notify Review Needed", "type": "main", "index": 0 }]] },
+    "Notify Review Needed": { "main": [[{ "node": "Wait for PM Review", "type": "main", "index": 0 }]] },
+    "Wait for PM Review": { "main": [[{ "node": "PM Decision", "type": "main", "index": 0 }]] },
+    "PM Decision": {
+      "main": [
+        [{ "node": "Send Email to Vendor", "type": "main", "index": 0 }],
+        [{ "node": "Update Pending (Disputed)", "type": "main", "index": 0 }]
+      ]
+    },
+    "Send Email to Vendor": { "main": [[{ "node": "Update Pending (Human Approved)", "type": "main", "index": 0 }]] },
+    "Update Pending (Human Approved)": { "main": [[{ "node": "Shape Books Row (Human)", "type": "main", "index": 0 }]] },
+    "Shape Books Row (Human)": { "main": [[{ "node": "Append Books (Human)", "type": "main", "index": 0 }]] },
+    "Append Books (Human)": { "main": [[{ "node": "Shape Notification (Human Approved)", "type": "main", "index": 0 }]] },
+    "Shape Notification (Human Approved)": { "main": [[{ "node": "Notify Human Approved", "type": "main", "index": 0 }]] },
+    "Update Pending (Disputed)": { "main": [[{ "node": "Shape Notification (Disputed)", "type": "main", "index": 0 }]] },
+    "Shape Notification (Disputed)": { "main": [[{ "node": "Notify Disputed", "type": "main", "index": 0 }]] }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

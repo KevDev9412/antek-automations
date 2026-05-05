@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { CalendlyButton } from "@/components/CalendlyButton";
+import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Renovation Operations Automation | Antek Automations",
@@ -327,7 +329,9 @@ const RENO_STEPS = [
 ───────────────────────────────────────────────────────────────────────── */
 export default function RenovationsPage() {
   return (
-    <main>
+    <>
+      <Navbar />
+      <main>
 
       {/* ══════════════════════════════════════════════════════════════════
           HERO — Split layout
@@ -691,6 +695,8 @@ export default function RenovationsPage() {
         </div>
       </section>
 
-    </main>
+      </main>
+      <Footer />
+    </>
   );
 }

@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
+import {
+  Geist,
+  Geist_Mono,
+  Playfair_Display,
+  Fraunces,
+  Inter_Tight,
+  JetBrains_Mono,
+} from "next/font/google";
 import Script from "next/script";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -21,26 +27,50 @@ const playfairDisplay = Playfair_Display({
   weight: ["400", "500", "600", "700"],
 });
 
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin"],
+  display: "swap",
+  axes: ["opsz"],
+  style: ["normal", "italic"],
+  weight: "variable",
+});
+
+const interTight = Inter_Tight({
+  variable: "--font-inter-tight",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500"],
+});
+
+const TITLE = "Antek Automations | Workflow Automation for Residential Construction";
+const DESCRIPTION =
+  "Custom AI workflow automation for custom home builders, general contractors, and renovation firms. We map where time and margin are leaking, then build the systems that fix it.";
+
 export const metadata: Metadata = {
-  title: "Antek Automations | Custom AI Automation for Growing Businesses",
-  description:
-    "We design and build custom AI automation systems that eliminate operational chaos for service businesses. Less manual work. Tighter margins. Scalable operations.",
+  title: TITLE,
+  description: DESCRIPTION,
   icons: {
     icon: "/Icon.png",
   },
   openGraph: {
-    title: "Antek Automations | Custom AI Automation for Growing Businesses",
-    description:
-      "We design and build custom AI automation systems that eliminate operational chaos for service businesses. Less manual work. Tighter margins. Scalable operations.",
+    title: TITLE,
+    description: DESCRIPTION,
     type: "website",
     url: "https://www.antekautomations.com/",
     images: [{ url: "https://www.antekautomations.com/Icon.png" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Antek Automations | Custom AI Automation for Growing Businesses",
-    description:
-      "We design and build custom AI automation systems that eliminate operational chaos for service businesses. Less manual work. Tighter margins. Scalable operations.",
+    title: TITLE,
+    description: DESCRIPTION,
   },
 };
 
@@ -52,7 +82,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${playfairDisplay.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${playfairDisplay.variable} ${fraunces.variable} ${interTight.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <head>
         {/* Calendly popup widget styles */}
@@ -62,14 +92,13 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col">
-        <Navbar />
         {children}
-        <Footer />
         {/* Calendly popup widget script — loaded after page is interactive */}
         <Script
           src="https://assets.calendly.com/assets/external/widget.js"
           strategy="afterInteractive"
         />
+        <Analytics />
       </body>
     </html>
   );
