@@ -1262,6 +1262,8 @@
 
 /* Mockup wrapper fade */
 .rp-cs__mockup-wrap {
+  min-width: 0;     /* prevent grid blowout — grid items default to min-width:auto */
+  max-width: 100%;  /* hard cap at column track width */
   opacity: 0;
   transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -1272,6 +1274,7 @@
 
 /* Mockup frame */
 .rp-cs__mockup {
+  width: 100%;      /* fill the constrained wrapper, not the content */
   border: 1px solid rgba(194, 188, 179, 0.18);
   border-radius: 8px;
   overflow: hidden;
