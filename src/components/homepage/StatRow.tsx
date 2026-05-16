@@ -138,7 +138,7 @@ export function StatRow() {
       >
         <div className="rp-stat-row__inner">
           <StatItem
-            target={4}
+            target={3}
             suffix="-WEEK"
             labelLines={["DEPLOYMENT", "TIMELINE"]}
             sublabelLines={["Kickoff to", "live ops"]}
@@ -151,11 +151,10 @@ export function StatRow() {
           <div className="rp-stat__divider" aria-hidden="true" />
 
           <StatItem
-            prefix="$"
-            target={100}
-            suffix="K+"
-            labelLines={["AVG. ANNUAL", "SAVINGS"]}
-            sublabelLines={["Per typical", "engagement"]}
+            target={14}
+            suffix=" HRS"
+            labelLines={["AVG. WEEKLY TIME", "RECLAIMED"]}
+            sublabelLines={["Per CSR,", "typical engagement"]}
             colorVar="var(--rp-brick)"
             triggered={triggered}
             reducedMotion={reducedMotion}

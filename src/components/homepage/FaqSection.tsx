@@ -5,9 +5,9 @@ import { useState, useRef, useEffect, useId } from "react";
 const FAQS = [
   {
     fig: "[ Q.01 ]",
-    question: "How is this different from BuilderTrend or Procore?",
+    question: "How is this different from Applied Epic or AMS360?",
     answer:
-      "BuilderTrend and Procore are project management platforms. We are not a platform. We are the automation layer that makes your existing tools act on information without a person in the middle. We connect what you already use and eliminate the manual handoffs, so your team stops doing coordination work and focuses on the build.",
+      "Applied Epic and AMS360 are agency management systems. They hold your policies, your clients, and your records. We aren't another system. We're the automation layer that sits across your AMS, your inbox, and your carrier portals, and handles the work that moves between them. Your AMS keeps doing what it does. We handle the part where a person used to copy information between it and everything else.",
   },
   {
     fig: "[ Q.02 ]",

@@ -38,7 +38,7 @@ function Schematic() {
       xmlns="http://www.w3.org/2000/svg"
       style={{ width: "100%", height: "auto", display: "block" }}
       role="img"
-      aria-label="Automation workflow schematic, three-stage pipeline: Estimate, Scheduling, Invoicing"
+      aria-label="Automation workflow schematic, three-stage brokerage pipeline: Submission, Servicing, Renewal"
     >
       <defs>
         {/* Blueprint dot grid */}
@@ -155,12 +155,12 @@ function Schematic() {
         <text x={118} y={161} textAnchor="middle"
               style={{ fontFamily: MONO_FONT, fontSize: "9px", fontWeight: 500,
                        fill: C_INK, letterSpacing: "0.07em" }}>
-          ESTIMATE
+          SUBMISSION
         </text>
         <text x={118} y={173} textAnchor="middle"
               style={{ fontFamily: MONO_FONT, fontSize: "7.5px",
                        fill: C_INK_MUTE, letterSpacing: "0.04em" }}>
-          quotes / scope
+          quotes / coverage
         </text>
       </g>
       <g data-animate="true"
@@ -169,12 +169,12 @@ function Schematic() {
         <text x={230} y={161} textAnchor="middle"
               style={{ fontFamily: MONO_FONT, fontSize: "9px", fontWeight: 500,
                        fill: C_INK, letterSpacing: "0.07em" }}>
-          SCHEDULING
+          SERVICING
         </text>
         <text x={230} y={173} textAnchor="middle"
               style={{ fontFamily: MONO_FONT, fontSize: "7.5px",
                        fill: C_INK_MUTE, letterSpacing: "0.04em" }}>
-          crews / timelines
+          COI / endorsements
         </text>
       </g>
       <g data-animate="true"
@@ -183,12 +183,12 @@ function Schematic() {
         <text x={342} y={161} textAnchor="middle"
               style={{ fontFamily: MONO_FONT, fontSize: "9px", fontWeight: 500,
                        fill: C_INK, letterSpacing: "0.07em" }}>
-          INVOICING
+          RENEWAL
         </text>
         <text x={342} y={173} textAnchor="middle"
               style={{ fontFamily: MONO_FONT, fontSize: "7.5px",
                        fill: C_INK_MUTE, letterSpacing: "0.04em" }}>
-          billing / follow-up
+          retention / upsell
         </text>
       </g>
 
@@ -384,13 +384,13 @@ function Schematic() {
         <text x={289} y={315} clipPath="url(#rp-tb-r2)"
               style={{ fontFamily: MONO_FONT, fontSize: "8px",
                        fill: C_INK, letterSpacing: "0.025em" }}>
-          STRUCTURAL DEVELOPMENT
+          BROKERAGE WORKFLOW
         </text>
         {/* Row 3 left: DWG NO */}
         <text x={289} y={329} clipPath="url(#rp-tb-r3l)"
               style={{ fontFamily: MONO_FONT, fontSize: "7.5px",
                        fill: C_INK, letterSpacing: "0.02em" }}>
-          DWG NO. AA-2026-001
+          DWG NO. AA-2026-002
         </text>
         {/* Row 3 right: FIG */}
         <text x={387} y={329} clipPath="url(#rp-tb-r3r)"
@@ -432,22 +432,21 @@ export function Hero() {
         {/* ── Left column: copy ──────────────────────────────── */}
         <div className="rp-hero__copy">
           <span className="rp-hero__eyebrow" aria-hidden="true">
-            [ Workflow Automation · Residential Construction ]
+            [ Workflow Automation · Insurance Brokerages ]
           </span>
 
           <h1 className="rp-hero__headline" id="rp-hero-headline">
-            Your <span style={{ color: C_BRICK }}>builds</span> are complex.
+            Your <span style={{ color: C_BRICK }}>policies</span> are complex.
             <br />
             Your operations{" "}
-            <em><span style={{ color: C_BRICK }}>shouldn&rsquo;t</span>&nbsp;be.</em>
+            <em><span style={{ color: C_BRICK }}>don&rsquo;t</span>&nbsp;have to be.</em>
           </h1>
 
           <p className="rp-hero__subhead">
-            We map where time and margin are leaking, then build the custom
-            automated systems that fix it permanently. Eliminating{" "}
-            <span style={{ color: C_BRICK, fontSize: "1.17em", fontWeight: 500,
-                           fontFamily: "inherit" }}>$100k+</span>
-            {" "}in losses due to operational friction.
+            We map where time and margin are leaking across your AMS, your inbox,
+            and your carrier portals, then build the automation that closes those{" "}
+            <span style={{ color: C_BRICK, fontWeight: 600 }}>gaps</span>.
+            {" "}Your tools keep working. Your team stops doing the work between them.
           </p>
 
           <div className="rp-hero__ctas">
@@ -469,7 +468,7 @@ export function Hero() {
             lineHeight: 1.4,
           }}>
             <span style={{ color: C_BRICK }}>↳</span>
-            {" "}4,800 DOCS · INDEXED IN &lt;2.0s{"  "}·{"  "}TYPICAL CLIENT DEPLOYMENT
+            {" "}COI REQUEST · TRIAGED · DRAFTED · SENT IN &lt;30s{"  "}·{"  "}TYPICAL AUTOMATION
           </p>
         </div>
 
@@ -487,7 +486,7 @@ export function Hero() {
               borderBottom: `1px solid var(--rp-rule, #E2DED4)`,
             }}>
               <span className="rp-schematic__annotation">
-                [ FIG. 01 / STRUCTURAL DEVELOPMENT ]
+                [ FIG. 01 / BROKERAGE WORKFLOW ]
               </span>
               {/* LIVE indicator — pulses via rp-live-indicator CSS class */}
               <span className="rp-live-indicator" style={{

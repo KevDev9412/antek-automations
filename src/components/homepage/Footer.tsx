@@ -23,8 +23,8 @@ export function Footer() {
           <div className="rp-footer__col rp-footer__col--brand">
             <p className="rp-footer__wordmark">Antek Automations</p>
             <p className="rp-footer__blurb">
-              Workflow automation for residential construction.
-              Less manual chaos, more time building.
+              Workflow automation for independent insurance brokerages.
+              Less manual work, more time on what actually grows your book.
             </p>
           </div>
 
@@ -70,7 +70,7 @@ export function Footer() {
             © 2026 Antek Automations. All rights reserved.
           </p>
           <p className="rp-footer__tagline">
-            BUILT FOR BUILDERS WHO MEAN BUSINESS.
+            BUILT FOR BROKERAGES THAT MEAN BUSINESS.
           </p>
         </div>
 

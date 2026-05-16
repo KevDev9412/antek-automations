@@ -8,7 +8,7 @@ const STATEMENTS = [
     label: "[ INTEGRATION ]",
     stmtLabel: "[ STATEMENT 01 ]",
     headline: "We don't replace your tools. We make them smarter.",
-    body: "Our systems integrate with the project management platforms you already use, adding the automation layer that turns manual handoffs into seamless workflows.",
+    body: "Our systems sit on top of Applied Epic, AMS360, HawkSoft, Power Broker, and whatever else your brokerage runs on. We connect the tools you've already chosen and handle the work that moves between them, so your existing stack starts doing more without you having to learn anything new.",
   },
   {
     num: "02",

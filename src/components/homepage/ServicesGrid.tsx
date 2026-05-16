@@ -7,38 +7,38 @@ const SERVICES = [
   {
     fig: "[ FIG. 06.01 ]",
     num: "01",
-    name: "Lead Follow-Up & Nurture",
-    body: "Automated response sequences so no enquiry goes cold. Every prospect gets a timely, professional follow-up without manual effort.",
+    name: "Submission Triage",
+    body: "Inbound commercial submissions get read, classified, and routed to the right producer with the data already pulled out and ready to use. First touch with the client happens within the hour, not the next morning.",
   },
   {
     fig: "[ FIG. 06.02 ]",
     num: "02",
-    name: "Document Search & Retrieval",
-    body: "Intelligent search across every file and every project in plain English. Find permits, specs, and approvals in seconds, not minutes.",
+    name: "COI Generation and Delivery",
+    body: "Certificate of Insurance requests get parsed, checked against the active policy, generated on your template, and sent. The activity logs back to your AMS automatically. No one on the team has to touch it.",
   },
   {
     fig: "[ FIG. 06.03 ]",
     num: "03",
-    name: "Subcontractor Coordination",
-    body: "Automated scheduling, reminders, and status updates across your trades, so the right people have the right information at the right time.",
+    name: "Renewal Risk Detection",
+    body: "Weekly analysis of your book that flags accounts your AMS dashboard still shows as healthy but that signal risk underneath. Producers get the heads up with talking points ready, before the renewal lands.",
   },
   {
     fig: "[ FIG. 06.04 ]",
     num: "04",
-    name: "Permit & Compliance Tracking",
-    body: "Deadline monitoring and document routing so nothing expires or gets missed, across every active project, without manual chasing.",
+    name: "Loss Run and Submission Packaging",
+    body: "Loss runs pulled, summarized, and put together into a producer-ready submission package. Carrier appetite checked against the risk. A four-hour task becomes a fifteen-minute review.",
   },
   {
     fig: "[ FIG. 06.05 ]",
     num: "05",
-    name: "Client Communication",
-    body: "Templated updates, milestone notifications, and approval workflows that keep clients informed and reduce back-and-forth.",
+    name: "Client Communication Workflows",
+    body: "Personalized follow-ups, renewal reminders, and policy update notifications. Sent on cadence, written in your firm's voice, without anyone on the team having to draft them one by one.",
   },
   {
     fig: "[ FIG. 06.06 ]",
     num: "06",
-    name: "Reporting & Metrics",
-    body: "Automated dashboards that surface where time is going and where it's being saved, so every decision is backed by real data.",
+    name: "Producer and Book Reporting",
+    body: "Custom dashboards that show what's actually happening in your book. Producer pipeline, retention risk, time saved per workflow, and revenue trends. Decisions backed by real data instead of Friday gut feel.",
   },
 ] as const;
 
@@ -83,8 +83,8 @@ export function ServicesGrid() {
             <div className="rp-services__header-left">
               <h2 id="services-headline" className="rp-services__headline">
                 Custom workflows built<br />
-                around how you<br />
-                <em className="rp-services__headline-em">actually</em> operate.
+                around how you{" "}<em className="rp-services__headline-em">actually</em><br />
+                operate.
               </h2>
             </div>
             <div className="rp-services__header-right">

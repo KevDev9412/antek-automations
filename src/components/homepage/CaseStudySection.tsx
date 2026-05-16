@@ -2,14 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const QUERY = "What are the approved window specs for Lot 14?";
+const QUERY = "Apex Construction needs a COI for the Harbor Way project. Coverage in place?";
 const ANSWER =
-  "Lot 14 uses Andersen 400 Series casement windows, triple-glazed, with a matte black exterior finish. Approved 14 Mar 2025.";
+  "Confirmed. Apex's GL policy with Meridian Mutual ($5M limit, expires Aug 2026) satisfies the $5M GL plus waiver of subrogation required by Westbridge Properties Ltd. COI generated and sent to Jennifer Reyes at 11:47am.";
 
 const DOCS = [
-  { name: "Lot14_WindowSpec_v3.pdf",    date: "14 Mar 2025", tag: "Spec Sheet" },
-  { name: "ClientApproval_Lot14.pdf",   date: "15 Mar 2025", tag: "Approval"   },
-  { name: "SubcontractorBrief_Q2.pdf",  date: "02 Apr 2025", tag: "Brief"      },
+  { name: "Apex_Policy_GL-2025-0847.pdf",     date: "GL-2025-0847",   tag: "Active Policy" },
+  { name: "Project_Requirements_Harbor.eml",  date: "Inbound Email",  tag: "Email Source"  },
+  { name: "COI_Apex_Westbridge_2026.pdf",      date: "11:47am",        tag: "Generated"     },
 ] as const;
 
 type Phase = "idle" | "typing" | "answer" | "docs" | "done";
@@ -141,31 +141,39 @@ export function CaseStudySection() {
           {/* ── Left copy column ─────────────────────────── */}
           <div className="rp-cs__copy">
 
-            <p className="rp-cs__eyebrow">[ Case Study · Document Search ]</p>
+            <p className="rp-cs__eyebrow">[ Case Study · Submission to Quote ]</p>
 
             <h2 id="cs-headline" className="rp-cs__headline">
-              Thousands of documents.<br />
-              One question.<br />
-              Answered in <em className="rp-cs__headline-em">seconds</em>.
+              A commercial COI request, handled before anyone on the team has{" "}
+              <em className="rp-cs__headline-em">finished their coffee.</em>
             </h2>
 
             <div className="rp-cs__body-group">
               <p className="rp-cs__body">
-                A premier custom home builder managing multiple high-value
-                projects simultaneously was drowning in documents. Thousands of
-                files scattered across email threads, shared drives, and personal
-                devices. Finding a single permit, spec sheet, or client approval
-                could take their team 20+ minutes.
+                An independent brokerage was losing real hours every week to a
+                workflow every brokerage knows. A commercial client emails in
+                asking for a Certificate of Insurance for a new project. A senior
+                CSR reads it, pulls up the existing policy in their AMS, checks
+                if coverage meets the project requirements, generates the COI from
+                a template, drafts a reply, and sends it. About twenty-five
+                minutes of careful work. Across forty weekly requests, that's two
+                full days of senior staff time, every week.
               </p>
               <p className="rp-cs__body">
-                We built a custom system that lets their team search across every
-                project document using plain English. Type a question, get an
-                answer in seconds, with the source document attached.
+                We built a custom system that watches the brokerage's general
+                inbox, classifies what comes in, pulls the structured data out,
+                looks up the client's existing policy in their AMS, validates
+                coverage against project requirements, generates the COI on the
+                firm's own template, drafts a personalized reply, and sends it.
+                Under thirty seconds. The original CSR gets a notification telling
+                them the work is done.
               </p>
               <p className="rp-cs__body">
-                The system handles automated document categorisation, intelligent
-                search tuned to construction terminology, OCR for scanned files,
-                and full version control with audit trails.
+                The same architecture handles other inbound work too. New
+                submissions get routed to the right producer with everything
+                pre-staged. Renewal questions get answered or escalated based on
+                what the policy actually says. Claims notifications get logged
+                into the AMS and the right person gets the heads up.
               </p>
             </div>
 
@@ -198,7 +206,7 @@ export function CaseStudySection() {
                   <span className="rp-cs__dot" />
                   <span className="rp-cs__dot" />
                 </div>
-                <span className="rp-cs__chrome-title">Project Document Search</span>
+                <span className="rp-cs__chrome-title">Submission to Quote Bridge</span>
               </div>
 
               <div className="rp-cs__mockup-body">
@@ -259,7 +267,7 @@ export function CaseStudySection() {
                 <div className={`rp-cs__status${showStatus ? " rp-cs__status--visible" : ""}`}>
                   <span className="rp-cs__status-bolt">↯</span>
                   <span className="rp-cs__status-text">
-                    Retrieved in 1.2s across 4,800 project documents
+                    Triaged, validated, sent in 28 seconds
                   </span>
                 </div>
 

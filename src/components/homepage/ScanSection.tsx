@@ -61,11 +61,20 @@ export function ScanSection() {
       >
         <div className="rp-scan__inner">
 
-          <h2 id="scan-headline" className="rp-scan__headline">
-            A four-step process for turning operational{" "}
-            <em className="rp-scan__headline-em">friction</em>{" "}
-            into measurable, repeatable efficiency.
-          </h2>
+          {/* Two-column header: headline left, subhead right */}
+          <div className="rp-scan__header">
+            <div className="rp-scan__header-left">
+              <h2 id="scan-headline" className="rp-scan__headline">
+                The <em className="rp-scan__headline-em">SCAN</em> Framework
+              </h2>
+            </div>
+            <div className="rp-scan__header-right">
+              <p className="rp-scan__subhead">
+                A four-step process for turning operational friction into
+                measurable, repeatable efficiency.
+              </p>
+            </div>
+          </div>
 
           <ol className="rp-scan__steps" aria-label="SCAN framework steps">
             {STEPS.map((step) => (
@@ -108,7 +117,7 @@ export function ScanSection() {
       <div className="rp-break-b" aria-hidden="true">
         <div className="rp-break-b__inner">
           <div className="rp-break-b__rule" />
-          <p className="rp-break-b__eyebrow">[ Case Study · Document Search ]</p>
+          <p className="rp-break-b__eyebrow">[ Case Study · Submission to Quote ]</p>
         </div>
       </div>
     </>

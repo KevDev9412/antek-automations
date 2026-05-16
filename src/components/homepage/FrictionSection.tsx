@@ -5,18 +5,18 @@ import { useEffect, useRef, useState } from "react";
 const CARDS = [
   {
     num: "01",
-    title: "Critical Info, Scattered Everywhere",
-    body: "Project details buried across email threads, shared drives, and personal devices. Your team wastes hours hunting for answers that should take seconds.",
+    title: "Submissions Sitting in Inboxes",
+    body: "New commercial submissions, COI requests, and renewal questions land in shared inboxes and wait their turn. The same client data gets typed into Epic or AMS360, then again into a carrier portal, then again into a follow-up email. Nothing's broken. Everything's slow.",
   },
   {
     num: "02",
-    title: "Leads Slip Through the Cracks",
-    body: "Follow-ups get lost in the day-to-day. By the time someone circles back, the client has already moved on to another builder.",
+    title: "Renewals That Quietly Walk Away",
+    body: "Most brokerages lose accounts not to price, but to silence. By the time someone follows up on a stale renewal, the client has already taken a quote from somewhere else. Your AMS shows the policy as active. It can't tell you the relationship is over.",
   },
   {
     num: "03",
-    title: "Coordination That Costs You Time",
-    body: "Vendor schedules, permit tracking, subcontractor updates. Managed manually, full of gaps, and always reactive. Every delay compounds.",
+    title: "The 20-Minute Tasks That Add Up",
+    body: "A COI request. A loss run pull. An endorsement update. Each one takes twenty minutes and pulls a senior CSR away from the work that actually grows the book. Across a week, that's a full day of capacity lost to tasks that should run themselves.",
   },
 ] as const;
 
@@ -49,16 +49,22 @@ export function FrictionSection() {
       >
         <div className="rp-friction__inner">
 
-          {/* Eyebrow */}
-          <p className="rp-friction__eyebrow">[ 02 / Sound Familiar? ]</p>
-
-          {/* Headline */}
-          <h2 id="friction-headline" className="rp-friction__headline">
-            Running a construction business means managing thousands of moving parts.
-            <br />
-            {" "}Most of them{" "}
-            <em className="rp-friction__headline-em">manually.</em>
-          </h2>
+          {/* Two-column header: headline left, subhead right */}
+          <div className="rp-friction__header">
+            <div className="rp-friction__header-left">
+              <p className="rp-friction__eyebrow">[ 02 / Sound Familiar? ]</p>
+              <h2 id="friction-headline" className="rp-friction__headline">
+                Still moving by{" "}
+                <em className="rp-friction__headline-em">hand.</em>
+              </h2>
+            </div>
+            <div className="rp-friction__header-right">
+              <p className="rp-friction__subhead">
+                Running a brokerage means managing thousands of client touchpoints.
+                Most of them still need someone in the middle to move them.
+              </p>
+            </div>
+          </div>
 
           {/* Three friction cards */}
           <div className="rp-friction__cards" role="list">
@@ -82,13 +88,16 @@ export function FrictionSection() {
           <div className="rp-friction__bridge">
             <p className="rp-friction__bridge-text">
               <span className="rp-friction__bridge-muted">
-                Your project management software organizes tasks.{" "}
-              </span>
-              <span className="rp-friction__bridge-strong">
-                But the manual hand-offs in between still drain your time and profit.{" "}
+                Your AMS handles policies.{" "}
               </span>
               <span className="rp-friction__bridge-muted">
-                We bridge them.
+                Your inbox handles communication.{" "}
+              </span>
+              <span className="rp-friction__bridge-strong">
+                The manual work between them is where the hours go.{" "}
+              </span>
+              <span className="rp-friction__bridge-muted">
+                That's the gap we close.
               </span>
             </p>
           </div>
