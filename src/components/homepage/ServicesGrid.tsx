@@ -82,9 +82,7 @@ export function ServicesGrid() {
           <div className="rp-services__header">
             <div className="rp-services__header-left">
               <h2 id="services-headline" className="rp-services__headline">
-                Custom workflows built<br />
-                around how you{" "}<em className="rp-services__headline-em">actually</em><br />
-                operate.
+                Custom workflows built around how you{" "}<em className="rp-services__headline-em">actually</em>{" "}operate.
               </h2>
             </div>
             <div className="rp-services__header-right">
