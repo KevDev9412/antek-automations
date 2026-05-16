@@ -1578,6 +1578,13 @@
   padding-bottom: 60px;
 }
 
+@media (max-width: 768px) {
+  .rp-break-a--services {
+    padding-top: 40px;
+    padding-bottom: 24px;
+  }
+}
+
 /* Responsive */
 @media (max-width: 900px) {
   .rp-cs__inner {
@@ -1910,7 +1917,7 @@
   }
 
   .rp-services {
-    padding-top: 64px;
+    padding-top: 32px;
     padding-bottom: 72px;
   }
 
