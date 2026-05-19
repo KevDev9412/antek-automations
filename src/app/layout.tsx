@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import {
   Geist,
   Geist_Mono,
@@ -99,6 +100,7 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
