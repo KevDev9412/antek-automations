@@ -14,11 +14,25 @@ import { CtaSection }       from "@/components/homepage/CtaSection";
 import { Footer }           from "@/components/homepage/Footer";
 
 export const metadata: Metadata = {
-  title: "Antek Automations | Workflow Automation for Residential Construction",
+  title: "Antek Automations | Workflow Automation for Professional Services",
   description:
-    "Custom AI workflow automation for custom home builders, general contractors, and renovation firms. We map where time and margin are leaking, then build the systems that fix it.",
+    "Custom workflow automation for professional service businesses. We find where manual work drains your team and build the systems that fix it. Book a free audit.",
   alternates: {
     canonical: "https://www.antekautomations.com/",
+  },
+  openGraph: {
+    title: "Antek Automations | Workflow Automation for Professional Services",
+    description:
+      "Custom workflow automation for professional service businesses. We find where manual work drains your team and build the systems that fix it. Book a free audit.",
+    type: "website",
+    url: "https://www.antekautomations.com/",
+    images: [{ url: "https://www.antekautomations.com/Icon.png" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Antek Automations | Workflow Automation for Professional Services",
+    description:
+      "Custom workflow automation for professional service businesses. We find where manual work drains your team and build the systems that fix it. Book a free audit.",
   },
   robots: { index: true, follow: true },
 };

@@ -50,9 +50,9 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["400", "500"],
 });
 
-const TITLE = "Antek Automations | Workflow Automation for Insurance Brokerages";
+const TITLE = "Antek Automations | Workflow Automation for Professional Services";
 const DESCRIPTION =
-  "Custom workflow automation and AI agents for independent insurance brokerages. We make Applied Epic, AMS360, your email, and your carrier portals work together automatically.";
+  "Custom workflow automation for professional service businesses. We find where manual work drains your team and build the systems that fix it. Book a free audit.";
 
 export const metadata: Metadata = {
   title: TITLE,
