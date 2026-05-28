@@ -2733,3 +2733,314 @@
     gap: 10px;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   HERO v2 — centered single-column with cycling pipeline animation
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Centered wrapper — replaces old 2-col grid */
+.rp-hero__centered {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 960px;
+  margin: 0 auto;
+  padding-top: 16px;
+}
+
+/* Center-align + size override for headline — must fit on 2 lines */
+.rp-hero__centered .rp-hero__headline {
+  text-align: center;
+  margin-top: 36px;
+  font-size: clamp(32px, 4vw, 52px);
+  max-width: none;
+}
+
+.rp-hero__centered .rp-hero__subhead {
+  text-align: center;
+  margin-top: 20px;
+  max-width: 52ch;
+}
+
+/* ── Eyebrow pill badge ─────────────────────────────────────────── */
+.rp-hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid #8b5e3c;
+  border-radius: 999px;
+  padding: 5px 14px 5px 10px;
+  background: transparent;
+}
+
+.rp-hero__badge-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #1a2744;
+  flex-shrink: 0;
+}
+
+.rp-hero__badge-text {
+  font-family: var(--rp-font-mono, monospace);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #8b5e3c;
+  line-height: 1;
+}
+
+/* ── Workflow label ─────────────────────────────────────────────── */
+.rp-hero__wf-label {
+  font-family: var(--rp-font-mono, monospace);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: #9a8f80;
+  margin: 28px 0 10px;
+  line-height: 1;
+}
+
+/* ── Pipeline row ───────────────────────────────────────────────── */
+.rp-hero__pipeline {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  max-width: 760px;
+  width: 100%;
+}
+
+.rp-pipe__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* ── Connector — flex: 1 so lines stretch between nodes ─────────── */
+.rp-pipe__conn-wrap {
+  flex: 1;
+  min-width: 20px;
+  display: flex;
+  align-items: flex-start;
+  padding-top: 23px; /* vertically centres with 48px circles */
+}
+
+.rp-pipe__conn {
+  width: 100%;
+  height: 1.5px;
+  background-color: #c4a882;
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+}
+
+.rp-pipe__conn-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background-color: #8b5e3c;
+  transition: width 0.38s ease;
+}
+
+/* ── Node circle ────────────────────────────────────────────────── */
+.rp-pipe__circle {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1.5px solid #c4a882;
+  background-color: #ede8de;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.35s, background-color 0.35s;
+}
+
+.rp-pipe__circle--active {
+  border-color: #8b5e3c;
+  background-color: #f0e8dc;
+}
+
+.rp-pipe__circle--done {
+  border-color: #1a2744;
+  background-color: #d4c9b5;
+}
+
+/* ── Done checkmark badge ───────────────────────────────────────── */
+.rp-pipe__badge {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: #1a2744;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+/* ── Node label ─────────────────────────────────────────────────── */
+.rp-pipe__label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--rp-font-mono, monospace);
+  font-size: 10px;
+  line-height: 1.35;
+  color: #9a8f80;
+  text-align: center;
+  transition: color 0.35s;
+  white-space: nowrap;
+}
+
+.rp-pipe__label--active { color: #8b5e3c; }
+.rp-pipe__label--done   { color: #1a2744; }
+
+/* ── Processing timer ───────────────────────────────────────────── */
+.rp-hero__timer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 12px;
+  margin-bottom: 40px;
+}
+
+.rp-hero__timer-label {
+  font-family: var(--rp-font-mono, monospace);
+  font-size: 10px;
+  letter-spacing: 0.07em;
+  color: #9a8f80;
+  white-space: nowrap;
+}
+
+.rp-hero__timer-track {
+  width: 160px;
+  height: 2px;
+  background-color: #c4a882;
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.rp-hero__timer-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background-color: #8b5e3c;
+  transition: width 0.1s linear;
+}
+
+.rp-hero__timer-val {
+  font-family: var(--rp-font-mono, monospace);
+  font-size: 10px;
+  font-weight: 600;
+  color: #8b5e3c;
+  min-width: 32px;
+  text-align: left;
+}
+
+/* ── CTA block ──────────────────────────────────────────────────── */
+.rp-hero__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Primary button — hardcoded #1a2744, NOT from theme token */
+.rp-btn-audit {
+  display: inline-block;
+  font-family: var(--rp-font-mono, monospace);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #f5f0e8;
+  background-color: #1a2744;
+  padding: 12px 30px;
+  border-radius: 3px;
+  border: 2px solid #8b5e3c;
+  cursor: pointer;
+  width: 220px;
+  text-decoration: none;
+  line-height: 1;
+  transition: background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.rp-btn-audit:hover {
+  background-color: #4FC3E8;
+  border-color: #4FC3E8;
+  color: #1a2744;
+}
+
+/* "See how it works →" — plain text, no box */
+.rp-hero__see-how {
+  display: inline-block;
+  font-family: var(--rp-font-body, sans-serif);
+  font-size: 12px;
+  font-weight: 500;
+  color: #8b5e3c;
+  text-decoration: none;
+  position: relative;
+}
+
+.rp-hero__see-how::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: #8b5e3c;
+  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.rp-hero__see-how:hover::after {
+  width: 100%;
+}
+
+/* ── prefers-reduced-motion ─────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .rp-pipe__conn-fill,
+  .rp-pipe__circle,
+  .rp-pipe__label,
+  .rp-hero__timer-fill {
+    transition: none !important;
+  }
+}
+
+/* ── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .rp-pipe__circle     { width: 38px; height: 38px; }
+  .rp-pipe__conn-wrap  { padding-top: 18px; }
+  .rp-pipe__conn       { width: 28px; }
+  .rp-pipe__badge      { width: 12px; height: 12px; top: -2px; right: -2px; }
+  .rp-pipe__circle svg { width: 16px; height: 16px; }
+  .rp-pipe__label      { font-size: 9px; }
+  .rp-hero__timer-track { width: 100px; }
+  .rp-hero__wf-label   { font-size: 9px; letter-spacing: 0.05em; }
+}
+
+@media (max-width: 420px) {
+  .rp-pipe__circle     { width: 32px; height: 32px; }
+  .rp-pipe__conn-wrap  { padding-top: 15px; }
+  .rp-pipe__conn       { width: 16px; }
+  .rp-pipe__circle svg { width: 14px; height: 14px; }
+  .rp-pipe__label      { font-size: 8px; }
+  .rp-hero__timer-track { width: 72px; }
+}
