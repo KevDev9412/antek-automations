@@ -2754,7 +2754,7 @@
 .rp-hero__centered .rp-hero__headline {
   text-align: center;
   margin-top: 36px;
-  font-size: clamp(32px, 4vw, 52px);
+  font-size: clamp(37px, 4.6vw, 60px);
   max-width: none;
 }
 
