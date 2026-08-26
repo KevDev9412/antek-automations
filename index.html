@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Antek Automations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: oklch(97% 0.012 85);
+    --ink: oklch(24% 0.075 259);
+    --ink-soft: color-mix(in oklch, var(--ink) 68%, var(--bg));
+    --ink-faint: color-mix(in oklch, var(--ink) 38%, var(--bg));
+    --accent: oklch(48% 0.14 38);
+    --accent-ink: oklch(40% 0.135 36);
+    --accent-soft: color-mix(in oklch, var(--accent) 13%, var(--bg));
+    --accent-hover: color-mix(in oklch, var(--accent) 86%, black);
+    --border: color-mix(in oklch, var(--ink) 13%, var(--bg));
+    --border-strong: color-mix(in oklch, var(--ink) 24%, var(--bg));
+    --surface: color-mix(in oklch, var(--ink) 3.5%, var(--bg));
+
+    /* dark-field tokens: elevation on a dark section is rising surface lightness, not shadow */
+    --dark-surface: color-mix(in oklch, var(--ink) 84%, white 16%);
+    --dark-border: color-mix(in oklch, var(--ink) 66%, white 34%);
+    --dark-text-soft: color-mix(in oklch, var(--bg) 62%, var(--ink) 38%);
+
+    --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+    --font-body: "IBM Plex Sans", system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, "Courier New", monospace;
+
+    --step--1: clamp(0.82rem, 0.79rem + 0.16vw, 0.92rem);
+    --step-0:  clamp(1rem, 0.95rem + 0.24vw, 1.125rem);
+    --step-1:  clamp(1.18rem, 1.1rem + 0.4vw, 1.35rem);
+    --step-2:  clamp(1.4rem, 1.28rem + 0.6vw, 1.7rem);
+    --display: clamp(3rem, 2rem + 4.1vw, 4.8rem);
+
+    --ease: cubic-bezier(.16,1,.3,1);
+    --space-1: clamp(0.75rem, 0.7rem + 0.24vw, 1rem);
+    --space-2: clamp(1.1rem, 1rem + 0.5vw, 1.5rem);
+    --space-3: clamp(1.6rem, 1.35rem + 1.1vw, 2.4rem);
+    --space-4: clamp(2.25rem, 1.9rem + 1.6vw, 3.5rem);
+
+    color-scheme: light;
+  }
+
+  *,*::before,*::after{ box-sizing: border-box; }
+  html{ text-size-adjust: 100%; }
+  body{
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+
+  /* global grain: one texture system, applied once */
+  body::after{
+    content:""; position: fixed; inset: 0; pointer-events: none; z-index: 999;
+    opacity: 0.035; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  h1,h2,h3{ font-family: var(--font-display); font-optical-sizing: auto; margin: 0; text-wrap: balance; }
+  p{ margin: 0; text-wrap: pretty; }
+  img{ max-width: 100%; display: block; }
+  a{ color: inherit; }
+  button{ font: inherit; }
+
+  .wrap{ max-width: 100rem; margin-inline: auto; padding-inline: clamp(3rem, 2rem + 5vw, 7rem); }
+
+  /* ---------- header ---------- */
+  header{
+    position: relative; z-index: 10;
+    padding-block: var(--space-2);
+  }
+  .nav-row{ display:flex; align-items:center; justify-content:space-between; gap: var(--space-2); }
+  .brand{ display:flex; align-items:center; gap: 0.6rem; text-decoration:none; }
+  .brand img{ height: 30px; width:auto; }
+  .brand span{
+    font-family: var(--font-display); font-weight: 520; font-size: 1.3rem;
+    letter-spacing: -0.005em; color: var(--ink);
+  }
+  .nav-links{ display:flex; align-items:center; gap: var(--space-3); list-style:none; margin:0; padding:0; }
+  .nav-links a{
+    position: relative;
+    display: inline-block;
+    padding-block: 0.65rem 0.6rem;
+    font-size: var(--step--1); text-decoration:none; color: var(--ink-soft);
+    font-weight: 500; transition: color 220ms var(--ease);
+  }
+  /* hover/current marker: a small accent tick above, a line that draws in below.
+     Same idea as a tab indicator, different execution: no numbering, no bracket label. */
+  .nav-links a::before{
+    content:"";
+    position: absolute; left: 50%; top: 0.1rem;
+    width: 4px; height: 4px; background: var(--accent);
+    transform: translate(-50%, 4px) scale(0.4);
+    opacity: 0;
+    transition: opacity 220ms var(--ease), transform 220ms var(--ease);
+  }
+  .nav-links a::after{
+    content:"";
+    position: absolute; left: 0; right: 0; bottom: 0;
+    height: 1.5px; background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 280ms var(--ease);
+  }
+  .nav-links a:hover, .nav-links a:focus-visible, .nav-links a.is-current{ color: var(--ink); }
+  .nav-links a:hover::before, .nav-links a:focus-visible::before, .nav-links a.is-current::before{
+    opacity: 1; transform: translate(-50%, 0) scale(1);
+  }
+  .nav-links a:hover::after, .nav-links a:focus-visible::after, .nav-links a.is-current::after{
+    transform: scaleX(1);
+  }
+  .nav-cta{
+    font-family: var(--font-body); font-size: var(--step--1); font-weight: 600;
+    color: var(--bg); background: var(--ink); border: 3px solid var(--accent);
+    padding: 0.6em 1.2em; border-radius: 7px; text-decoration:none;
+    transition: background 220ms var(--ease), border-color 220ms var(--ease), transform 220ms var(--ease);
+    display:inline-block;
+  }
+  .nav-cta:hover{ background: var(--accent-hover); border-color: var(--accent-hover); transform: translateY(-1px); }
+  .menu-btn{ display:none; }
+
+  @media (max-width: 760px){
+    .nav-links{ display:none; }
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position: relative;
+    padding-block: var(--space-1) var(--space-3);
+  }
+
+  /* signature background: manual chaos untangling into clean flow, left to right */
+  .hero-bg{
+    position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    overflow: clip;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 86%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 86%, transparent 100%);
+  }
+  .hero-bg svg{ width: 100%; height: 100%; display: block; }
+
+  /* the wire itself now sits still; the pulses below carry the motion */
+  .flow-pulse{ filter: drop-shadow(0 0 2.5px var(--accent)); }
+  .flow-node{
+    fill: none;
+    stroke: var(--ink-faint);
+    stroke-width: 1.2px;
+    opacity: 0.4;
+  }
+
+  /* soft paper veil so the copy stays legible over the line art */
+  .hero-scrim{
+    position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background: radial-gradient(ellipse 64% 62% at 26% 42%, var(--bg) 0%, color-mix(in oklch, var(--bg) 55%, transparent) 52%, transparent 76%);
+  }
+
+  .hero-inner{ position: relative; z-index: 2; width: 100%; }
+
+  .eyebrow{
+    display:flex; align-items:center; gap: 0.55rem;
+    font-family: var(--font-mono); font-size: var(--step--1);
+    letter-spacing: 0.11em; text-transform: uppercase;
+    color: var(--ink-soft); font-weight: 500;
+    margin-bottom: var(--space-3);
+  }
+  .eyebrow::before{
+    content:""; width: 7px; height: 7px; background: var(--accent);
+    flex-shrink:0;
+  }
+
+  .hero-copy{ max-width: 54rem; }
+
+  h1.headline{
+    font-size: var(--display);
+    font-weight: 560;
+    letter-spacing: 0em;
+    line-height: 1.2;
+    color: var(--ink);
+    text-wrap: wrap; /* lines are hand-set below; balance would rewrap them */
+  }
+  h1.headline > span{ display:block; }
+  h1.headline .accent{
+    color: var(--accent-ink);
+    font-style: italic;
+  }
+
+  .subhead{
+    margin-top: var(--space-1);
+    max-width: 40rem;
+    font-size: var(--step-1);
+    line-height: 1.48;
+    color: var(--ink-soft);
+    font-weight: 400;
+  }
+
+  .cta-row{
+    margin-top: var(--space-4);
+    display:flex; flex-wrap: wrap; align-items:center; gap: 1rem;
+  }
+  .btn{
+    display:inline-flex; align-items:center; gap: 0.5em;
+    font-family: var(--font-body); font-weight: 600; font-size: var(--step-0);
+    padding: 0.85em 1.6em; border-radius: 8px;
+    text-decoration:none; cursor:pointer;
+    transition: background 220ms var(--ease), color 220ms var(--ease), border-color 220ms var(--ease), transform 220ms var(--ease);
+    border: 1.5px solid transparent;
+  }
+  .btn svg{ width: 16px; height:16px; transition: transform 220ms var(--ease); }
+  .btn-primary{ background: var(--ink); color: var(--bg); border-color: var(--accent); border-width: 3px; }
+  .btn-primary:hover{ background: var(--accent-hover); border-color: var(--accent-hover); transform: translateY(-1px); }
+  .btn-primary:hover svg{ transform: translateX(2px); }
+  .btn-secondary{ background: transparent; color: var(--ink); border-color: var(--border-strong); }
+  .btn-secondary:hover{ border-color: var(--ink); background: var(--surface); }
+
+  /* ---------- section seam: jagged skyline, not a wave or a straight line ---------- */
+  .section-seam{
+    position: relative;
+    height: clamp(4.5rem, 3.4rem + 5vw, 8.5rem);
+    line-height: 0;
+  }
+  .section-seam svg{ width: 100%; height: 100%; display: block; }
+  .seam-crossing{
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    opacity: 0.55;
+  }
+
+  /* ---------- services (dark field) ---------- */
+  .services{
+    position: relative;
+    background: var(--ink);
+    color: var(--bg);
+    padding-block: var(--space-4);
+  }
+  .services-head{ max-width: 46rem; }
+
+  .services-title{
+    font-size: clamp(2rem, 1.55rem + 2.2vw, 3.1rem);
+    font-weight: 560;
+    line-height: 1.15;
+    color: var(--bg);
+  }
+
+  .services-lede{
+    margin-top: var(--space-2);
+    max-width: 40rem;
+    font-size: var(--step-1);
+    line-height: 1.6;
+    color: var(--dark-text-soft);
+  }
+
+  .services-grid{
+    margin-top: var(--space-4);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--dark-border);
+    border: 1px solid var(--dark-border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .service-card{
+    background: var(--dark-surface);
+    padding: var(--space-3);
+    display: flex; flex-direction: column; gap: 0.75rem;
+  }
+  .service-icon{
+    width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+    background: color-mix(in oklch, var(--accent) 16%, transparent);
+    color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .service-icon svg{ width: 20px; height: 20px; }
+  .service-card h3{
+    font-family: var(--font-body); font-size: var(--step-0); font-weight: 600;
+    color: var(--bg); margin: 0;
+  }
+  .service-card p{
+    font-size: var(--step--1); line-height: 1.55; color: var(--dark-text-soft); margin: 0;
+  }
+
+  .services-foot{ margin-top: var(--space-3); }
+  .services-link{
+    display: inline-flex; align-items: center; gap: 0.5em;
+    color: var(--bg); font-weight: 600; text-decoration: none;
+    border-bottom: 1px solid var(--dark-border); padding-bottom: 0.2em;
+    transition: border-color 220ms var(--ease), color 220ms var(--ease);
+  }
+  .services-link svg{ width: 16px; height: 16px; transition: transform 220ms var(--ease); }
+  .services-link:hover{ border-color: var(--accent); color: var(--accent); }
+  .services-link:hover svg{ transform: translateX(2px); }
+
+  @media (max-width: 900px){
+    .services-grid{ grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px){
+    .services-grid{ grid-template-columns: 1fr; }
+  }
+
+  /* seam variant for a dark section handing off to a light one below it.
+     The dark fill is drawn as a full-canvas rect inside the SVG itself
+     (rather than a CSS background on this div). A small negative margin
+     pulls the section below up to overlap the seam's last couple of
+     pixels, so a sub-pixel anti-aliasing seam at the flat closing edge
+     of the wave path can't show through as a hairline. */
+  .section-seam--to-light{ margin-bottom: -3px; }
+
+  /* ---------- about (brief, light field) ---------- */
+  .about{
+    position: relative;
+    background: var(--bg);
+    color: var(--ink);
+    padding-block: var(--space-4);
+  }
+  .about-grid{
+    display: grid;
+    grid-template-columns: 7fr 5fr;
+    gap: var(--space-4);
+    align-items: start;
+  }
+  .about-heading{
+    font-size: clamp(1.9rem, 1.5rem + 2vw, 2.8rem);
+    font-weight: 560;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .about-lede{
+    margin-top: var(--space-2);
+    max-width: 34rem;
+    font-size: var(--step-1);
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .about-foot{ margin-top: var(--space-3); }
+
+  /* shared light-bg "arrow link" -- used by any section on the light field (about, faq, ...) */
+  .link-light{
+    display: inline-flex; align-items: center; gap: 0.5em;
+    color: var(--ink); font-weight: 600; text-decoration: none;
+    border-bottom: 1px solid var(--border-strong); padding-bottom: 0.2em;
+    transition: border-color 220ms var(--ease), color 220ms var(--ease);
+  }
+  .link-light svg{ width: 16px; height: 16px; transition: transform 220ms var(--ease); }
+  .link-light:hover{ border-color: var(--accent); color: var(--accent-ink); }
+  .link-light:hover svg{ transform: translateX(2px); }
+
+  .about-points{
+    display: flex; flex-direction: column;
+    border-left: 1px solid var(--border);
+    padding-left: var(--space-3);
+  }
+  .about-point{
+    padding-block: var(--space-2);
+    border-top: 1px solid var(--border);
+    display: flex; gap: 1rem;
+  }
+  .about-point:first-child{ border-top: none; padding-top: 0; }
+  .about-point:last-child{ padding-bottom: 0; }
+  .about-point-index{
+    font-family: var(--font-mono); font-size: var(--step--1);
+    color: var(--accent-ink); flex-shrink: 0; width: 2ch; padding-top: 0.2em;
+  }
+  .about-point-body h3{
+    font-family: var(--font-body); font-weight: 600; font-size: var(--step-0);
+    color: var(--ink); margin: 0 0 0.35rem;
+  }
+  .about-point-body p{
+    font-size: var(--step--1); line-height: 1.55; color: var(--ink-soft); margin: 0;
+  }
+
+  @media (max-width: 860px){
+    .about-grid{ grid-template-columns: 1fr; gap: var(--space-3); }
+    .about-points{
+      border-left: none; padding-left: 0;
+      margin-top: var(--space-1);
+    }
+  }
+
+  /* ---------- section divider: rhythm break between two same-background
+     sections, no colour change. Echoes the hero's flow-node dots (where the
+     wire "settles" into a clean line) as the recurring signature mark. ---------- */
+  .section-divider{
+    display: flex; align-items: center; gap: var(--space-2);
+    padding-block: var(--space-2);
+  }
+  .section-divider-line{ flex: 1 1 auto; height: 1px; background: var(--border); }
+  .section-divider-dot{
+    flex: 0 0 auto; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--accent);
+  }
+
+  /* ---------- faq (light field, shares the about/hero background) ---------- */
+  .faq{
+    position: relative;
+    background: var(--bg);
+    color: var(--ink);
+    padding-block: var(--space-2) var(--space-4);
+  }
+  .faq-head{ max-width: 34rem; margin-inline: auto; text-align: center; }
+  .faq-title{
+    font-size: clamp(1.9rem, 1.5rem + 2vw, 2.8rem);
+    font-weight: 560;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .faq-lede{
+    margin-top: var(--space-1);
+    font-size: var(--step-1);
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+
+  .faq-list{
+    max-width: 44rem;
+    margin: var(--space-4) auto 0;
+    border-top: 1px solid var(--border);
+  }
+  .faq-item{ border-bottom: 1px solid var(--border); }
+  .faq-q{
+    width: 100%;
+    display: flex; align-items: center; justify-content: space-between; gap: var(--space-2);
+    padding-block: var(--space-2);
+    background: none; border: none; cursor: pointer; text-align: left;
+    font-family: var(--font-body); font-weight: 600; font-size: var(--step-0);
+    color: var(--ink);
+  }
+  .faq-q-icon{
+    flex-shrink: 0; position: relative; width: 18px; height: 18px;
+  }
+  .faq-q-icon::before, .faq-q-icon::after{
+    content: ""; position: absolute; top: 50%; left: 50%;
+    background: var(--accent-ink);
+    transform: translate(-50%, -50%);
+    transition: transform 260ms var(--ease), opacity 260ms var(--ease);
+  }
+  .faq-q-icon::before{ width: 14px; height: 1.6px; }
+  .faq-q-icon::after{ width: 1.6px; height: 14px; }
+  .faq-item.is-open .faq-q-icon::after{ transform: translate(-50%, -50%) rotate(90deg); opacity: 0; }
+
+  .faq-a{
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 320ms var(--ease);
+  }
+  .faq-item.is-open .faq-a{ grid-template-rows: 1fr; }
+  .faq-a-inner{ min-height: 0; overflow: hidden; }
+  .faq-a-inner p{
+    padding-bottom: var(--space-2);
+    max-width: 38rem;
+    font-size: var(--step-0);
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+
+  .faq-foot{ margin-top: var(--space-3); text-align: center; }
+
+  @media (max-width: 640px){
+    .faq-head{ max-width: 100%; }
+  }
+
+  /* ---------- closing cta (light field, shares the page background) ---------- */
+  .cta-close{
+    background: var(--bg);
+    padding-block: var(--space-2) var(--space-4);
+  }
+  .cta-close-panel{
+    max-width: 42rem;
+    margin-inline: auto;
+    text-align: center;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 22px;
+    background: var(--surface);
+    padding: var(--space-4) var(--space-3);
+  }
+  .cta-close-mark{
+    width: 7px; height: 7px; margin-inline: auto;
+    background: var(--accent);
+  }
+  .cta-close-title{
+    margin-top: var(--space-2);
+    font-size: clamp(1.9rem, 1.5rem + 2vw, 2.8rem);
+    font-weight: 560;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .cta-close-lede{
+    margin-top: var(--space-1);
+    font-size: var(--step-1);
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+  .cta-close-row{
+    margin-top: var(--space-3);
+    display: flex; justify-content: center;
+  }
+
+  /* ---------- footer (dark field -- exempt from the "no default alternation"
+     rule as structural chrome, not a content section; reuses the same
+     dark-surface tokens as services rather than inventing new ones) ---------- */
+  footer{
+    background: var(--ink);
+    color: var(--bg);
+    padding-block: var(--space-4) var(--space-2);
+  }
+  .footer-top{
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--dark-border);
+  }
+  .footer-brand{ max-width: 22rem; }
+  .footer-brand .brand span{ color: var(--bg); }
+  .footer-tagline{
+    margin-top: var(--space-1);
+    font-size: var(--step-0);
+    line-height: 1.5;
+    color: var(--dark-text-soft);
+  }
+  .footer-cta{
+    display: inline-block;
+    margin-top: var(--space-2);
+    font-family: var(--font-body); font-size: var(--step--1); font-weight: 600;
+    color: var(--ink); background: var(--accent);
+    padding: 0.65em 1.3em; border-radius: 7px; text-decoration: none;
+    transition: background 220ms var(--ease), transform 220ms var(--ease);
+  }
+  .footer-cta:hover{ background: var(--accent-hover); color: var(--bg); transform: translateY(-1px); }
+
+  .footer-col h4{
+    font-family: var(--font-mono); font-size: var(--step--1);
+    letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500;
+    color: var(--dark-text-soft); margin: 0 0 var(--space-2);
+  }
+  .footer-col ul{
+    list-style: none; margin: 0; padding: 0;
+    display: flex; flex-direction: column; gap: 0.65rem;
+  }
+  .footer-col a{
+    font-size: var(--step-0); color: var(--bg); text-decoration: none;
+    transition: color 220ms var(--ease);
+  }
+  .footer-col a:hover{ color: var(--accent); }
+
+  .footer-bottom{
+    margin-top: var(--space-3);
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem;
+    font-size: var(--step--1); color: var(--dark-text-soft);
+  }
+  .footer-top-link{
+    color: var(--dark-text-soft); text-decoration: none;
+    transition: color 220ms var(--ease);
+  }
+  .footer-top-link:hover{ color: var(--bg); }
+
+  @media (max-width: 640px){
+    .footer-top{ flex-direction: column; }
+  }
+
+  /* reveal-on-load */
+  [data-reveal]{
+    opacity: 0;
+    clip-path: inset(100% 0 0 0);
+    transition: opacity 620ms var(--ease), clip-path 620ms var(--ease);
+  }
+  [data-reveal].is-in{ opacity: 1; clip-path: inset(0 0 0 0); }
+
+  @media (prefers-reduced-motion: reduce){
+    [data-reveal]{ transition: opacity 150ms linear; clip-path: none; }
+    [data-reveal].is-in{ opacity: 1; }
+    /* pulses are SMIL (animateMotion), which CSS can't gate — paused via JS below */
+    .faq-a{ transition: none; }
+    .faq-q-icon::before, .faq-q-icon::after{ transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav-row">
+    <a class="brand" href="index.html">
+      <img src="assets/logo-icon-240.png" alt="Antek Automations">
+      <span>Antek Automations</span>
+    </a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html" class="is-current">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="automations.html">Work</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <a class="nav-cta" href="contact.html">Book A Call</a>
+  </div>
+</header>
+
+<section class="hero" id="top">
+
+  <div class="hero-bg" aria-hidden="true">
+    <svg viewBox="0 0 1600 620" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="flowGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" style="stop-color:var(--accent)"/>
+          <stop offset="55%" style="stop-color:var(--ink-faint)"/>
+          <stop offset="100%" style="stop-color:var(--ink)"/>
+        </linearGradient>
+      </defs>
+        <path id="fl0" class="flow-line" d="M 0.0 41.7 Q 0.0 41.7 16.0 44.0 Q 32.0 46.3 48.0 48.4 Q 64.0 50.5 80.0 52.3 Q 96.0 54.0 112.0 55.4 Q 128.0 56.8 144.0 57.8 Q 160.0 58.7 176.0 59.3 Q 192.0 59.8 208.0 59.9 Q 224.0 59.9 240.0 59.6 Q 256.0 59.2 272.0 58.3 Q 288.0 57.5 304.0 56.2 Q 320.0 54.9 336.0 53.3 Q 352.0 51.6 368.0 49.7 Q 384.0 47.7 400.0 45.4 Q 416.0 43.1 432.0 40.7 Q 448.0 38.2 464.0 34.1 Q 480.0 30.0 496.0 30.0 Q 512.0 30.0 528.0 30.0 Q 544.0 30.0 560.0 30.0 Q 576.0 30.0 592.0 30.0 Q 608.0 30.0 624.0 30.0 Q 640.0 30.0 656.0 30.0 Q 672.0 30.0 688.0 30.0 Q 704.0 30.0 720.0 30.0 Q 736.0 30.0 752.0 30.0 Q 768.0 30.0 784.0 30.0 Q 800.0 30.0 816.0 30.0 Q 832.0 30.0 848.0 30.0 Q 864.0 30.0 880.0 30.0 Q 896.0 30.0 912.0 30.0 Q 928.0 30.0 944.0 30.0 Q 960.0 30.0 976.0 30.0 Q 992.0 30.0 1008.0 30.0 Q 1024.0 30.0 1040.0 30.0 Q 1056.0 30.0 1072.0 30.0 Q 1088.0 30.0 1104.0 30.0 Q 1120.0 30.0 1136.0 30.0 Q 1152.0 30.0 1168.0 30.0 Q 1184.0 30.0 1200.0 30.0 Q 1216.0 30.0 1232.0 30.0 Q 1248.0 30.0 1264.0 30.0 Q 1280.0 30.0 1296.0 30.0 Q 1312.0 30.0 1328.0 30.0 Q 1344.0 30.0 1360.0 30.0 Q 1376.0 30.0 1392.0 30.0 Q 1408.0 30.0 1424.0 30.0 Q 1440.0 30.0 1456.0 30.0 Q 1472.0 30.0 1488.0 30.0 Q 1504.0 30.0 1520.0 30.0 Q 1536.0 30.0 1552.0 30.0 Q 1568.0 30.0 1584.0 30.0 T 1600.0 30.0" stroke="url(#flowGrad)" stroke-width="1.10" fill="none" stroke-linecap="round" opacity="0.22"/>
+        <path id="fl1" class="flow-line" d="M 0.0 130.6 Q 0.0 130.6 16.0 127.1 Q 32.0 123.6 48.0 119.6 Q 64.0 115.5 80.0 111.0 Q 96.0 106.5 112.0 101.9 Q 128.0 97.2 144.0 92.7 Q 160.0 88.1 176.0 83.8 Q 192.0 79.6 208.0 75.8 Q 224.0 72.1 240.0 69.1 Q 256.0 66.0 272.0 63.9 Q 288.0 61.7 304.0 60.6 Q 320.0 59.4 336.0 59.3 Q 352.0 59.2 368.0 60.1 Q 384.0 61.0 400.0 62.9 Q 416.0 64.9 432.0 67.7 Q 448.0 70.5 464.0 85.3 Q 480.0 100.0 496.0 100.0 Q 512.0 100.0 528.0 100.0 Q 544.0 100.0 560.0 100.0 Q 576.0 100.0 592.0 100.0 Q 608.0 100.0 624.0 100.0 Q 640.0 100.0 656.0 100.0 Q 672.0 100.0 688.0 100.0 Q 704.0 100.0 720.0 100.0 Q 736.0 100.0 752.0 100.0 Q 768.0 100.0 784.0 100.0 Q 800.0 100.0 816.0 100.0 Q 832.0 100.0 848.0 100.0 Q 864.0 100.0 880.0 100.0 Q 896.0 100.0 912.0 100.0 Q 928.0 100.0 944.0 100.0 Q 960.0 100.0 976.0 100.0 Q 992.0 100.0 1008.0 100.0 Q 1024.0 100.0 1040.0 100.0 Q 1056.0 100.0 1072.0 100.0 Q 1088.0 100.0 1104.0 100.0 Q 1120.0 100.0 1136.0 100.0 Q 1152.0 100.0 1168.0 100.0 Q 1184.0 100.0 1200.0 100.0 Q 1216.0 100.0 1232.0 100.0 Q 1248.0 100.0 1264.0 100.0 Q 1280.0 100.0 1296.0 100.0 Q 1312.0 100.0 1328.0 100.0 Q 1344.0 100.0 1360.0 100.0 Q 1376.0 100.0 1392.0 100.0 Q 1408.0 100.0 1424.0 100.0 Q 1440.0 100.0 1456.0 100.0 Q 1472.0 100.0 1488.0 100.0 Q 1504.0 100.0 1520.0 100.0 Q 1536.0 100.0 1552.0 100.0 Q 1568.0 100.0 1584.0 100.0 T 1600.0 100.0" stroke="url(#flowGrad)" stroke-width="1.45" fill="none" stroke-linecap="round" opacity="0.29"/>
+        <path id="fl2" class="flow-line" d="M 0.0 124.7 Q 0.0 124.7 16.0 122.0 Q 32.0 119.4 48.0 118.7 Q 64.0 118.1 80.0 119.4 Q 96.0 120.7 112.0 123.9 Q 128.0 127.1 144.0 132.0 Q 160.0 136.9 176.0 143.0 Q 192.0 149.1 208.0 156.1 Q 224.0 163.0 240.0 170.2 Q 256.0 177.5 272.0 184.4 Q 288.0 191.3 304.0 197.4 Q 320.0 203.5 336.0 208.3 Q 352.0 213.2 368.0 216.3 Q 384.0 219.5 400.0 220.7 Q 416.0 222.0 432.0 221.2 Q 448.0 220.5 464.0 195.2 Q 480.0 170.0 496.0 170.0 Q 512.0 170.0 528.0 170.0 Q 544.0 170.0 560.0 170.0 Q 576.0 170.0 592.0 170.0 Q 608.0 170.0 624.0 170.0 Q 640.0 170.0 656.0 170.0 Q 672.0 170.0 688.0 170.0 Q 704.0 170.0 720.0 170.0 Q 736.0 170.0 752.0 170.0 Q 768.0 170.0 784.0 170.0 Q 800.0 170.0 816.0 170.0 Q 832.0 170.0 848.0 170.0 Q 864.0 170.0 880.0 170.0 Q 896.0 170.0 912.0 170.0 Q 928.0 170.0 944.0 170.0 Q 960.0 170.0 976.0 170.0 Q 992.0 170.0 1008.0 170.0 Q 1024.0 170.0 1040.0 170.0 Q 1056.0 170.0 1072.0 170.0 Q 1088.0 170.0 1104.0 170.0 Q 1120.0 170.0 1136.0 170.0 Q 1152.0 170.0 1168.0 170.0 Q 1184.0 170.0 1200.0 170.0 Q 1216.0 170.0 1232.0 170.0 Q 1248.0 170.0 1264.0 170.0 Q 1280.0 170.0 1296.0 170.0 Q 1312.0 170.0 1328.0 170.0 Q 1344.0 170.0 1360.0 170.0 Q 1376.0 170.0 1392.0 170.0 Q 1408.0 170.0 1424.0 170.0 Q 1440.0 170.0 1456.0 170.0 Q 1472.0 170.0 1488.0 170.0 Q 1504.0 170.0 1520.0 170.0 Q 1536.0 170.0 1552.0 170.0 Q 1568.0 170.0 1584.0 170.0 T 1600.0 170.0" stroke="url(#flowGrad)" stroke-width="1.80" fill="none" stroke-linecap="round" opacity="0.36"/>
+        <path id="fl3" class="flow-line" d="M 0.0 228.5 Q 0.0 228.5 16.0 238.9 Q 32.0 249.2 48.0 259.0 Q 64.0 268.9 80.0 277.2 Q 96.0 285.4 112.0 291.3 Q 128.0 297.1 144.0 299.9 Q 160.0 302.6 176.0 302.0 Q 192.0 301.4 208.0 297.5 Q 224.0 293.6 240.0 286.8 Q 256.0 280.0 272.0 271.1 Q 288.0 262.1 304.0 252.0 Q 320.0 241.8 336.0 231.6 Q 352.0 221.3 368.0 212.1 Q 384.0 202.9 400.0 195.6 Q 416.0 188.4 432.0 183.9 Q 448.0 179.5 464.0 209.7 Q 480.0 240.0 496.0 240.0 Q 512.0 240.0 528.0 240.0 Q 544.0 240.0 560.0 240.0 Q 576.0 240.0 592.0 240.0 Q 608.0 240.0 624.0 240.0 Q 640.0 240.0 656.0 240.0 Q 672.0 240.0 688.0 240.0 Q 704.0 240.0 720.0 240.0 Q 736.0 240.0 752.0 240.0 Q 768.0 240.0 784.0 240.0 Q 800.0 240.0 816.0 240.0 Q 832.0 240.0 848.0 240.0 Q 864.0 240.0 880.0 240.0 Q 896.0 240.0 912.0 240.0 Q 928.0 240.0 944.0 240.0 Q 960.0 240.0 976.0 240.0 Q 992.0 240.0 1008.0 240.0 Q 1024.0 240.0 1040.0 240.0 Q 1056.0 240.0 1072.0 240.0 Q 1088.0 240.0 1104.0 240.0 Q 1120.0 240.0 1136.0 240.0 Q 1152.0 240.0 1168.0 240.0 Q 1184.0 240.0 1200.0 240.0 Q 1216.0 240.0 1232.0 240.0 Q 1248.0 240.0 1264.0 240.0 Q 1280.0 240.0 1296.0 240.0 Q 1312.0 240.0 1328.0 240.0 Q 1344.0 240.0 1360.0 240.0 Q 1376.0 240.0 1392.0 240.0 Q 1408.0 240.0 1424.0 240.0 Q 1440.0 240.0 1456.0 240.0 Q 1472.0 240.0 1488.0 240.0 Q 1504.0 240.0 1520.0 240.0 Q 1536.0 240.0 1552.0 240.0 Q 1568.0 240.0 1584.0 240.0 T 1600.0 240.0" stroke="url(#flowGrad)" stroke-width="1.10" fill="none" stroke-linecap="round" opacity="0.43"/>
+        <path id="fl4" class="flow-line" d="M 0.0 383.2 Q 0.0 383.2 16.0 381.7 Q 32.0 380.2 48.0 377.6 Q 64.0 375.0 80.0 371.4 Q 96.0 367.8 112.0 363.3 Q 128.0 358.8 144.0 353.6 Q 160.0 348.3 176.0 342.5 Q 192.0 336.7 208.0 330.4 Q 224.0 324.2 240.0 317.7 Q 256.0 311.2 272.0 304.8 Q 288.0 298.3 304.0 292.0 Q 320.0 285.7 336.0 279.7 Q 352.0 273.8 368.0 268.4 Q 384.0 263.1 400.0 258.4 Q 416.0 253.8 432.0 250.0 Q 448.0 246.2 464.0 278.1 Q 480.0 310.0 496.0 310.0 Q 512.0 310.0 528.0 310.0 Q 544.0 310.0 560.0 310.0 Q 576.0 310.0 592.0 310.0 Q 608.0 310.0 624.0 310.0 Q 640.0 310.0 656.0 310.0 Q 672.0 310.0 688.0 310.0 Q 704.0 310.0 720.0 310.0 Q 736.0 310.0 752.0 310.0 Q 768.0 310.0 784.0 310.0 Q 800.0 310.0 816.0 310.0 Q 832.0 310.0 848.0 310.0 Q 864.0 310.0 880.0 310.0 Q 896.0 310.0 912.0 310.0 Q 928.0 310.0 944.0 310.0 Q 960.0 310.0 976.0 310.0 Q 992.0 310.0 1008.0 310.0 Q 1024.0 310.0 1040.0 310.0 Q 1056.0 310.0 1072.0 310.0 Q 1088.0 310.0 1104.0 310.0 Q 1120.0 310.0 1136.0 310.0 Q 1152.0 310.0 1168.0 310.0 Q 1184.0 310.0 1200.0 310.0 Q 1216.0 310.0 1232.0 310.0 Q 1248.0 310.0 1264.0 310.0 Q 1280.0 310.0 1296.0 310.0 Q 1312.0 310.0 1328.0 310.0 Q 1344.0 310.0 1360.0 310.0 Q 1376.0 310.0 1392.0 310.0 Q 1408.0 310.0 1424.0 310.0 Q 1440.0 310.0 1456.0 310.0 Q 1472.0 310.0 1488.0 310.0 Q 1504.0 310.0 1520.0 310.0 Q 1536.0 310.0 1552.0 310.0 Q 1568.0 310.0 1584.0 310.0 T 1600.0 310.0" stroke="url(#flowGrad)" stroke-width="1.45" fill="none" stroke-linecap="round" opacity="0.22"/>
+        <path id="fl5" class="flow-line" d="M 0.0 366.3 Q 0.0 366.3 16.0 363.4 Q 32.0 360.6 48.0 358.3 Q 64.0 356.0 80.0 354.2 Q 96.0 352.5 112.0 351.5 Q 128.0 350.5 144.0 350.3 Q 160.0 350.0 176.0 350.5 Q 192.0 351.1 208.0 352.3 Q 224.0 353.6 240.0 355.5 Q 256.0 357.5 272.0 360.0 Q 288.0 362.5 304.0 365.5 Q 320.0 368.5 336.0 371.7 Q 352.0 375.0 368.0 378.4 Q 384.0 381.8 400.0 385.1 Q 416.0 388.5 432.0 391.6 Q 448.0 394.8 464.0 387.4 Q 480.0 380.0 496.0 380.0 Q 512.0 380.0 528.0 380.0 Q 544.0 380.0 560.0 380.0 Q 576.0 380.0 592.0 380.0 Q 608.0 380.0 624.0 380.0 Q 640.0 380.0 656.0 380.0 Q 672.0 380.0 688.0 380.0 Q 704.0 380.0 720.0 380.0 Q 736.0 380.0 752.0 380.0 Q 768.0 380.0 784.0 380.0 Q 800.0 380.0 816.0 380.0 Q 832.0 380.0 848.0 380.0 Q 864.0 380.0 880.0 380.0 Q 896.0 380.0 912.0 380.0 Q 928.0 380.0 944.0 380.0 Q 960.0 380.0 976.0 380.0 Q 992.0 380.0 1008.0 380.0 Q 1024.0 380.0 1040.0 380.0 Q 1056.0 380.0 1072.0 380.0 Q 1088.0 380.0 1104.0 380.0 Q 1120.0 380.0 1136.0 380.0 Q 1152.0 380.0 1168.0 380.0 Q 1184.0 380.0 1200.0 380.0 Q 1216.0 380.0 1232.0 380.0 Q 1248.0 380.0 1264.0 380.0 Q 1280.0 380.0 1296.0 380.0 Q 1312.0 380.0 1328.0 380.0 Q 1344.0 380.0 1360.0 380.0 Q 1376.0 380.0 1392.0 380.0 Q 1408.0 380.0 1424.0 380.0 Q 1440.0 380.0 1456.0 380.0 Q 1472.0 380.0 1488.0 380.0 Q 1504.0 380.0 1520.0 380.0 Q 1536.0 380.0 1552.0 380.0 Q 1568.0 380.0 1584.0 380.0 T 1600.0 380.0" stroke="url(#flowGrad)" stroke-width="1.80" fill="none" stroke-linecap="round" opacity="0.29"/>
+        <path id="fl6" class="flow-line" d="M 0.0 421.6 Q 0.0 421.6 16.0 426.2 Q 32.0 430.8 48.0 436.1 Q 64.0 441.5 80.0 447.1 Q 96.0 452.8 112.0 458.4 Q 128.0 464.0 144.0 469.0 Q 160.0 474.0 176.0 478.1 Q 192.0 482.2 208.0 485.1 Q 224.0 487.9 240.0 489.3 Q 256.0 490.8 272.0 490.6 Q 288.0 490.4 304.0 488.7 Q 320.0 487.0 336.0 483.8 Q 352.0 480.7 368.0 476.4 Q 384.0 472.0 400.0 466.9 Q 416.0 461.7 432.0 456.1 Q 448.0 450.4 464.0 450.2 Q 480.0 450.0 496.0 450.0 Q 512.0 450.0 528.0 450.0 Q 544.0 450.0 560.0 450.0 Q 576.0 450.0 592.0 450.0 Q 608.0 450.0 624.0 450.0 Q 640.0 450.0 656.0 450.0 Q 672.0 450.0 688.0 450.0 Q 704.0 450.0 720.0 450.0 Q 736.0 450.0 752.0 450.0 Q 768.0 450.0 784.0 450.0 Q 800.0 450.0 816.0 450.0 Q 832.0 450.0 848.0 450.0 Q 864.0 450.0 880.0 450.0 Q 896.0 450.0 912.0 450.0 Q 928.0 450.0 944.0 450.0 Q 960.0 450.0 976.0 450.0 Q 992.0 450.0 1008.0 450.0 Q 1024.0 450.0 1040.0 450.0 Q 1056.0 450.0 1072.0 450.0 Q 1088.0 450.0 1104.0 450.0 Q 1120.0 450.0 1136.0 450.0 Q 1152.0 450.0 1168.0 450.0 Q 1184.0 450.0 1200.0 450.0 Q 1216.0 450.0 1232.0 450.0 Q 1248.0 450.0 1264.0 450.0 Q 1280.0 450.0 1296.0 450.0 Q 1312.0 450.0 1328.0 450.0 Q 1344.0 450.0 1360.0 450.0 Q 1376.0 450.0 1392.0 450.0 Q 1408.0 450.0 1424.0 450.0 Q 1440.0 450.0 1456.0 450.0 Q 1472.0 450.0 1488.0 450.0 Q 1504.0 450.0 1520.0 450.0 Q 1536.0 450.0 1552.0 450.0 Q 1568.0 450.0 1584.0 450.0 T 1600.0 450.0" stroke="url(#flowGrad)" stroke-width="1.10" fill="none" stroke-linecap="round" opacity="0.36"/>
+        <path id="fl7" class="flow-line" d="M 0.0 567.1 Q 0.0 567.1 16.0 569.4 Q 32.0 571.7 48.0 571.2 Q 64.0 570.7 80.0 567.5 Q 96.0 564.3 112.0 558.7 Q 128.0 553.1 144.0 545.7 Q 160.0 538.3 176.0 529.9 Q 192.0 521.6 208.0 513.1 Q 224.0 504.7 240.0 497.0 Q 256.0 489.4 272.0 483.4 Q 288.0 477.4 304.0 473.8 Q 320.0 470.1 336.0 469.1 Q 352.0 468.1 368.0 469.8 Q 384.0 471.6 400.0 476.0 Q 416.0 480.4 432.0 487.0 Q 448.0 493.5 464.0 506.7 Q 480.0 520.0 496.0 520.0 Q 512.0 520.0 528.0 520.0 Q 544.0 520.0 560.0 520.0 Q 576.0 520.0 592.0 520.0 Q 608.0 520.0 624.0 520.0 Q 640.0 520.0 656.0 520.0 Q 672.0 520.0 688.0 520.0 Q 704.0 520.0 720.0 520.0 Q 736.0 520.0 752.0 520.0 Q 768.0 520.0 784.0 520.0 Q 800.0 520.0 816.0 520.0 Q 832.0 520.0 848.0 520.0 Q 864.0 520.0 880.0 520.0 Q 896.0 520.0 912.0 520.0 Q 928.0 520.0 944.0 520.0 Q 960.0 520.0 976.0 520.0 Q 992.0 520.0 1008.0 520.0 Q 1024.0 520.0 1040.0 520.0 Q 1056.0 520.0 1072.0 520.0 Q 1088.0 520.0 1104.0 520.0 Q 1120.0 520.0 1136.0 520.0 Q 1152.0 520.0 1168.0 520.0 Q 1184.0 520.0 1200.0 520.0 Q 1216.0 520.0 1232.0 520.0 Q 1248.0 520.0 1264.0 520.0 Q 1280.0 520.0 1296.0 520.0 Q 1312.0 520.0 1328.0 520.0 Q 1344.0 520.0 1360.0 520.0 Q 1376.0 520.0 1392.0 520.0 Q 1408.0 520.0 1424.0 520.0 Q 1440.0 520.0 1456.0 520.0 Q 1472.0 520.0 1488.0 520.0 Q 1504.0 520.0 1520.0 520.0 Q 1536.0 520.0 1552.0 520.0 Q 1568.0 520.0 1584.0 520.0 T 1600.0 520.0" stroke="url(#flowGrad)" stroke-width="1.45" fill="none" stroke-linecap="round" opacity="0.43"/>
+        <path id="fl8" class="flow-line" d="M 0.0 596.8 Q 0.0 596.8 16.0 591.3 Q 32.0 585.7 48.0 580.2 Q 64.0 574.8 80.0 569.5 Q 96.0 564.3 112.0 559.5 Q 128.0 554.6 144.0 550.3 Q 160.0 546.1 176.0 542.4 Q 192.0 538.8 208.0 536.0 Q 224.0 533.2 240.0 531.2 Q 256.0 529.3 272.0 528.3 Q 288.0 527.3 304.0 527.2 Q 320.0 527.2 336.0 528.1 Q 352.0 529.1 368.0 530.9 Q 384.0 532.8 400.0 535.6 Q 416.0 538.3 432.0 541.9 Q 448.0 545.4 464.0 567.7 Q 480.0 590.0 496.0 590.0 Q 512.0 590.0 528.0 590.0 Q 544.0 590.0 560.0 590.0 Q 576.0 590.0 592.0 590.0 Q 608.0 590.0 624.0 590.0 Q 640.0 590.0 656.0 590.0 Q 672.0 590.0 688.0 590.0 Q 704.0 590.0 720.0 590.0 Q 736.0 590.0 752.0 590.0 Q 768.0 590.0 784.0 590.0 Q 800.0 590.0 816.0 590.0 Q 832.0 590.0 848.0 590.0 Q 864.0 590.0 880.0 590.0 Q 896.0 590.0 912.0 590.0 Q 928.0 590.0 944.0 590.0 Q 960.0 590.0 976.0 590.0 Q 992.0 590.0 1008.0 590.0 Q 1024.0 590.0 1040.0 590.0 Q 1056.0 590.0 1072.0 590.0 Q 1088.0 590.0 1104.0 590.0 Q 1120.0 590.0 1136.0 590.0 Q 1152.0 590.0 1168.0 590.0 Q 1184.0 590.0 1200.0 590.0 Q 1216.0 590.0 1232.0 590.0 Q 1248.0 590.0 1264.0 590.0 Q 1280.0 590.0 1296.0 590.0 Q 1312.0 590.0 1328.0 590.0 Q 1344.0 590.0 1360.0 590.0 Q 1376.0 590.0 1392.0 590.0 Q 1408.0 590.0 1424.0 590.0 Q 1440.0 590.0 1456.0 590.0 Q 1472.0 590.0 1488.0 590.0 Q 1504.0 590.0 1520.0 590.0 Q 1536.0 590.0 1552.0 590.0 Q 1568.0 590.0 1584.0 590.0 T 1600.0 590.0" stroke="url(#flowGrad)" stroke-width="1.80" fill="none" stroke-linecap="round" opacity="0.22"/>
+
+        <!-- traveling pulses: the literal information-flow signal, following each wire from chaos into order -->
+        <circle class="flow-pulse" r="2.20" fill="var(--accent)">
+          <animateMotion dur="11.1s" begin="0.0s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.183;1" keyPoints="0;0.35;1" keySplines="0.1 0 0.3 1;0 0 1 1">
+            <mpath href="#fl0"/>
+          </animateMotion>
+        </circle>
+        <circle class="flow-pulse" r="2.55" fill="var(--accent)">
+          <animateMotion dur="13.8s" begin="-1.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.183;1" keyPoints="0;0.35;1" keySplines="0.1 0 0.3 1;0 0 1 1">
+            <mpath href="#fl1"/>
+          </animateMotion>
+        </circle>
+        <circle class="flow-pulse" r="2.90" fill="var(--accent)">
+          <animateMotion dur="16.6s" begin="-2.7s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.183;1" keyPoints="0;0.35;1" keySplines="0.1 0 0.3 1;0 0 1 1">
+            <mpath href="#fl2"/>
+          </animateMotion>
+        </circle>
+        <circle class="flow-pulse" r="2.20" fill="var(--accent)">
+          <animateMotion dur="19.3s" begin="-4.1s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.183;1" keyPoints="0;0.35;1" keySplines="0.1 0 0.3 1;0 0 1 1">
+            <mpath href="#fl3"/>
+          </animateMotion>
+        </circle>
+        <circle class="flow-pulse" r="2.55" fill="var(--accent)">
+          <animateMotion dur="22.0s" begin="-5.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.183;1" keyPoints="0;0.35;1" keySplines="0.1 0 0.3 1;0 0 1 1">
+            <mpath href="#fl4"/>
+          </animateMotion>
+        </circle>
+        <circle class="flow-pulse" r="2.90" fill="var(--accent)">
+          <animateMotion dur="11.1s" begin="-6.8s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.183;1" keyPoints="0;0.35;1" keySplines="0.1 0 0.3 1;0 0 1 1">
+            <mpath href="#fl5"/>
+          </animateMotion>
+        </circle>
+        <circle class="flow-pulse" r="2.20" fill="var(--accent)">
+          <animateMotion dur="13.8s" begin="-8.1s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.183;1" keyPoints="0;0.35;1" keySplines="0.1 0 0.3 1;0 0 1 1">
+            <mpath href="#fl6"/>
+          </animateMotion>
+        </circle>
+        <circle class="flow-pulse" r="2.55" fill="var(--accent)">
+          <animateMotion dur="16.6s" begin="-9.5s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.183;1" keyPoints="0;0.35;1" keySplines="0.1 0 0.3 1;0 0 1 1">
+            <mpath href="#fl7"/>
+          </animateMotion>
+        </circle>
+        <circle class="flow-pulse" r="2.90" fill="var(--accent)">
+          <animateMotion dur="19.3s" begin="-10.8s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.183;1" keyPoints="0;0.35;1" keySplines="0.1 0 0.3 1;0 0 1 1">
+            <mpath href="#fl8"/>
+          </animateMotion>
+        </circle>
+
+        <!-- static junction nodes: where the wire settles from chaos into a clean line -->
+        <circle class="flow-node" cx="1050" cy="100.0" r="5"/>
+        <circle class="flow-node" cx="1050" cy="240.0" r="5"/>
+        <circle class="flow-node" cx="1050" cy="380.0" r="5"/>
+        <circle class="flow-node" cx="1050" cy="520.0" r="5"/>
+
+    </svg>
+  </div>
+  <div class="hero-scrim" aria-hidden="true"></div>
+
+  <div class="wrap hero-inner">
+
+    <div class="hero-copy">
+      <p class="eyebrow" data-reveal>Operations &amp; Back-Office Automation</p>
+
+      <h1 class="headline">
+        <span data-reveal>Remove back-office</span>
+        <span data-reveal><span class="accent">friction</span> without new</span>
+        <span data-reveal>software or hires.</span>
+      </h1>
+
+      <p class="subhead" data-reveal>
+        We turn repetitive manual processes into background automations that quietly eliminate daily bottlenecks, so your team handles more volume on the exact same overhead.
+      </p>
+
+      <div class="cta-row" data-reveal>
+        <a class="btn btn-primary" href="contact.html">
+          Ask How
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="btn btn-secondary" href="services.html">What We Automate</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="section-seam" aria-hidden="true">
+  <svg viewBox="0 0 1600 130" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill="var(--ink)" d="M0,95 C260,118 420,58 600,66 C780,74 900,98 1060,74 C1220,50 1360,40 1600,50 L1600,130 L0,130 Z"/>
+    <path class="seam-crossing" d="M560,-10 Q590,60 615,140"/>
+    <path class="seam-crossing" d="M1180,-10 Q1205,55 1235,140"/>
+  </svg>
+</div>
+
+<section class="services" id="services">
+  <div class="wrap">
+    <div class="services-head">
+      <h2 class="services-title" data-reveal>The manual work always lands in the same six places.</h2>
+      <p class="services-lede" data-reveal>
+        No matter the business, manual work clusters in the same handful of departments. Every automation we build is shaped around how you actually work, not a template. These are the six places we start.
+      </p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card" data-reveal>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </div>
+        <h3>Client Communication</h3>
+        <p>Inbound emails, status updates, and follow-ups handled without anyone chasing a reply.</p>
+      </div>
+
+      <div class="service-card" data-reveal>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>
+        </div>
+        <h3>Billing &amp; Invoicing</h3>
+        <p>Invoices go out, payments get tracked, and reminders send themselves.</p>
+      </div>
+
+      <div class="service-card" data-reveal>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
+        </div>
+        <h3>Data Entry &amp; Records</h3>
+        <p>Information moves between your systems without anyone retyping it.</p>
+      </div>
+
+      <div class="service-card" data-reveal>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        </div>
+        <h3>Scheduling &amp; Coordination</h3>
+        <p>Appointments, bookings, and calendars stay in sync on their own.</p>
+      </div>
+
+      <div class="service-card" data-reveal>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-6"/><path d="M2 20h20"/></svg>
+        </div>
+        <h3>Reporting &amp; Reconciliation</h3>
+        <p>Recurring reports and status updates assemble themselves in the background.</p>
+      </div>
+
+      <div class="service-card" data-reveal>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
+        </div>
+        <h3>Something More Specific</h3>
+        <p>Most bottlenecks fit one of the five above. If yours doesn't, tell us anyway. It's usually one we've built before.</p>
+      </div>
+    </div>
+
+    <div class="services-foot" data-reveal>
+      <a class="services-link" href="services.html">
+        See the full breakdown
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="section-seam section-seam--to-light" aria-hidden="true">
+  <svg viewBox="0 0 1600 130" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="0" width="1600" height="130" fill="var(--ink)"/>
+    <path fill="var(--bg)" d="M0,58 C260,32 420,86 600,78 C780,70 900,46 1060,70 C1220,94 1360,104 1600,86 L1600,130 L0,130 Z"/>
+    <path class="seam-crossing" d="M520,-10 Q548,58 572,140"/>
+    <path class="seam-crossing" d="M1110,-10 Q1136,55 1162,140"/>
+  </svg>
+</div>
+
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div>
+        <h2 class="about-heading" data-reveal>Small enough to stay hands-on. Built to stay out of your way.</h2>
+        <p class="about-lede" data-reveal>
+          We build and maintain the automation ourselves, starting with how your team actually works today. Nothing about your process changes except the manual part disappearing.
+        </p>
+        <div class="about-foot" data-reveal>
+          <a class="link-light" href="about.html">
+            More about us
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="about-points">
+        <div class="about-point" data-reveal>
+          <span class="about-point-index">01</span>
+          <div class="about-point-body">
+            <h3>Direct access</h3>
+            <p>You talk to the person building your automation. Not a support ticket, not an account manager.</p>
+          </div>
+        </div>
+        <div class="about-point" data-reveal>
+          <span class="about-point-index">02</span>
+          <div class="about-point-body">
+            <h3>No new software</h3>
+            <p>Everything runs behind the tools you already use. Nothing new to license or train your team on.</p>
+          </div>
+        </div>
+        <div class="about-point" data-reveal>
+          <span class="about-point-index">03</span>
+          <div class="about-point-body">
+            <h3>Quiet by design</h3>
+            <p>Once it's live, it runs in the background on its own. No dashboard to check, no new login for anyone.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="section-divider" aria-hidden="true">
+    <span class="section-divider-line"></span>
+    <span class="section-divider-dot"></span>
+    <span class="section-divider-line"></span>
+  </div>
+</div>
+
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="faq-head">
+      <h2 class="faq-title" data-reveal>What usually comes up before we start.</h2>
+      <p class="faq-lede" data-reveal>Straight answers to what most people ask first.</p>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item" data-reveal>
+        <button class="faq-q" aria-expanded="false" aria-controls="faq-a-1" id="faq-q-1">
+          <span>How long does it take to get something running?</span>
+          <span class="faq-q-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-a" id="faq-a-1" role="region" aria-labelledby="faq-q-1">
+          <div class="faq-a-inner">
+            <p>It depends on what we're automating. We start with the highest-impact piece of manual work first, scope it, get it running, then move to the next one.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-reveal>
+        <button class="faq-q" aria-expanded="false" aria-controls="faq-a-2" id="faq-q-2">
+          <span>What happens if something breaks after it's live?</span>
+          <span class="faq-q-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-a" id="faq-a-2" role="region" aria-labelledby="faq-q-2">
+          <div class="faq-a-inner">
+            <p>We built it, so we maintain it. If something changes upstream or in a tool you use, we fix it. That's part of working with us, not a separate ticket you have to file.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-reveal>
+        <button class="faq-q" aria-expanded="false" aria-controls="faq-a-3" id="faq-q-3">
+          <span>How does pricing work?</span>
+          <span class="faq-q-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-a" id="faq-a-3" role="region" aria-labelledby="faq-q-3">
+          <div class="faq-a-inner">
+            <p>Every automation is scoped and quoted around what it actually replaces, not a flat fee for a tool you might not use fully. Tell us what's costing your team the most time and we'll tell you straight whether it's worth automating.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-reveal>
+        <button class="faq-q" aria-expanded="false" aria-controls="faq-a-4" id="faq-q-4">
+          <span>Who has access to our systems and data?</span>
+          <span class="faq-q-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-a" id="faq-a-4" role="region" aria-labelledby="faq-q-4">
+          <div class="faq-a-inner">
+            <p>Only the person building your automation, and only for what the automation needs. We don't ask for broader access than the task requires.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-reveal>
+        <button class="faq-q" aria-expanded="false" aria-controls="faq-a-5" id="faq-q-5">
+          <span>What if our process changes after the automation is built?</span>
+          <span class="faq-q-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-a" id="faq-a-5" role="region" aria-labelledby="faq-q-5">
+          <div class="faq-a-inner">
+            <p>Tell us and we adjust it. The automation was built around how you work today, so it gets updated as that changes too, no extra project, no new invoice.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-reveal>
+        <button class="faq-q" aria-expanded="false" aria-controls="faq-a-6" id="faq-q-6">
+          <span>Do you build one automation at a time, or take on the whole back office at once?</span>
+          <span class="faq-q-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-a" id="faq-a-6" role="region" aria-labelledby="faq-q-6">
+          <div class="faq-a-inner">
+            <p>We start with the one place manual work is costing you the most time, get it running, then move to the next. Most of what we build gets requested once the first automation is already live and someone asks what else we can take off their plate.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-foot" data-reveal>
+      <a class="link-light" href="contact.html">
+        Ask us directly
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="section-divider" aria-hidden="true">
+    <span class="section-divider-line"></span>
+    <span class="section-divider-dot"></span>
+    <span class="section-divider-line"></span>
+  </div>
+</div>
+
+<section class="cta-close">
+  <div class="wrap">
+    <div class="cta-close-panel">
+      <div class="cta-close-mark" aria-hidden="true"></div>
+      <h2 class="cta-close-title" data-reveal>The manual work won't remove itself.</h2>
+      <p class="cta-close-lede" data-reveal>No pitch, no deck. Just tell us what's slowing your team down.</p>
+      <div class="cta-close-row" data-reveal>
+        <a class="btn btn-primary" href="contact.html">
+          Ask How
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="index.html">
+          <img src="assets/logo-icon-240.png" alt="Antek Automations">
+          <span>Antek Automations</span>
+        </a>
+        <p class="footer-tagline">Back-office automation that stays out of your way.</p>
+        <a class="footer-cta" href="contact.html">Book A Call</a>
+      </div>
+
+      <nav class="footer-col" aria-label="Footer">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="automations.html">Work</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 Antek Automations. All rights reserved.</p>
+      <a class="footer-top-link" href="#top">Back to top &uarr;</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // hero entrance reveal: visible on load, so stagger by time
+  var heroRevealEls = document.querySelectorAll(".hero [data-reveal]");
+  heroRevealEls.forEach(function(el, i){
+    setTimeout(function(){ el.classList.add("is-in"); }, reduced ? 0 : 90 * i);
+  });
+
+  // below-the-fold reveals: stagger by scroll position instead, one-shot
+  var scrollRevealEls = document.querySelectorAll("section:not(.hero) [data-reveal]");
+  if (reduced || !("IntersectionObserver" in window)){
+    scrollRevealEls.forEach(function(el){ el.classList.add("is-in"); });
+  } else {
+    // threshold 0 (any pixel visible) rather than a ratio -- some environments
+    // report isIntersecting correctly but never compute a usable intersection ratio.
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        var siblings = Array.prototype.slice.call(el.parentElement.children);
+        var delay = Math.max(0, siblings.indexOf(el)) * 70;
+        setTimeout(function(){ el.classList.add("is-in"); }, delay);
+        io.unobserve(el);
+      });
+    }, { threshold: 0 });
+    scrollRevealEls.forEach(function(el){ io.observe(el); });
+
+    // safety net: never leave content permanently invisible if the observer
+    // never fires for a given element (broken host, layout edge case, etc.)
+    setTimeout(function(){
+      scrollRevealEls.forEach(function(el){ el.classList.add("is-in"); });
+    }, 4000);
+  }
+
+  // the flow-line pulses are SMIL (animateMotion), which prefers-reduced-motion
+  // can't gate in CSS -- freeze them in place via the SVG animation API instead.
+  if (reduced){
+    var flowSvg = document.querySelector(".hero-bg svg");
+    if (flowSvg && typeof flowSvg.pauseAnimations === "function"){
+      flowSvg.pauseAnimations();
+    }
+  }
+
+  // faq accordion: single item open at a time
+  var faqItems = document.querySelectorAll(".faq-item");
+  faqItems.forEach(function(item){
+    var btn = item.querySelector(".faq-q");
+    btn.addEventListener("click", function(){
+      var wasOpen = item.classList.contains("is-open");
+      faqItems.forEach(function(other){
+        other.classList.remove("is-open");
+        other.querySelector(".faq-q").setAttribute("aria-expanded", "false");
+      });
+      if (!wasOpen){
+        item.classList.add("is-open");
+        btn.setAttribute("aria-expanded", "true");
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

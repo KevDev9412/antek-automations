@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work | Antek Automations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: oklch(97% 0.012 85);
+    --ink: oklch(24% 0.075 259);
+    --ink-soft: color-mix(in oklch, var(--ink) 68%, var(--bg));
+    --ink-faint: color-mix(in oklch, var(--ink) 38%, var(--bg));
+    --accent: oklch(48% 0.14 38);
+    --accent-ink: oklch(40% 0.135 36);
+    --accent-soft: color-mix(in oklch, var(--accent) 13%, var(--bg));
+    --accent-hover: color-mix(in oklch, var(--accent) 86%, black);
+    --border: color-mix(in oklch, var(--ink) 13%, var(--bg));
+    --border-strong: color-mix(in oklch, var(--ink) 24%, var(--bg));
+    --surface: color-mix(in oklch, var(--ink) 3.5%, var(--bg));
+
+    /* dark-field tokens: elevation on a dark section is rising surface lightness, not shadow */
+    --dark-surface: color-mix(in oklch, var(--ink) 84%, white 16%);
+    --dark-border: color-mix(in oklch, var(--ink) 66%, white 34%);
+    --dark-text-soft: color-mix(in oklch, var(--bg) 62%, var(--ink) 38%);
+
+    --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+    --font-body: "IBM Plex Sans", system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, "Courier New", monospace;
+
+    --step--1: clamp(0.82rem, 0.79rem + 0.16vw, 0.92rem);
+    --step-0:  clamp(1rem, 0.95rem + 0.24vw, 1.125rem);
+    --step-1:  clamp(1.18rem, 1.1rem + 0.4vw, 1.35rem);
+    --step-2:  clamp(1.4rem, 1.28rem + 0.6vw, 1.7rem);
+    --display: clamp(3rem, 2rem + 4.1vw, 4.8rem);
+
+    --ease: cubic-bezier(.16,1,.3,1);
+    --space-1: clamp(0.75rem, 0.7rem + 0.24vw, 1rem);
+    --space-2: clamp(1.1rem, 1rem + 0.5vw, 1.5rem);
+    --space-3: clamp(1.6rem, 1.35rem + 1.1vw, 2.4rem);
+    --space-4: clamp(2.25rem, 1.9rem + 1.6vw, 3.5rem);
+
+    color-scheme: light;
+  }
+
+  *,*::before,*::after{ box-sizing: border-box; }
+  html{ text-size-adjust: 100%; }
+  body{
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+
+  /* global grain: one texture system, applied once */
+  body::after{
+    content:""; position: fixed; inset: 0; pointer-events: none; z-index: 999;
+    opacity: 0.035; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  h1,h2,h3{ font-family: var(--font-display); font-optical-sizing: auto; margin: 0; text-wrap: balance; }
+  p{ margin: 0; text-wrap: pretty; }
+  img{ max-width: 100%; display: block; }
+  a{ color: inherit; }
+  button{ font: inherit; }
+
+  .wrap{ max-width: 100rem; margin-inline: auto; padding-inline: clamp(3rem, 2rem + 5vw, 7rem); }
+
+  /* ---------- header ---------- */
+  header{
+    position: relative; z-index: 10;
+    padding-block: var(--space-2);
+  }
+  .nav-row{ display:flex; align-items:center; justify-content:space-between; gap: var(--space-2); }
+  .brand{ display:flex; align-items:center; gap: 0.6rem; text-decoration:none; }
+  .brand img{ height: 30px; width:auto; }
+  .brand span{
+    font-family: var(--font-display); font-weight: 520; font-size: 1.3rem;
+    letter-spacing: -0.005em; color: var(--ink);
+  }
+  .nav-links{ display:flex; align-items:center; gap: var(--space-3); list-style:none; margin:0; padding:0; }
+  .nav-links a{
+    position: relative;
+    display: inline-block;
+    padding-block: 0.65rem 0.6rem;
+    font-size: var(--step--1); text-decoration:none; color: var(--ink-soft);
+    font-weight: 500; transition: color 220ms var(--ease);
+  }
+  .nav-links a::before{
+    content:"";
+    position: absolute; left: 50%; top: 0.1rem;
+    width: 4px; height: 4px; background: var(--accent);
+    transform: translate(-50%, 4px) scale(0.4);
+    opacity: 0;
+    transition: opacity 220ms var(--ease), transform 220ms var(--ease);
+  }
+  .nav-links a::after{
+    content:"";
+    position: absolute; left: 0; right: 0; bottom: 0;
+    height: 1.5px; background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 280ms var(--ease);
+  }
+  .nav-links a:hover, .nav-links a:focus-visible, .nav-links a.is-current{ color: var(--ink); }
+  .nav-links a:hover::before, .nav-links a:focus-visible::before, .nav-links a.is-current::before{
+    opacity: 1; transform: translate(-50%, 0) scale(1);
+  }
+  .nav-links a:hover::after, .nav-links a:focus-visible::after, .nav-links a.is-current::after{
+    transform: scaleX(1);
+  }
+  .nav-cta{
+    font-family: var(--font-body); font-size: var(--step--1); font-weight: 600;
+    color: var(--bg); background: var(--ink); border: 3px solid var(--accent);
+    padding: 0.6em 1.2em; border-radius: 7px; text-decoration:none;
+    transition: background 220ms var(--ease), border-color 220ms var(--ease), transform 220ms var(--ease);
+    display:inline-block;
+  }
+  .nav-cta:hover{ background: var(--accent-hover); border-color: var(--accent-hover); transform: translateY(-1px); }
+  .menu-btn{ display:none; }
+
+  @media (max-width: 760px){
+    .nav-links{ display:none; }
+  }
+
+  .eyebrow{
+    display:flex; align-items:center; gap: 0.55rem;
+    font-family: var(--font-mono); font-size: var(--step--1);
+    letter-spacing: 0.11em; text-transform: uppercase;
+    color: var(--ink-soft); font-weight: 500;
+    margin-bottom: var(--space-3);
+  }
+  .eyebrow::before{
+    content:""; width: 7px; height: 7px; background: var(--accent);
+    flex-shrink:0;
+  }
+
+  .hero-copy{ max-width: 54rem; }
+
+  h1.headline{
+    font-size: var(--display);
+    font-weight: 560;
+    letter-spacing: 0em;
+    line-height: 1.2;
+    color: var(--ink);
+    text-wrap: wrap;
+  }
+  h1.headline > span{ display:block; }
+  h1.headline .accent{
+    color: var(--accent-ink);
+    font-style: italic;
+  }
+
+  .subhead{
+    margin-top: var(--space-1);
+    max-width: 40rem;
+    font-size: var(--step-1);
+    line-height: 1.48;
+    color: var(--ink-soft);
+    font-weight: 400;
+  }
+
+  .btn{
+    display:inline-flex; align-items:center; gap: 0.5em;
+    font-family: var(--font-body); font-weight: 600; font-size: var(--step-0);
+    padding: 0.85em 1.6em; border-radius: 8px;
+    text-decoration:none; cursor:pointer;
+    transition: background 220ms var(--ease), color 220ms var(--ease), border-color 220ms var(--ease), transform 220ms var(--ease);
+    border: 1.5px solid transparent;
+  }
+  .btn svg{ width: 16px; height:16px; transition: transform 220ms var(--ease); }
+  .btn-primary{ background: var(--ink); color: var(--bg); border-color: var(--accent); border-width: 3px; }
+  .btn-primary:hover{ background: var(--accent-hover); border-color: var(--accent-hover); transform: translateY(-1px); }
+  .btn-primary:hover svg{ transform: translateX(2px); }
+
+  /* shared light-bg "arrow link" -- used by any section on the light field */
+  .link-light{
+    display: inline-flex; align-items: center; gap: 0.5em;
+    color: var(--ink); font-weight: 600; text-decoration: none;
+    border-bottom: 1px solid var(--border-strong); padding-bottom: 0.2em;
+    transition: border-color 220ms var(--ease), color 220ms var(--ease);
+  }
+  .link-light svg{ width: 16px; height: 16px; transition: transform 220ms var(--ease); }
+  .link-light:hover{ border-color: var(--accent); color: var(--accent-ink); }
+  .link-light:hover svg{ transform: translateX(2px); }
+
+  /* ---------- section divider: rhythm break between two same-background
+     sections, no colour change. Echoes the hero's flow-node dots. ---------- */
+  .section-divider{
+    display: flex; align-items: center; gap: var(--space-2);
+    padding-block: var(--space-2);
+  }
+  .section-divider-line{ flex: 1 1 auto; height: 1px; background: var(--border); }
+  .section-divider-dot{
+    flex: 0 0 auto; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--accent);
+  }
+
+  /* ---------- work page intro ---------- */
+  .work-intro{
+    padding-block: var(--space-3) var(--space-2);
+  }
+
+  /* ---------- case studies ---------- */
+  .work-cases{
+    padding-block: var(--space-3) var(--space-4);
+  }
+  .case-row{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    align-items: center;
+    padding-block: var(--space-4);
+  }
+  .case-index{
+    font-family: var(--font-mono); font-weight: 500;
+    font-size: clamp(1.8rem, 1.5rem + 1.2vw, 2.4rem);
+    color: var(--accent-ink); opacity: 0.55;
+  }
+  .case-title{
+    margin-top: 0.5rem;
+    font-size: clamp(1.5rem, 1.25rem + 1.2vw, 2.1rem);
+    font-weight: 560;
+    line-height: 1.25;
+    color: var(--ink);
+  }
+  .case-desc{
+    margin-top: var(--space-1);
+    max-width: 34rem;
+    font-size: var(--step-0);
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .case-note{
+    margin-top: var(--space-1);
+    max-width: 34rem;
+    font-size: var(--step--1);
+    line-height: 1.55;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+  .case-media{
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    aspect-ratio: 4 / 3;
+  }
+  .case-media iframe{ width: 100%; height: 100%; display: block; border: 0; }
+
+  @media (max-width: 860px){
+    .case-row{ grid-template-columns: 1fr; padding-block: var(--space-3); }
+    .case-row .case-media{ order: -1; }
+  }
+
+  /* case 3: the flagship case study, wider than 1/2 because it carries real
+     measured proof (stats), not because "different for different's sake".
+     Centered rather than left-aligned like 1/2, so the extra width reads as
+     a deliberate centerpiece rather than a stray, unbalanced block. */
+  .case-feature{ padding-block: var(--space-4); text-align: center; }
+  .case-feature-head{ max-width: 40rem; margin-inline: auto; }
+  .case-feature-head .case-desc,
+  .case-feature-head .case-note{ margin-inline: auto; }
+  .case-feature-media{
+    margin: var(--space-3) auto 0;
+    max-width: 54rem;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    aspect-ratio: 4 / 3;
+  }
+  .case-feature-media iframe{ width: 100%; height: 100%; display: block; border: 0; }
+
+  .case-feature-stats-cap{
+    margin-top: var(--space-3);
+    font-family: var(--font-mono); font-size: var(--step--1);
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .case-feature-stats{
+    margin: var(--space-2) auto 0;
+    max-width: 40rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3);
+    border-top: 1px solid var(--border);
+    padding-top: var(--space-3);
+  }
+  .stat-num{
+    font-family: var(--font-mono); font-weight: 500;
+    font-size: clamp(1.8rem, 1.5rem + 1.3vw, 2.5rem);
+    color: var(--accent-ink);
+  }
+  .stat-label{
+    margin-top: 0.3rem;
+    font-size: var(--step--1);
+    line-height: 1.4;
+    color: var(--ink-soft);
+  }
+  @media (max-width: 640px){
+    .case-feature-stats{ grid-template-columns: 1fr; gap: var(--space-2); }
+  }
+
+  /* ---------- closing cta (light field) ---------- */
+  .cta-close{
+    background: var(--bg);
+    padding-block: var(--space-2) var(--space-4);
+  }
+  .cta-close-panel{
+    max-width: 42rem;
+    margin-inline: auto;
+    text-align: center;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 22px;
+    background: var(--surface);
+    padding: var(--space-4) var(--space-3);
+  }
+  .cta-close-mark{
+    width: 7px; height: 7px; margin-inline: auto;
+    background: var(--accent);
+  }
+  .cta-close-title{
+    margin-top: var(--space-2);
+    font-size: clamp(1.9rem, 1.5rem + 2vw, 2.8rem);
+    font-weight: 560;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .cta-close-lede{
+    margin-top: var(--space-1);
+    font-size: var(--step-1);
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+  .cta-close-row{
+    margin-top: var(--space-3);
+    display: flex; justify-content: center;
+  }
+
+  /* ---------- footer (dark field) ---------- */
+  footer{
+    background: var(--ink);
+    color: var(--bg);
+    padding-block: var(--space-4) var(--space-2);
+  }
+  .footer-top{
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--dark-border);
+  }
+  .footer-brand{ max-width: 22rem; }
+  .footer-brand .brand span{ color: var(--bg); }
+  .footer-tagline{
+    margin-top: var(--space-1);
+    font-size: var(--step-0);
+    line-height: 1.5;
+    color: var(--dark-text-soft);
+  }
+  .footer-cta{
+    display: inline-block;
+    margin-top: var(--space-2);
+    font-family: var(--font-body); font-size: var(--step--1); font-weight: 600;
+    color: var(--ink); background: var(--accent);
+    padding: 0.65em 1.3em; border-radius: 7px; text-decoration: none;
+    transition: background 220ms var(--ease), transform 220ms var(--ease);
+  }
+  .footer-cta:hover{ background: var(--accent-hover); color: var(--bg); transform: translateY(-1px); }
+
+  .footer-col h4{
+    font-family: var(--font-mono); font-size: var(--step--1);
+    letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500;
+    color: var(--dark-text-soft); margin: 0 0 var(--space-2);
+  }
+  .footer-col ul{
+    list-style: none; margin: 0; padding: 0;
+    display: flex; flex-direction: column; gap: 0.65rem;
+  }
+  .footer-col a{
+    font-size: var(--step-0); color: var(--bg); text-decoration: none;
+    transition: color 220ms var(--ease);
+  }
+  .footer-col a:hover{ color: var(--accent); }
+
+  .footer-bottom{
+    margin-top: var(--space-3);
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem;
+    font-size: var(--step--1); color: var(--dark-text-soft);
+  }
+  .footer-top-link{
+    color: var(--dark-text-soft); text-decoration: none;
+    transition: color 220ms var(--ease);
+  }
+  .footer-top-link:hover{ color: var(--bg); }
+
+  @media (max-width: 640px){
+    .footer-top{ flex-direction: column; }
+  }
+
+  /* reveal-on-load */
+  [data-reveal]{
+    opacity: 0;
+    clip-path: inset(100% 0 0 0);
+    transition: opacity 620ms var(--ease), clip-path 620ms var(--ease);
+  }
+  [data-reveal].is-in{ opacity: 1; clip-path: inset(0 0 0 0); }
+
+  @media (prefers-reduced-motion: reduce){
+    [data-reveal]{ transition: opacity 150ms linear; clip-path: none; }
+    [data-reveal].is-in{ opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<header id="top">
+  <div class="wrap nav-row">
+    <a class="brand" href="index.html">
+      <img src="assets/logo-icon-240.png" alt="Antek Automations">
+      <span>Antek Automations</span>
+    </a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="automations.html" class="is-current">Work</a></li>
+        <li><a href="index.html#faq">FAQ</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <a class="nav-cta" href="contact.html">Book A Call</a>
+  </div>
+</header>
+
+<section class="work-intro">
+  <div class="wrap">
+    <div class="hero-copy">
+      <h1 class="headline">
+        <span data-reveal>Watch the <span class="accent">work</span>.</span>
+        <span data-reveal>Skip the pitch.</span>
+      </h1>
+      <p class="subhead" data-reveal>
+        Three automations, filmed running inside real businesses. No slides, no mockups, just the thing itself.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="work-cases">
+  <div class="wrap">
+
+    <div class="case-row">
+      <div class="case-media">
+        <iframe src="https://www.loom.com/embed/e160d0dcfeff4bbab7341b928c8bb09c" title="Antek automation: daily task email becomes a to-do list" frameborder="0" loading="lazy" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+      </div>
+      <div data-reveal>
+        <p class="case-index">01</p>
+        <h2 class="case-title">One inbox digest, sorted into everyone's morning before they've read it.</h2>
+        <p class="case-desc">A single daily email carries the day's tasks in one long block of text. This automation opens it first, splits it into assignments for the right people, and loops in anyone else the work touches, drafting a note to an outside vendor on its own when a task depends on them.</p>
+      </div>
+    </div>
+
+    <div class="section-divider" aria-hidden="true">
+      <span class="section-divider-line"></span>
+      <span class="section-divider-dot"></span>
+      <span class="section-divider-line"></span>
+    </div>
+
+    <div class="case-row">
+      <div data-reveal>
+        <p class="case-index">02</p>
+        <h2 class="case-title">A request lands, and it's already been answered.</h2>
+        <p class="case-desc">This one keeps a quiet watch on the inbox for a single, specific kind of ask. The moment it shows up, the automation puts the requested document together and replies with it, the whole exchange finishes before anyone on staff would have even opened the message.</p>
+      </div>
+      <div class="case-media">
+        <iframe src="https://www.loom.com/embed/cb519650a9204d1c95684d3ac171b6fd" title="Antek automation: document requests answered automatically" frameborder="0" loading="lazy" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <div class="section-divider" aria-hidden="true">
+      <span class="section-divider-line"></span>
+      <span class="section-divider-dot"></span>
+      <span class="section-divider-line"></span>
+    </div>
+
+    <div class="case-feature">
+      <div class="case-feature-head" data-reveal>
+        <p class="case-index">03</p>
+        <h2 class="case-title">An invoice with the wrong numbers doesn't get paid by accident.</h2>
+        <p class="case-desc">Every incoming invoice gets checked line by line against what was actually quoted, quantities, prices, anything billed for work that was never agreed to. A mismatch triggers a notice with the exact variance and a one-click way to approve or reject it, so a routine-looking invoice can't get approved by mistake.</p>
+        <p class="case-note">In the video, we reject a live invoice and watch the automation draft the vendor email on its own, ready to send or hold for review.</p>
+      </div>
+
+      <div class="case-feature-media" data-reveal>
+        <iframe src="https://www.loom.com/embed/2f827ee022f3499ab4411a893bd4cf08" title="Antek automation: catching invoice discrepancies before they're paid" frameborder="0" loading="lazy" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+      </div>
+
+      <p class="case-feature-stats-cap" data-reveal>Over one month, real numbers</p>
+      <div class="case-feature-stats" data-reveal>
+        <div>
+          <p class="stat-num">47</p>
+          <p class="stat-label">invoices processed</p>
+        </div>
+        <div>
+          <p class="stat-num">14</p>
+          <p class="stat-label">discrepancies caught</p>
+        </div>
+        <div>
+          <p class="stat-num">$28,400</p>
+          <p class="stat-label">kept in the business</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="section-divider" aria-hidden="true">
+    <span class="section-divider-line"></span>
+    <span class="section-divider-dot"></span>
+    <span class="section-divider-line"></span>
+  </div>
+</div>
+
+<section class="cta-close">
+  <div class="wrap">
+    <div class="cta-close-panel">
+      <div class="cta-close-mark" aria-hidden="true"></div>
+      <h2 class="cta-close-title" data-reveal>These aren't demos. They're already running.</h2>
+      <p class="cta-close-lede" data-reveal>Tell us what's costing your team time. A 20-minute call is enough to know if it's worth automating.</p>
+      <div class="cta-close-row" data-reveal>
+        <a class="btn btn-primary" href="contact.html">
+          Ask How
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="index.html">
+          <img src="assets/logo-icon-240.png" alt="Antek Automations">
+          <span>Antek Automations</span>
+        </a>
+        <p class="footer-tagline">Back-office automation that stays out of your way.</p>
+        <a class="footer-cta" href="contact.html">Book A Call</a>
+      </div>
+
+      <nav class="footer-col" aria-label="Footer">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="automations.html">Work</a></li>
+          <li><a href="index.html#faq">FAQ</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 Antek Automations. All rights reserved.</p>
+      <a class="footer-top-link" href="#top">Back to top &uarr;</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // page-intro entrance reveal: visible on load, so stagger by time
+  var introRevealEls = document.querySelectorAll(".work-intro [data-reveal]");
+  introRevealEls.forEach(function(el, i){
+    setTimeout(function(){ el.classList.add("is-in"); }, reduced ? 0 : 90 * i);
+  });
+
+  // below-the-fold reveals: stagger by scroll position instead, one-shot
+  var scrollRevealEls = document.querySelectorAll("section:not(.work-intro) [data-reveal]");
+  if (reduced || !("IntersectionObserver" in window)){
+    scrollRevealEls.forEach(function(el){ el.classList.add("is-in"); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        var siblings = Array.prototype.slice.call(el.parentElement.children);
+        var delay = Math.max(0, siblings.indexOf(el)) * 70;
+        setTimeout(function(){ el.classList.add("is-in"); }, delay);
+        io.unobserve(el);
+      });
+    }, { threshold: 0 });
+    scrollRevealEls.forEach(function(el){ io.observe(el); });
+
+    setTimeout(function(){
+      scrollRevealEls.forEach(function(el){ el.classList.add("is-in"); });
+    }, 4000);
+  }
+})();
+</script>
+
+</body>
+</html>
