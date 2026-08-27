@@ -5,3 +5,9 @@ Thumbs.db
 # editor
 .vscode/
 .idea/
+
+# design-workspace-only files (not part of the deployed site)
+CLAUDE.md
+.artifact-preview.html
+.artifact-preview-work.html
+assets/logo-icon.png
