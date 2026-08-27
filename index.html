@@ -225,6 +225,10 @@
     position: relative;
     height: clamp(4.5rem, 3.4rem + 5vw, 8.5rem);
     line-height: 0;
+    /* same sub-pixel anti-aliasing seam as .section-seam--to-light below --
+       the wave path's fill can leave a hairline at the fractional-height
+       closing edge. Pull the next section up to paint over it. */
+    margin-bottom: -3px;
   }
   .section-seam svg{ width: 100%; height: 100%; display: block; }
   .seam-crossing{
