@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About | Antek Automations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: oklch(97% 0.012 85);
+    --ink: oklch(24% 0.075 259);
+    --ink-soft: color-mix(in oklch, var(--ink) 68%, var(--bg));
+    --ink-faint: color-mix(in oklch, var(--ink) 38%, var(--bg));
+    --accent: oklch(48% 0.14 38);
+    --accent-ink: oklch(40% 0.135 36);
+    --accent-soft: color-mix(in oklch, var(--accent) 13%, var(--bg));
+    --accent-hover: color-mix(in oklch, var(--accent) 86%, black);
+    --border: color-mix(in oklch, var(--ink) 13%, var(--bg));
+    --border-strong: color-mix(in oklch, var(--ink) 24%, var(--bg));
+    --surface: color-mix(in oklch, var(--ink) 3.5%, var(--bg));
+
+    /* dark-field tokens: elevation on a dark section is rising surface lightness, not shadow */
+    --dark-surface: color-mix(in oklch, var(--ink) 84%, white 16%);
+    --dark-border: color-mix(in oklch, var(--ink) 66%, white 34%);
+    --dark-text-soft: color-mix(in oklch, var(--bg) 62%, var(--ink) 38%);
+
+    --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+    --font-body: "IBM Plex Sans", system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, "Courier New", monospace;
+
+    --step--1: clamp(0.82rem, 0.79rem + 0.16vw, 0.92rem);
+    --step-0:  clamp(1rem, 0.95rem + 0.24vw, 1.125rem);
+    --step-1:  clamp(1.18rem, 1.1rem + 0.4vw, 1.35rem);
+    --step-2:  clamp(1.4rem, 1.28rem + 0.6vw, 1.7rem);
+    --display: clamp(3rem, 2rem + 4.1vw, 4.8rem);
+
+    --ease: cubic-bezier(.16,1,.3,1);
+    --space-1: clamp(0.75rem, 0.7rem + 0.24vw, 1rem);
+    --space-2: clamp(1.1rem, 1rem + 0.5vw, 1.5rem);
+    --space-3: clamp(1.6rem, 1.35rem + 1.1vw, 2.4rem);
+    --space-4: clamp(2.25rem, 1.9rem + 1.6vw, 3.5rem);
+
+    color-scheme: light;
+  }
+
+  *,*::before,*::after{ box-sizing: border-box; }
+  html{ text-size-adjust: 100%; }
+  body{
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+
+  /* global grain: one texture system, applied once */
+  body::after{
+    content:""; position: fixed; inset: 0; pointer-events: none; z-index: 999;
+    opacity: 0.035; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  h1,h2,h3{ font-family: var(--font-display); font-optical-sizing: auto; margin: 0; text-wrap: balance; }
+  p{ margin: 0; text-wrap: pretty; }
+  img{ max-width: 100%; display: block; }
+  a{ color: inherit; }
+  button{ font: inherit; }
+
+  .wrap{ max-width: 100rem; margin-inline: auto; padding-inline: clamp(3rem, 2rem + 5vw, 7rem); }
+
+  /* ---------- header ---------- */
+  header{
+    position: relative; z-index: 10;
+    padding-block: var(--space-2);
+  }
+  .nav-row{ display:flex; align-items:center; justify-content:space-between; gap: var(--space-2); }
+  .brand{ display:flex; align-items:center; gap: 0.6rem; text-decoration:none; }
+  .brand img{ height: 30px; width:auto; }
+  .brand span{
+    font-family: var(--font-display); font-weight: 520; font-size: 1.3rem;
+    letter-spacing: -0.005em; color: var(--ink);
+  }
+  .nav-links{ display:flex; align-items:center; gap: var(--space-3); list-style:none; margin:0; padding:0; }
+  .nav-links a{
+    position: relative;
+    display: inline-block;
+    padding-block: 0.65rem 0.6rem;
+    font-size: var(--step--1); text-decoration:none; color: var(--ink-soft);
+    font-weight: 500; transition: color 220ms var(--ease);
+  }
+  .nav-links a::before{
+    content:"";
+    position: absolute; left: 50%; top: 0.1rem;
+    width: 4px; height: 4px; background: var(--accent);
+    transform: translate(-50%, 4px) scale(0.4);
+    opacity: 0;
+    transition: opacity 220ms var(--ease), transform 220ms var(--ease);
+  }
+  .nav-links a::after{
+    content:"";
+    position: absolute; left: 0; right: 0; bottom: 0;
+    height: 1.5px; background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 280ms var(--ease);
+  }
+  .nav-links a:hover, .nav-links a:focus-visible, .nav-links a.is-current{ color: var(--ink); }
+  .nav-links a:hover::before, .nav-links a:focus-visible::before, .nav-links a.is-current::before{
+    opacity: 1; transform: translate(-50%, 0) scale(1);
+  }
+  .nav-links a:hover::after, .nav-links a:focus-visible::after, .nav-links a.is-current::after{
+    transform: scaleX(1);
+  }
+  .nav-cta{
+    font-family: var(--font-body); font-size: var(--step--1); font-weight: 600;
+    color: var(--bg); background: var(--ink); border: 3px solid var(--accent);
+    padding: 0.6em 1.2em; border-radius: 7px; text-decoration:none;
+    transition: background 220ms var(--ease), border-color 220ms var(--ease), transform 220ms var(--ease);
+    display:inline-block;
+  }
+  .nav-cta:hover{ background: var(--accent-hover); border-color: var(--accent-hover); transform: translateY(-1px); }
+  .menu-btn{ display:none; }
+
+  @media (max-width: 760px){
+    .nav-links{ display:none; }
+  }
+
+  .hero-copy{ max-width: 54rem; }
+
+  h1.headline{
+    font-size: var(--display);
+    font-weight: 560;
+    letter-spacing: 0em;
+    line-height: 1.2;
+    color: var(--ink);
+    text-wrap: wrap;
+  }
+  h1.headline > span{ display:block; }
+  h1.headline .accent{
+    color: var(--accent-ink);
+    font-style: italic;
+  }
+
+  .subhead{
+    margin-top: var(--space-1);
+    max-width: 40rem;
+    font-size: var(--step-1);
+    line-height: 1.48;
+    color: var(--ink-soft);
+    font-weight: 400;
+  }
+
+  .btn{
+    display:inline-flex; align-items:center; gap: 0.5em;
+    font-family: var(--font-body); font-weight: 600; font-size: var(--step-0);
+    padding: 0.85em 1.6em; border-radius: 8px;
+    text-decoration:none; cursor:pointer;
+    transition: background 220ms var(--ease), color 220ms var(--ease), border-color 220ms var(--ease), transform 220ms var(--ease);
+    border: 1.5px solid transparent;
+  }
+  .btn svg{ width: 16px; height:16px; transition: transform 220ms var(--ease); }
+  .btn-primary{ background: var(--ink); color: var(--bg); border-color: var(--accent); border-width: 3px; }
+  .btn-primary:hover{ background: var(--accent-hover); border-color: var(--accent-hover); transform: translateY(-1px); }
+  .btn-primary:hover svg{ transform: translateX(2px); }
+
+  /* shared light-bg "arrow link" -- used by any section on the light field */
+  .link-light{
+    display: inline-flex; align-items: center; gap: 0.5em;
+    color: var(--ink); font-weight: 600; text-decoration: none;
+    border-bottom: 1px solid var(--border-strong); padding-bottom: 0.2em;
+    transition: border-color 220ms var(--ease), color 220ms var(--ease);
+  }
+  .link-light svg{ width: 16px; height: 16px; transition: transform 220ms var(--ease); }
+  .link-light:hover{ border-color: var(--accent); color: var(--accent-ink); }
+  .link-light:hover svg{ transform: translateX(2px); }
+
+  /* ---------- section divider: rhythm break between two same-background
+     sections, no colour change. Echoes the hero's flow-node dots. ---------- */
+  .section-divider{
+    display: flex; align-items: center; gap: var(--space-2);
+    padding-block: var(--space-2);
+  }
+  .section-divider-line{ flex: 1 1 auto; height: 1px; background: var(--border); }
+  .section-divider-dot{
+    flex: 0 0 auto; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--accent);
+  }
+
+  /* ---------- about page intro ---------- */
+  .about-intro{
+    padding-block: var(--space-3) var(--space-2);
+  }
+
+  /* ---------- origin: short business-history note, paired with a real
+     photo since this section is literally about manual paperwork -- the
+     one place on the site a photograph earns its place over line art. ---------- */
+  .origin{ padding-block: var(--space-2) var(--space-3); }
+  .origin-grid{
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: var(--space-4);
+    align-items: center;
+  }
+  .origin-title{
+    font-size: clamp(1.9rem, 1.5rem + 2vw, 2.8rem);
+    font-weight: 560;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .origin-body p{
+    margin-top: var(--space-2);
+    max-width: 38rem;
+    font-size: var(--step-1);
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .origin-media{
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    aspect-ratio: 4 / 3;
+  }
+  .origin-media img{
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+
+  @media (max-width: 860px){
+    .origin-grid{ grid-template-columns: 1fr; gap: var(--space-2); }
+    .origin-grid .origin-media{ order: -1; }
+  }
+
+  /* ---------- compare: "typical agency" vs "Antek" table.
+     A new component for the site -- not the homepage's dark card grid,
+     not the Work page's numbered rows, not the Services page's icon
+     rows. Two columns, hairlines between rows, a small glyph marking
+     which side is which so it still reads correctly when it stacks. ---------- */
+  .compare{ padding-block: var(--space-3) var(--space-3); }
+  .compare-head{ max-width: 42rem; }
+  .compare-title{
+    font-size: clamp(1.9rem, 1.5rem + 2vw, 2.8rem);
+    font-weight: 560;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .compare-lede{
+    margin-top: var(--space-1);
+    font-size: var(--step-1);
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+
+  .compare-table{
+    margin-top: var(--space-4);
+    border-top: 1px solid var(--border);
+  }
+  .compare-columns-head{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+    padding-block: var(--space-1);
+    border-bottom: 1px solid var(--border);
+  }
+  .compare-columns-head span{
+    font-family: var(--font-mono); font-size: var(--step--1);
+    letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500;
+    color: var(--ink-faint);
+  }
+  .compare-columns-head span.us{ color: var(--accent-ink); }
+
+  .compare-row{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+    padding-block: var(--space-2);
+    border-bottom: 1px solid var(--border);
+  }
+  .compare-cell{
+    display: flex; align-items: flex-start; gap: 0.6rem;
+    font-size: var(--step-0);
+    line-height: 1.55;
+  }
+  .compare-cell svg{ flex-shrink: 0; width: 18px; height: 18px; margin-top: 0.15em; }
+  .compare-cell.them{ color: var(--ink-faint); }
+  .compare-cell.them svg{ color: var(--ink-faint); }
+  .compare-cell.us{ color: var(--ink); font-weight: 500; }
+  .compare-cell.us svg{ color: var(--accent-ink); }
+  .compare-tag{ display: none; }
+
+  @media (max-width: 700px){
+    .compare-columns-head{ display: none; }
+    .compare-row{ grid-template-columns: 1fr; gap: 0.5rem; padding-block: var(--space-2); }
+    .compare-tag{
+      display: block;
+      font-family: var(--font-mono); font-size: var(--step--1);
+      letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500;
+      color: var(--ink-faint); margin-bottom: 0.2rem;
+    }
+    .compare-cell.us .compare-tag{ color: var(--accent-ink); }
+  }
+
+  /* ---------- values: three plain columns, no borders, no numbering --
+     distinct from the homepage's bordered about-points list. ---------- */
+  .values{ padding-block: var(--space-3) var(--space-3); }
+  .values-head{ max-width: 34rem; }
+  .values-title{
+    font-size: clamp(1.9rem, 1.5rem + 2vw, 2.8rem);
+    font-weight: 560;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .values-grid{
+    margin-top: var(--space-4);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3);
+  }
+  .value-col-rule{
+    width: 28px; height: 3px; background: var(--accent); border-radius: 2px;
+  }
+  .value-col h3{
+    margin-top: var(--space-1);
+    font-family: var(--font-body); font-weight: 600; font-size: var(--step-1);
+    color: var(--ink);
+  }
+  .value-col p{
+    margin-top: 0.5rem;
+    font-size: var(--step-0);
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 860px){
+    .values-grid{ grid-template-columns: 1fr; gap: var(--space-3); }
+  }
+
+  /* ---------- closing cta (light field, shares the page background) ---------- */
+  .cta-close{
+    background: var(--bg);
+    padding-block: var(--space-2) var(--space-4);
+  }
+  .cta-close-panel{
+    max-width: 42rem;
+    margin-inline: auto;
+    text-align: center;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 22px;
+    background: var(--surface);
+    padding: var(--space-4) var(--space-3);
+  }
+  .cta-close-mark{
+    width: 7px; height: 7px; margin-inline: auto;
+    background: var(--accent);
+  }
+  .cta-close-title{
+    margin-top: var(--space-2);
+    font-size: clamp(1.9rem, 1.5rem + 2vw, 2.8rem);
+    font-weight: 560;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .cta-close-lede{
+    margin-top: var(--space-1);
+    font-size: var(--step-1);
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+  .cta-close-row{
+    margin-top: var(--space-3);
+    display: flex; justify-content: center;
+  }
+
+  /* ---------- footer (dark field) ---------- */
+  footer{
+    background: var(--ink);
+    color: var(--bg);
+    padding-block: var(--space-4) var(--space-2);
+  }
+  .footer-top{
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--dark-border);
+  }
+  .footer-brand{ max-width: 22rem; }
+  .footer-brand .brand span{ color: var(--bg); }
+  .footer-tagline{
+    margin-top: var(--space-1);
+    font-size: var(--step-0);
+    line-height: 1.5;
+    color: var(--dark-text-soft);
+  }
+  .footer-cta{
+    display: inline-block;
+    margin-top: var(--space-2);
+    font-family: var(--font-body); font-size: var(--step--1); font-weight: 600;
+    color: var(--ink); background: var(--accent);
+    padding: 0.65em 1.3em; border-radius: 7px; text-decoration: none;
+    transition: background 220ms var(--ease), transform 220ms var(--ease);
+  }
+  .footer-cta:hover{ background: var(--accent-hover); color: var(--bg); transform: translateY(-1px); }
+
+  .footer-col h4{
+    font-family: var(--font-mono); font-size: var(--step--1);
+    letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500;
+    color: var(--dark-text-soft); margin: 0 0 var(--space-2);
+  }
+  .footer-col ul{
+    list-style: none; margin: 0; padding: 0;
+    display: flex; flex-direction: column; gap: 0.65rem;
+  }
+  .footer-col a{
+    font-size: var(--step-0); color: var(--bg); text-decoration: none;
+    transition: color 220ms var(--ease);
+  }
+  .footer-col a:hover{ color: var(--accent); }
+
+  .footer-bottom{
+    margin-top: var(--space-3);
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem;
+    font-size: var(--step--1); color: var(--dark-text-soft);
+  }
+  .footer-top-link{
+    color: var(--dark-text-soft); text-decoration: none;
+    transition: color 220ms var(--ease);
+  }
+  .footer-top-link:hover{ color: var(--bg); }
+
+  @media (max-width: 640px){
+    .footer-top{ flex-direction: column; }
+  }
+
+  /* reveal-on-load */
+  [data-reveal]{
+    opacity: 0;
+    clip-path: inset(100% 0 0 0);
+    transition: opacity 620ms var(--ease), clip-path 620ms var(--ease);
+  }
+  [data-reveal].is-in{ opacity: 1; clip-path: inset(0 0 0 0); }
+
+  @media (prefers-reduced-motion: reduce){
+    [data-reveal]{ transition: opacity 150ms linear; clip-path: none; }
+    [data-reveal].is-in{ opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<header id="top">
+  <div class="wrap nav-row">
+    <a class="brand" href="/">
+      <img src="assets/logo-icon-240.png" alt="Antek Automations">
+      <span>Antek Automations</span>
+    </a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="about" class="is-current">About</a></li>
+        <li><a href="services">Services</a></li>
+        <li><a href="automations">Work</a></li>
+        <li><a href="/#faq">FAQ</a></li>
+        <li><a href="contact">Contact</a></li>
+      </ul>
+    </nav>
+    <a class="nav-cta" href="contact">Book A Call</a>
+  </div>
+</header>
+
+<section class="about-intro">
+  <div class="wrap">
+    <div class="hero-copy">
+      <h1 class="headline">
+        <span data-reveal>What Antek actually is,</span>
+        <span data-reveal>and what it <span class="accent">isn't</span>.</span>
+      </h1>
+      <p class="subhead" data-reveal>
+        Not a software platform, and not an agency with layers between you and the work. A small operation that builds the automation and stays around to run it.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="origin">
+  <div class="wrap">
+    <div class="origin-grid">
+      <div>
+        <h2 class="origin-title" data-reveal>Where this started.</h2>
+        <div class="origin-body">
+          <p data-reveal>Antek started by automating one kind of manual work for one kind of business. What became clear fast: the problem was never specific to that business. Repetitive work costs the same hours everywhere, no matter what the company actually does. So the approach stayed the same, and the scope widened.</p>
+        </div>
+      </div>
+      <div class="origin-media" data-reveal>
+        <img src="assets/origin-paperwork.jpg" alt="A stack of old dot-matrix invoice printouts next to a calculator and reading glasses on a desk" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="section-divider" aria-hidden="true">
+    <span class="section-divider-line"></span>
+    <span class="section-divider-dot"></span>
+    <span class="section-divider-line"></span>
+  </div>
+</div>
+
+<section class="compare" id="compare">
+  <div class="wrap">
+    <div class="compare-head">
+      <h2 class="compare-title" data-reveal>How this is different from a typical automation agency.</h2>
+      <p class="compare-lede" data-reveal>Not a claim to be better at everything. Just different in the parts that actually affect you.</p>
+    </div>
+
+    <div class="compare-table" data-reveal>
+      <div class="compare-columns-head">
+        <span class="them">Most automation agencies</span>
+        <span class="us">Antek</span>
+      </div>
+
+      <div class="compare-row">
+        <div class="compare-cell them">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>
+          <span><span class="compare-tag">Most agencies</span>A rotating account manager relays your request.</span>
+        </div>
+        <div class="compare-cell us">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          <span><span class="compare-tag">Antek</span>You talk to the person building it.</span>
+        </div>
+      </div>
+
+      <div class="compare-row">
+        <div class="compare-cell them">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>
+          <span><span class="compare-tag">Most agencies</span>A new platform to license, learn, and pay for every month.</span>
+        </div>
+        <div class="compare-cell us">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          <span><span class="compare-tag">Antek</span>Runs behind the tools you already use.</span>
+        </div>
+      </div>
+
+      <div class="compare-row">
+        <div class="compare-cell them">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>
+          <span><span class="compare-tag">Most agencies</span>One fixed package, whether you need all of it or not.</span>
+        </div>
+        <div class="compare-cell us">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          <span><span class="compare-tag">Antek</span>Scoped around the manual work that's actually costing you time.</span>
+        </div>
+      </div>
+
+      <div class="compare-row">
+        <div class="compare-cell them">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>
+          <span><span class="compare-tag">Most agencies</span>A support ticket if something breaks.</span>
+        </div>
+        <div class="compare-cell us">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          <span><span class="compare-tag">Antek</span>The person who built it fixes it.</span>
+        </div>
+      </div>
+
+      <div class="compare-row">
+        <div class="compare-cell them">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>
+          <span><span class="compare-tag">Most agencies</span>A new project and a new invoice when your process changes.</span>
+        </div>
+        <div class="compare-cell us">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          <span><span class="compare-tag">Antek</span>Adjusted as you go. No extra project.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="section-divider" aria-hidden="true">
+    <span class="section-divider-line"></span>
+    <span class="section-divider-dot"></span>
+    <span class="section-divider-line"></span>
+  </div>
+</div>
+
+<section class="values" id="values">
+  <div class="wrap">
+    <div class="values-head">
+      <h2 class="values-title" data-reveal>How we actually work.</h2>
+    </div>
+
+    <div class="values-grid">
+      <div class="value-col" data-reveal>
+        <div class="value-col-rule" aria-hidden="true"></div>
+        <h3>One piece at a time</h3>
+        <p>We start with whatever manual work is costing you the most time, get it running, then move to the next. Not a company-wide rollout on day one.</p>
+      </div>
+      <div class="value-col" data-reveal>
+        <div class="value-col-rule" aria-hidden="true"></div>
+        <h3>Only what we can maintain</h3>
+        <p>If we build it, we're the ones who keep it working. That's part of why we don't take on more than we can actually stay on top of.</p>
+      </div>
+      <div class="value-col" data-reveal>
+        <div class="value-col-rule" aria-hidden="true"></div>
+        <h3>A straight answer either way</h3>
+        <p>Sometimes the honest answer is that something isn't worth automating yet. We'll say that instead of building it anyway.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-close">
+  <div class="wrap">
+    <div class="cta-close-panel">
+      <div class="cta-close-mark" aria-hidden="true"></div>
+      <h2 class="cta-close-title" data-reveal>Still deciding if this is worth a conversation?</h2>
+      <p class="cta-close-lede" data-reveal>Tell us what's manual and slow. We'll give you a straight answer on whether it's worth automating.</p>
+      <div class="cta-close-row" data-reveal>
+        <a class="btn btn-primary" href="contact">
+          Ask How
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="/">
+          <img src="assets/logo-icon-240.png" alt="Antek Automations">
+          <span>Antek Automations</span>
+        </a>
+        <p class="footer-tagline">Back-office automation that stays out of your way.</p>
+        <a class="footer-cta" href="contact">Book A Call</a>
+      </div>
+
+      <nav class="footer-col" aria-label="Footer">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="about">About</a></li>
+          <li><a href="services">Services</a></li>
+          <li><a href="automations">Work</a></li>
+          <li><a href="/#faq">FAQ</a></li>
+          <li><a href="contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 Antek Automations. All rights reserved.</p>
+      <a class="footer-top-link" href="#top">Back to top &uarr;</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // page-intro entrance reveal: visible on load, so stagger by time
+  var introRevealEls = document.querySelectorAll(".about-intro [data-reveal]");
+  introRevealEls.forEach(function(el, i){
+    setTimeout(function(){ el.classList.add("is-in"); }, reduced ? 0 : 90 * i);
+  });
+
+  // below-the-fold reveals: stagger by scroll position instead, one-shot
+  var scrollRevealEls = document.querySelectorAll("section:not(.about-intro) [data-reveal]");
+  if (reduced || !("IntersectionObserver" in window)){
+    scrollRevealEls.forEach(function(el){ el.classList.add("is-in"); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        var siblings = Array.prototype.slice.call(el.parentElement.children);
+        var delay = Math.max(0, siblings.indexOf(el)) * 70;
+        setTimeout(function(){ el.classList.add("is-in"); }, delay);
+        io.unobserve(el);
+      });
+    }, { threshold: 0 });
+    scrollRevealEls.forEach(function(el){ io.observe(el); });
+
+    setTimeout(function(){
+      scrollRevealEls.forEach(function(el){ el.classList.add("is-in"); });
+    }, 4000);
+  }
+})();
+</script>
+
+</body>
+</html>
