@@ -148,18 +148,26 @@
   .hero-bg svg{ width: 100%; height: 100%; display: block; }
 
   /* the wire itself now sits still; the pulses below carry the motion */
-  .flow-pulse{ filter: drop-shadow(0 0 2.5px var(--accent)); }
+  /* warmer glow -- these dots spend most of their travel time in the
+     resolved right-hand two-thirds of each wire (see the keyTimes/keyPoints
+     below: only 18% of the animation covers the chaotic left segment), so a
+     stronger glow here reads as "more vibrant on the right" without needing
+     to touch the wires themselves. */
+  .flow-pulse{ filter: drop-shadow(0 0 4px var(--accent)); }
   .flow-node{
     fill: none;
-    stroke: var(--ink-faint);
+    stroke: color-mix(in oklch, var(--accent) 55%, var(--ink-faint));
     stroke-width: 1.2px;
-    opacity: 0.4;
+    opacity: 0.55;
   }
 
   /* soft paper veil so the copy stays legible over the line art */
   .hero-scrim{
     position: absolute; inset: 0; z-index: 1; pointer-events: none;
-    background: radial-gradient(ellipse 64% 62% at 26% 42%, var(--bg) 0%, color-mix(in oklch, var(--bg) 55%, transparent) 52%, transparent 76%);
+    /* slightly stronger/wider than before -- the background art got a bit
+       more vibrant (see .flow-node / .flow-pulse below), so the veil over
+       the headline needed to grow a little to keep pace. */
+    background: radial-gradient(ellipse 64% 62% at 26% 42%, var(--bg) 0%, color-mix(in oklch, var(--bg) 62%, transparent) 52%, transparent 80%);
   }
 
   .hero-inner{ position: relative; z-index: 2; width: 100%; }
@@ -200,6 +208,9 @@
     color: var(--ink-soft);
     font-weight: 400;
   }
+  /* echoes the H1's single accent word, at paragraph scale: color only,
+     no italic -- a whole clause in italic reads as a hedge, not emphasis */
+  .subhead-accent{ color: var(--accent-ink); font-weight: 600; }
 
   .cta-row{
     margin-top: var(--space-4);
@@ -697,7 +708,7 @@
       </h1>
 
       <p class="subhead" data-reveal>
-        Self-running solutions that work with tools you already use, custom-built to eliminate manual processes like data entry, document creation, and scheduling. Human oversight built in, freeing up hours for what matters.
+        Self-running solutions that work with tools you already use, custom-built to eliminate manual processes like data entry, document creation, and scheduling. Human oversight built in, <span class="subhead-accent">freeing up hours for what matters.</span>
       </p>
 
       <div class="cta-row" data-reveal>
