@@ -594,9 +594,86 @@
     [data-reveal]{ transition: opacity 150ms linear; clip-path: none; }
     [data-reveal].is-in{ opacity: 1; }
   }
+
+  /* ---------- page through-line -----------------------------------------
+     The hero's vocabulary (thin accent / ink-faint strokes, flow-node
+     dots, a single travelling pulse) recomposed as a page-spanning spine:
+     inputs converge into a node beside the "Automations" headline, then
+     one wire threads down the right of the page past a settle-node at
+     each automation, with a slow signal drifting along it. z-index:-1
+     keeps it behind all in-flow text without touching section stacking. */
+  .page-flow{
+    position: absolute; inset: 0; z-index: -1;
+    overflow: hidden; pointer-events: none;
+  }
+  .page-flow svg{ width: 100%; height: 100%; display: block; }
+  .page-flow .pf-thread{
+    fill: none; stroke: var(--accent);
+    stroke-width: 1.4; stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+    opacity: 0.34;
+  }
+  .page-flow .pf-wire{
+    fill: none; stroke: url(#pf-grad);
+    stroke-width: 1.6; stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+  }
+  .page-flow .pf-node{
+    fill: var(--ink-faint); opacity: 0.5;
+  }
+  .page-flow .pf-node.pf-node--head{
+    fill: var(--accent); opacity: 0.7;
+  }
+  .pf-pulse{
+    position: absolute; top: 0; left: 80%;
+    width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px;
+    border-radius: 50%;
+    background: var(--accent);
+    filter: drop-shadow(0 0 7px color-mix(in oklch, var(--accent) 66%, transparent));
+    opacity: 0;
+    animation: pf-drift 27s linear infinite;
+  }
+  @keyframes pf-drift{
+    0%   { top: 5%;  left: 92%; opacity: 0; }
+    7%   { opacity: 0.72; }
+    27%  { left: 96%; }
+    47%  { left: 90%; }
+    68%  { left: 96.5%; }
+    90%  { opacity: 0.72; }
+    100% { top: 82%; left: 93.5%; opacity: 0; }
+  }
+  @media (max-width: 900px){
+    .page-flow{ opacity: 0.6; }
+    .pf-pulse{ display: none; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .pf-pulse{ animation: none; top: 16%; left: 80%; opacity: 0.5; }
+  }
 </style>
 </head>
 <body>
+
+<div class="page-flow" aria-hidden="true">
+  <svg viewBox="0 0 1440 4200" preserveAspectRatio="none">
+    <defs>
+      <linearGradient id="pf-grad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" style="stop-color:var(--accent);stop-opacity:.5"/>
+        <stop offset="0.16" style="stop-color:var(--ink-faint);stop-opacity:.4"/>
+        <stop offset="1" style="stop-color:var(--ink-faint);stop-opacity:.28"/>
+      </linearGradient>
+    </defs>
+    <path class="pf-thread" d="M1280,8 C 1200,110 1120,200 1080,300"/>
+    <path class="pf-thread" d="M1460,20 C 1360,110 1180,230 1080,300"/>
+    <path class="pf-thread" d="M1470,240 C 1380,258 1200,288 1080,300"/>
+    <path class="pf-wire" d="M1080,300 C 1180,570 1340,800 1360,1150 C 1382,1470 1300,1670 1310,1980 C 1320,2290 1396,2510 1378,2860 C 1360,3180 1296,3390 1306,3730 C 1316,3970 1352,4090 1352,4200"/>
+    <circle class="pf-node pf-node--head" cx="1080" cy="300" r="7"/>
+    <circle class="pf-node" cx="1360" cy="1150" r="5.5"/>
+    <circle class="pf-node" cx="1310" cy="1980" r="5.5"/>
+    <circle class="pf-node" cx="1378" cy="2860" r="5.5"/>
+    <circle class="pf-node" cx="1306" cy="3730" r="5.5"/>
+  </svg>
+  <span class="pf-pulse"></span>
+</div>
 
 <header id="top">
   <div class="wrap nav-row">
