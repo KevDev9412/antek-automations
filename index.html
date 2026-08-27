@@ -213,7 +213,7 @@
   .subhead-accent{ color: var(--accent-ink); font-weight: 600; }
 
   .cta-row{
-    margin-top: var(--space-4);
+    margin-top: calc(var(--space-4) * 0.8);
     display:flex; flex-wrap: wrap; align-items:center; gap: 1rem;
   }
   .btn{
@@ -624,7 +624,7 @@
     <svg viewBox="0 0 1600 620" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="flowGrad" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" style="stop-color:var(--accent)"/>
+          <stop offset="0%" style="stop-color:var(--accent)" stop-opacity="0.94"/>
           <stop offset="55%" style="stop-color:var(--ink-faint)"/>
           <stop offset="100%" style="stop-color:var(--ink)"/>
         </linearGradient>
@@ -640,47 +640,47 @@
         <path id="fl8" class="flow-line" d="M 0.0 596.8 Q 0.0 596.8 16.0 591.3 Q 32.0 585.7 48.0 580.2 Q 64.0 574.8 80.0 569.5 Q 96.0 564.3 112.0 559.5 Q 128.0 554.6 144.0 550.3 Q 160.0 546.1 176.0 542.4 Q 192.0 538.8 208.0 536.0 Q 224.0 533.2 240.0 531.2 Q 256.0 529.3 272.0 528.3 Q 288.0 527.3 304.0 527.2 Q 320.0 527.2 336.0 528.1 Q 352.0 529.1 368.0 530.9 Q 384.0 532.8 400.0 535.6 Q 416.0 538.3 432.0 541.9 Q 448.0 545.4 464.0 567.7 Q 480.0 590.0 496.0 590.0 Q 512.0 590.0 528.0 590.0 Q 544.0 590.0 560.0 590.0 Q 576.0 590.0 592.0 590.0 Q 608.0 590.0 624.0 590.0 Q 640.0 590.0 656.0 590.0 Q 672.0 590.0 688.0 590.0 Q 704.0 590.0 720.0 590.0 Q 736.0 590.0 752.0 590.0 Q 768.0 590.0 784.0 590.0 Q 800.0 590.0 816.0 590.0 Q 832.0 590.0 848.0 590.0 Q 864.0 590.0 880.0 590.0 Q 896.0 590.0 912.0 590.0 Q 928.0 590.0 944.0 590.0 Q 960.0 590.0 976.0 590.0 Q 992.0 590.0 1008.0 590.0 Q 1024.0 590.0 1040.0 590.0 Q 1056.0 590.0 1072.0 590.0 Q 1088.0 590.0 1104.0 590.0 Q 1120.0 590.0 1136.0 590.0 Q 1152.0 590.0 1168.0 590.0 Q 1184.0 590.0 1200.0 590.0 Q 1216.0 590.0 1232.0 590.0 Q 1248.0 590.0 1264.0 590.0 Q 1280.0 590.0 1296.0 590.0 Q 1312.0 590.0 1328.0 590.0 Q 1344.0 590.0 1360.0 590.0 Q 1376.0 590.0 1392.0 590.0 Q 1408.0 590.0 1424.0 590.0 Q 1440.0 590.0 1456.0 590.0 Q 1472.0 590.0 1488.0 590.0 Q 1504.0 590.0 1520.0 590.0 Q 1536.0 590.0 1552.0 590.0 Q 1568.0 590.0 1584.0 590.0 T 1600.0 590.0" stroke="url(#flowGrad)" stroke-width="1.80" fill="none" stroke-linecap="round" opacity="0.22"/>
 
         <!-- traveling pulses: the literal information-flow signal, following each wire from chaos into order -->
-        <circle class="flow-pulse" r="2.20" fill="var(--accent)">
+        <circle class="flow-pulse" r="4.40" fill="var(--accent)">
           <animateMotion dur="11.1s" begin="0.0s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.183;1" keyPoints="0;0.35;1" keySplines="0.1 0 0.3 1;0 0 1 1">
             <mpath href="#fl0"/>
           </animateMotion>
         </circle>
-        <circle class="flow-pulse" r="2.55" fill="var(--accent)">
+        <circle class="flow-pulse" r="5.10" fill="var(--accent)">
           <animateMotion dur="13.8s" begin="-1.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.183;1" keyPoints="0;0.35;1" keySplines="0.1 0 0.3 1;0 0 1 1">
             <mpath href="#fl1"/>
           </animateMotion>
         </circle>
-        <circle class="flow-pulse" r="2.90" fill="var(--accent)">
+        <circle class="flow-pulse" r="5.80" fill="var(--accent)">
           <animateMotion dur="16.6s" begin="-2.7s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.183;1" keyPoints="0;0.35;1" keySplines="0.1 0 0.3 1;0 0 1 1">
             <mpath href="#fl2"/>
           </animateMotion>
         </circle>
-        <circle class="flow-pulse" r="2.20" fill="var(--accent)">
+        <circle class="flow-pulse" r="4.40" fill="var(--accent)">
           <animateMotion dur="19.3s" begin="-4.1s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.183;1" keyPoints="0;0.35;1" keySplines="0.1 0 0.3 1;0 0 1 1">
             <mpath href="#fl3"/>
           </animateMotion>
         </circle>
-        <circle class="flow-pulse" r="2.55" fill="var(--accent)">
+        <circle class="flow-pulse" r="5.10" fill="var(--accent)">
           <animateMotion dur="22.0s" begin="-5.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.183;1" keyPoints="0;0.35;1" keySplines="0.1 0 0.3 1;0 0 1 1">
             <mpath href="#fl4"/>
           </animateMotion>
         </circle>
-        <circle class="flow-pulse" r="2.90" fill="var(--accent)">
+        <circle class="flow-pulse" r="5.80" fill="var(--accent)">
           <animateMotion dur="11.1s" begin="-6.8s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.183;1" keyPoints="0;0.35;1" keySplines="0.1 0 0.3 1;0 0 1 1">
             <mpath href="#fl5"/>
           </animateMotion>
         </circle>
-        <circle class="flow-pulse" r="2.20" fill="var(--accent)">
+        <circle class="flow-pulse" r="4.40" fill="var(--accent)">
           <animateMotion dur="13.8s" begin="-8.1s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.183;1" keyPoints="0;0.35;1" keySplines="0.1 0 0.3 1;0 0 1 1">
             <mpath href="#fl6"/>
           </animateMotion>
         </circle>
-        <circle class="flow-pulse" r="2.55" fill="var(--accent)">
+        <circle class="flow-pulse" r="5.10" fill="var(--accent)">
           <animateMotion dur="16.6s" begin="-9.5s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.183;1" keyPoints="0;0.35;1" keySplines="0.1 0 0.3 1;0 0 1 1">
             <mpath href="#fl7"/>
           </animateMotion>
         </circle>
-        <circle class="flow-pulse" r="2.90" fill="var(--accent)">
+        <circle class="flow-pulse" r="5.80" fill="var(--accent)">
           <animateMotion dur="19.3s" begin="-10.8s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.183;1" keyPoints="0;0.35;1" keySplines="0.1 0 0.3 1;0 0 1 1">
             <mpath href="#fl8"/>
           </animateMotion>
