@@ -853,15 +853,15 @@
         <p class="feature-results-cap">From the run in the video</p>
         <div class="feature-results-grid">
           <div>
-            <p class="stat-num">47</p>
+            <p class="stat-num" data-count="47">47</p>
             <p class="stat-label">invoices checked</p>
           </div>
           <div>
-            <p class="stat-num">14</p>
+            <p class="stat-num" data-count="14">14</p>
             <p class="stat-label">discrepancies flagged</p>
           </div>
           <div>
-            <p class="stat-num">$28,400</p>
+            <p class="stat-num" data-count="28400" data-prefix="$">$28,400</p>
             <p class="stat-label">in flagged charges</p>
           </div>
         </div>
@@ -983,6 +983,41 @@
       btn.remove();
     });
   });
+
+  // count-up on the results stats when they scroll into view (one-shot).
+  // The final values are already in the HTML, so reduced-motion / no-JS
+  // just shows them static.
+  var statWrap = document.querySelector(".feature-results");
+  if (statWrap && !reduced && ("IntersectionObserver" in window)){
+    var countEls = statWrap.querySelectorAll(".stat-num[data-count]");
+    var runCount = function(el){
+      var target = parseFloat(el.getAttribute("data-count"));
+      var prefix = el.getAttribute("data-prefix") || "";
+      var dur = 1300, start = null, fired = false;
+      var settle = function(){ el.textContent = prefix + target.toLocaleString("en-US"); };
+      el.textContent = prefix + "0";
+      var step = function(ts){
+        fired = true;
+        if (start === null) start = ts;
+        var t = Math.min(1, (ts - start) / dur);
+        var eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = prefix + Math.round(target * eased).toLocaleString("en-US");
+        if (t < 1) requestAnimationFrame(step);
+        else settle();
+      };
+      requestAnimationFrame(step);
+      // if rAF never ticks (e.g. tab never painted), don't leave it at 0
+      setTimeout(function(){ if (!fired) settle(); }, 250);
+    };
+    var co = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (!entry.isIntersecting) return;
+        countEls.forEach(runCount);
+        co.disconnect();
+      });
+    }, { threshold: 0 });
+    co.observe(statWrap);
+  }
 })();
 </script>
 
