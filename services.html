@@ -330,6 +330,17 @@
   .panel-foot{ margin-top: var(--space-2); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-1) var(--space-2); }
   .cb-demo{ font-size: var(--step--1); color: var(--accent-ink); border-bottom-color: color-mix(in oklch, var(--accent) 45%, transparent); }
 
+  /* works with */
+  .sv-works{ padding-block: var(--space-2) var(--space-3); }
+  .sv-works .wrap{ text-align: center; }
+  .sv-works-cap{ font-size: var(--step-1); font-weight: 600; color: var(--ink); margin: 0; }
+  .sv-works-list{ list-style: none; margin: var(--space-2) 0 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem; }
+  .sv-works-list li{
+    padding: 0.5em 1.05em; border: 1px solid var(--border-strong); border-radius: 999px; background: color-mix(in oklch, white 62%, var(--bg));
+    font-size: var(--step-0); font-weight: 500; color: var(--ink-soft);
+  }
+  .sv-works-foot{ margin: var(--space-1) 0 0; font-size: var(--step--1); color: var(--ink-faint); }
+
   /* process: one line, four stops, the human step filled */
   .sv-process{ padding-block: var(--space-3) var(--space-4); }
   .sv-process-head{ max-width: 34rem; margin-bottom: var(--space-4); }
@@ -590,6 +601,14 @@
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="sv-works">
+  <div class="wrap">
+    <p class="sv-works-cap">Works with the tools you already use</p>
+    <ul class="sv-works-list"><li>QuickBooks</li><li>Xero</li><li>Outlook</li><li>Gmail</li><li>Google Sheets</li></ul>
+    <p class="sv-works-foot">Using something else? Ask.</p>
   </div>
 </section>
 
