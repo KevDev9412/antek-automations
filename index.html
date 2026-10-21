@@ -1262,33 +1262,33 @@
           <span>How long does it take to get something running?</span>
           <span class="faq-q-icon" aria-hidden="true"></span>
         </button>
-        <div class="faq-a" id="faq-a-1" role="region" aria-labelledby="faq-q-1">
+        <div class="faq-a" id="faq-a-1" inert>
           <div class="faq-a-inner">
-            <p>It depends on what we're automating. We start with the highest-impact piece of manual work first, scope it, get it running, then move to the next one.</p>
+            <p>Most first automations take four to six weeks from the day we have your system access and sample documents. That covers scoping, building, testing on your own data, and a live trial with a person approving each result. It moves at your pace as much as ours, so the biggest thing that stretches a timeline is waiting on access or data.</p>
           </div>
         </div>
       </div>
 
       <div class="faq-item" data-reveal>
         <button class="faq-q" aria-expanded="false" aria-controls="faq-a-2" id="faq-q-2">
-          <span>What happens if something breaks after it's live?</span>
+          <span>How does pricing work?</span>
           <span class="faq-q-icon" aria-hidden="true"></span>
         </button>
-        <div class="faq-a" id="faq-a-2" role="region" aria-labelledby="faq-q-2">
+        <div class="faq-a" id="faq-a-2" inert>
           <div class="faq-a-inner">
-            <p>We built it, so we maintain it. If something changes upstream or in a tool you use, we fix it. That's part of working with us, not a separate ticket you have to file.</p>
+            <p>Every automation is scoped and quoted after a short call, based on what it replaces. Most clients pay a one-time build fee, and we can split it into monthly payments if that suits you better. Every automation comes with 30 days of free support after it goes live. An ongoing support plan is recommended but never required.</p>
           </div>
         </div>
       </div>
 
       <div class="faq-item" data-reveal>
         <button class="faq-q" aria-expanded="false" aria-controls="faq-a-3" id="faq-q-3">
-          <span>How does pricing work?</span>
+          <span>Who approves the results, and what does that take?</span>
           <span class="faq-q-icon" aria-hidden="true"></span>
         </button>
-        <div class="faq-a" id="faq-a-3" role="region" aria-labelledby="faq-q-3">
+        <div class="faq-a" id="faq-a-3" inert>
           <div class="faq-a-inner">
-            <p>Every automation is scoped and quoted around what it actually replaces, not a flat fee for a tool you might not use fully. Tell us what's costing your team the most time and we'll tell you straight whether it's worth automating.</p>
+            <p>A person on your team approves each result before it goes anywhere: an invoice before it posts, a reply before it sends. We set it up so the details are already pulled out and checked, so each review is a quick look. You decide who approves, and anything that looks off is flagged with the reason attached.</p>
           </div>
         </div>
       </div>
@@ -1298,33 +1298,21 @@
           <span>Who has access to our systems and data?</span>
           <span class="faq-q-icon" aria-hidden="true"></span>
         </button>
-        <div class="faq-a" id="faq-a-4" role="region" aria-labelledby="faq-q-4">
+        <div class="faq-a" id="faq-a-4" inert>
           <div class="faq-a-inner">
-            <p>Only the person building your automation, and only for what the automation needs. We don't ask for broader access than the task requires.</p>
+            <p>Only the person building your automation, and only for what the automation needs. We don't ask for broader access than the task requires, and you can revoke it whenever you like.</p>
           </div>
         </div>
       </div>
 
       <div class="faq-item" data-reveal>
         <button class="faq-q" aria-expanded="false" aria-controls="faq-a-5" id="faq-q-5">
-          <span>What if our process changes after the automation is built?</span>
+          <span>What if something breaks, or our process changes?</span>
           <span class="faq-q-icon" aria-hidden="true"></span>
         </button>
-        <div class="faq-a" id="faq-a-5" role="region" aria-labelledby="faq-q-5">
+        <div class="faq-a" id="faq-a-5" inert>
           <div class="faq-a-inner">
-            <p>Tell us and we adjust it. The automation was built around how you work today, so it gets updated as that changes too, no extra project, no new invoice.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="faq-item" data-reveal>
-        <button class="faq-q" aria-expanded="false" aria-controls="faq-a-6" id="faq-q-6">
-          <span>Do you build one automation at a time, or take on the whole back office at once?</span>
-          <span class="faq-q-icon" aria-hidden="true"></span>
-        </button>
-        <div class="faq-a" id="faq-a-6" role="region" aria-labelledby="faq-q-6">
-          <div class="faq-a-inner">
-            <p>We start with the one place manual work is costing you the most time, get it running, then move to the next. Most of what we build gets requested once the first automation is already live and someone asks what else we can take off their plate.</p>
+            <p>For the first 30 days after go-live, fixes and adjustments are on us. After that, a support plan covers fixes, small changes and monitoring, and we respond to any failure within one business day. Without a plan, you can still bring us back for fixes and changes, quoted as they come up.</p>
           </div>
         </div>
       </div>
@@ -1457,10 +1445,12 @@
       faqItems.forEach(function(other){
         other.classList.remove("is-open");
         other.querySelector(".faq-q").setAttribute("aria-expanded", "false");
+        other.querySelector(".faq-a").setAttribute("inert", "");
       });
       if (!wasOpen){
         item.classList.add("is-open");
         btn.setAttribute("aria-expanded", "true");
+        item.querySelector(".faq-a").removeAttribute("inert");
       }
     });
   });
