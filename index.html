@@ -345,6 +345,8 @@
     font-weight: 400;
   }
   .subhead-accent{ color: var(--accent-ink); font-weight: 600; }
+  /* hand-set three-line break on desktop; flows naturally on small screens */
+  @media (min-width: 701px){ .subhead > span{ display: block; } }
 
   .cta-row{
     margin-top: var(--space-3);
@@ -944,9 +946,9 @@
       </h1>
 
       <p class="subhead" data-reveal>
-        Autonomous solutions built around your existing setup. The repetitive
-        data entry, invoice processing, and document sorting get done without
-        landing on anyone's desk.
+        <span>Self-running solutions built around your existing setup.</span>
+        <span>Your data entry, invoice processing, and document sorting,</span>
+        <span>handled with human approval as standard.</span>
       </p>
 
       <div class="cta-row" data-reveal>
