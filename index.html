@@ -10,7 +10,7 @@
 <style>
   :root{
     /* Path A palette: cool porcelain ground, near-black cool ink, electric blue */
-    --bg: oklch(98.5% 0.004 248);
+    --bg: oklch(96.5% 0.011 250);
     --ink: oklch(16% 0.026 264);
     --ink-soft: color-mix(in oklch, var(--ink) 64%, var(--bg));
     --ink-faint: color-mix(in oklch, var(--ink) 34%, var(--bg));
@@ -80,19 +80,19 @@
     padding-block: var(--space-2);
   }
   .nav-row{ display:grid; grid-template-columns: 1fr auto 1fr; align-items:center; gap: var(--space-2); }
-  .brand{ display:flex; align-items:center; gap: 0.48rem; text-decoration:none; justify-self: start; }
-  .brand img{ height: 30px; width:auto; }
+  .brand{ display:flex; align-items:center; gap: 0.325rem; text-decoration:none; justify-self: start; }
+  .brand img{ height: 45px; width:auto; }
   .brand span{
-    font-family: var(--font-display); font-weight: 500; font-size: 1.4375rem;
-    letter-spacing: -0.02em; color: var(--ink);
+    font-family: var(--font-display); font-weight: 600; font-size: 1.625rem;
+    letter-spacing: -0.015em; color: var(--ink); white-space: nowrap;
   }
   .nav-links{ display:flex; align-items:center; gap: var(--space-3); list-style:none; margin:0; padding:0; }
   .nav-links a{
     position: relative;
     display: inline-block;
     padding-block: 0.65rem 0.6rem;
-    font-size: clamp(1.23rem, 1.185rem + 0.24vw, 1.38rem); text-decoration:none; color: var(--ink-soft);
-    font-weight: 600; transition: color 220ms var(--ease);
+    font-size: clamp(1.05rem, 1rem + 0.2vw, 1.18rem); text-decoration:none; color: var(--ink-soft);
+    font-weight: 500; transition: color 220ms var(--ease);
   }
   /* hover/current marker: a small accent tick above, a line that draws in below.
      Same idea as a tab indicator, different execution: no numbering, no bracket label. */
@@ -185,23 +185,39 @@
   .hero-inner{ position: relative; z-index: 2; width: 100%; }
 
   .eyebrow{
-    display:flex; align-items:center; justify-content:center; gap: 0.55rem;
+    display:flex; align-items:center; justify-content:center; gap: 0.75rem;
     flex-wrap: wrap;
-    font-family: var(--font-mono); font-size: var(--step--1);
-    letter-spacing: 0.14em; text-transform: uppercase;
+    font-family: var(--font-body); font-size: 1.2292rem;
+    letter-spacing: 0.005em;
     color: var(--ink-soft); font-weight: 500;
     margin-bottom: calc(var(--space-2) * 1.3915);
   }
-  /* the eyebrow device: a bracketed chip around the load-bearing phrase --
+  /* the eyebrow device: a quiet pill around the load-bearing phrase --
      it names the reader's situation, not the product category */
   .eyebrow-chip{
-    display:inline-flex; align-items:center;
-    padding: 0.32em 0.8em;
-    border: 1px solid color-mix(in oklch, var(--accent) 40%, var(--border));
+    display:inline-flex; align-items:center; gap: 0.5em;
+    padding: 0.3em 0.85em 0.3em 0.7em;
+    border: 1px solid color-mix(in oklch, var(--accent) 28%, var(--border));
     border-radius: 999px;
-    background: color-mix(in oklch, var(--accent) 9%, var(--bg));
+    background: color-mix(in oklch, white 70%, var(--bg));
     color: var(--accent-ink);
-    letter-spacing: 0.1em;
+    font-size: 1.1042rem; font-weight: 500; letter-spacing: 0;
+  }
+  .eyebrow-chip::before{
+    content:""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent);
+  }
+
+  /* live-status dot: fades in and out like a recording indicator. No ring,
+     no movement, just opacity. A symmetric sine-like curve is used here
+     because the site's --ease is a one-way decelerating curve and would make
+     the fade lopsided. Only runs where motion is allowed. */
+  .eyebrow-chip::before{ flex: 0 0 auto; }
+  @media (prefers-reduced-motion: no-preference){
+    .eyebrow-chip::before{ animation: live-dot 3s cubic-bezier(.45,0,.55,1) infinite; }
+  }
+  @keyframes live-dot{
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0; }
   }
 
   .hero-copy{ max-width: 66rem; margin-inline: auto; text-align: center; }
@@ -799,7 +815,7 @@
     <div class="hero-copy">
 
       <p class="eyebrow" data-reveal>
-        Workflow automation for <span style="text-transform:none">SMEs</span>
+        <span>Workflow automation for SMEs</span>
         <span class="eyebrow-chip">growing or streamlining</span>
       </p>
 
