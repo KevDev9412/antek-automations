@@ -414,6 +414,7 @@
   }
   .services-head{ max-width: 46rem; }
 
+  .services-title-accent{ color: var(--accent); white-space: nowrap; }
   .services-title{
     font-size: clamp(2rem, 1.55rem + 2.2vw, 3.1rem);
     font-weight: 560;
@@ -430,6 +431,22 @@
   }
 
   .services-foot{ margin-top: var(--space-4); }
+  /* wide screens: heading on the left, intro paragraph on the right. Saves a block
+     of height and uses the empty space beside the title. Below this width there is
+     not room for both, so they stack. */
+  @media (min-width: 1340px){
+    .services-head{
+      max-width: none;
+      display: grid;
+      grid-template-columns: minmax(0, 46rem) minmax(0, 1fr);
+      column-gap: var(--space-4);
+      align-items: start;
+    }
+    .services-lede{
+      margin-top: 0.5rem; max-width: 30rem; justify-self: end;
+      font-size: var(--step-0); line-height: 1.55;
+    }
+  }
   .services-link{
     display: inline-flex; align-items: center; gap: 0.5em;
     color: var(--bg); font-weight: 600; text-decoration: none;
@@ -1042,7 +1059,7 @@
 </svg>
   <div class="wrap">
     <div class="services-head">
-      <h2 class="services-title" data-reveal>The manual work always lands in the same places.</h2>
+      <h2 class="services-title" data-reveal>The manual work always lands in the <span class="services-title-accent">same places.</span></h2>
       <p class="services-lede" data-reveal>
         No matter the business, manual work clusters in the same handful of departments. Every automation we build is shaped around how you actually work, not a template. These are the places we start.
       </p>
