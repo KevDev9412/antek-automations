@@ -183,7 +183,11 @@
     align-items: center;
     /* padding-top carries the +15% eyebrow gap so the block re-centres to the
        same eyebrow position (eyebrow stays put, headline + rest shift down) */
-    padding-block: calc(var(--space-4) + var(--space-2) * 0.2915) var(--space-3);
+    /* extra padding-top = the headline's growth (14% bigger than the original, 2 lines) + the 0.5rem
+       added below the eyebrow, so the eyebrow stays where it was and only the
+       headline and everything under it move down. */
+    --h1-size: calc(clamp(2.4rem, 1.5rem + 2.9vw, 3.7rem) * 1.05 * 1.14);
+    padding-block: calc(var(--space-4) + var(--space-2) * 0.2915 + var(--h1-size) * 0.275 + 0.5rem) var(--space-3);
     overflow: clip;
     isolation: isolate;
   }
@@ -230,7 +234,7 @@
     font-family: var(--font-body); font-size: 1.2292rem;
     letter-spacing: 0.005em;
     color: var(--ink-soft); font-weight: 500;
-    margin-bottom: calc(var(--space-2) * 1.3915);
+    margin-bottom: calc(var(--space-2) * 1.3915 + 0.5rem);
   }
   /* the eyebrow device: a quiet pill around the load-bearing phrase --
      it names the reader's situation, not the product category */
@@ -260,10 +264,15 @@
     50%      { opacity: 0; }
   }
 
-  .hero-copy{ max-width: 66rem; margin-inline: auto; text-align: center; }
+  /* .hero-copy is a size container so the headline can be capped by the width
+     it actually has (cqi), which keeps "No new software. No new hires." on
+     one line at every desktop width. The cap only bites below ~1200px; above
+     that the fluid clamp() size governs. */
+  .hero-copy{ max-width: 72rem; margin-inline: auto; text-align: center; container-type: inline-size; }
 
   h1.headline{
-    font-size: calc(clamp(2.4rem, 1.5rem + 2.9vw, 3.7rem) * 1.05);
+    font-size: var(--h1-size);
+    word-spacing: -0.06em;
     font-weight: 588;
     letter-spacing: 0;
     line-height: 1.12;
@@ -271,6 +280,9 @@
     text-wrap: balance;
   }
   h1.headline > span{ display:block; }
+  @media (min-width: 701px){
+    h1.headline{ font-size: min(var(--h1-size), 6.4cqi); }
+  }
   h1.headline .turn{ color: var(--accent-ink); }
 
   /* a light sweep pulled left-to-right through the blue line every ~5.5s.
