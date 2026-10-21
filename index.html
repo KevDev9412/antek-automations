@@ -399,6 +399,15 @@
     letter-spacing: -0.01em; color: var(--ink); font-variant-numeric: lining-nums tabular-nums;
   }
   .proof-num small{ font-size: 0.5em; font-weight: 500; color: var(--accent-ink); letter-spacing: 0; margin-left: 0.15em; }
+  /* the invisible final number reserves the width, so nothing shifts while the live one counts up */
+  .count{ display: inline-grid; }
+  .count > *{ grid-area: 1 / 1; }
+  .count-final{ visibility: hidden; }
+  .count-live{ justify-self: end; }
+  .sr-only{
+    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
   .proof-label{ font-size: var(--step-0); line-height: 1.4; color: var(--ink-soft); max-width: 17rem; text-wrap: balance; }
   @media (max-width: 700px){
     .proof-row{ grid-template-columns: 1fr; }
@@ -1027,15 +1036,15 @@
   <div class="wrap">
     <div class="proof-row" data-reveal>
       <div class="proof-stat">
-        <div class="proof-num">71<small>hours</small></div>
+        <div class="proof-num"><span aria-hidden="true"><span class="count" data-to="71"><span class="count-final">71</span><span class="count-live">71</span></span><small>hours</small></span><span class="sr-only">71 hours</span></div>
         <p class="proof-label">a month back, out of about 83 spent by hand</p>
       </div>
       <div class="proof-stat">
-        <div class="proof-num">16<small>hours</small></div>
+        <div class="proof-num"><span aria-hidden="true"><span class="count" data-to="16"><span class="count-final">16</span><span class="count-live">16</span></span><small>hours</small></span><span class="sr-only">16 hours</span></div>
         <p class="proof-label">a week, about 40% of a full-time AP role</p>
       </div>
       <div class="proof-stat">
-        <div class="proof-num">$21,250</div>
+        <div class="proof-num"><span aria-hidden="true">$<span class="count" data-to="21250" data-group="1"><span class="count-final">21,250</span><span class="count-live">21,250</span></span></span><span class="sr-only">$21,250</span></div>
         <p class="proof-label">a year in staff time, at the Ontario median wage</p>
       </div>
     </div>
@@ -1435,6 +1444,37 @@
       flowSvg.pauseAnimations();
     }
   }
+
+
+  // proof strip: numbers roll up from zero as the strip scrolls into view (once)
+  (function(){
+    var counts = [].slice.call(document.querySelectorAll(".count"));
+    var row = document.querySelector(".proof-row");
+    if (!counts.length || !row) return;
+    var fmt = function(el, v){
+      var n = Math.round(v);
+      el.querySelector(".count-live").textContent = el.getAttribute("data-group") ? n.toLocaleString("en-US") : String(n);
+    };
+    if (reduced || !("IntersectionObserver" in window)) return; // final values stay in place
+    // start every number at zero (the hidden final number keeps the width)
+    counts.forEach(function(el){ fmt(el, 0); });
+    function run(){
+      var t0 = null, dur = 1700;
+      function frame(t){
+        if (t0 === null) t0 = t;
+        var p = Math.min(1, (t - t0) / dur);
+        var e = p === 1 ? 1 : 1 - Math.pow(2, -10 * p); // fast start, long settle
+        counts.forEach(function(el){ fmt(el, e * parseFloat(el.getAttribute("data-to"))); });
+        if (p < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+    var done = false;
+    function once(){ if (done) return; done = true; run(); }
+    new IntersectionObserver(function(entries, io){
+      entries.forEach(function(en){ if (en.isIntersecting){ once(); io.disconnect(); } });
+    }, { threshold: 0, rootMargin: "0px 0px -18% 0px" }).observe(row);
+  })();
 
   // faq accordion: single item open at a time
   var faqItems = document.querySelectorAll(".faq-item");
