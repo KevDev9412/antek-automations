@@ -377,10 +377,10 @@
   .hero-textlink:hover{ color: var(--accent-ink); }
   .hero-textlink:hover svg{ transform: translateX(3px); }
   /* ---------- proof strip (directly under the hero) ---------- */
-  .proof{ padding-block: var(--space-3) var(--space-4); }
-  .proof-head{
-    text-align: center; margin-bottom: var(--space-2);
-    font-size: var(--step-1); font-weight: 600; color: var(--ink);
+  .proof{ padding-block: calc(var(--space-3) + var(--space-2)) var(--space-4); }
+  .proof-foot{
+    margin-top: var(--space-1); text-align: center;
+    font-size: var(--step--1); color: color-mix(in oklch, var(--ink) 50%, var(--bg));
   }
   .proof-row{
     display: grid; grid-template-columns: repeat(3, 1fr);
@@ -966,7 +966,6 @@
 
 <section class="proof" aria-label="What it adds up to">
   <div class="wrap">
-    <p class="proof-head" data-reveal>What 500 invoices a month adds up to</p>
     <div class="proof-row" data-reveal>
       <div class="proof-stat">
         <div class="proof-num">71<small>hours</small></div>
@@ -981,6 +980,7 @@
         <p class="proof-label">a year in staff time, at the Ontario median wage</p>
       </div>
     </div>
+    <p class="proof-foot" data-reveal>At 500 invoices a month</p>
   </div>
 </section>
 
