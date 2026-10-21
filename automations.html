@@ -126,10 +126,50 @@
     justify-self: end;
   }
   .nav-cta:hover{ background: var(--accent-hover); border-color: var(--accent-hover); transform: translateY(-1px); }
-  .menu-btn{ display:none; }
+  .menu-btn{
+    display: none; justify-self: end;
+    width: 44px; height: 44px; padding: 0;
+    align-items: center; justify-content: center;
+    background: transparent; color: var(--ink); cursor: pointer;
+    border: 1px solid var(--border-strong); border-radius: 9px;
+  }
+  .menu-btn:hover{ border-color: var(--ink); }
+  .menu-btn-bars{ position: relative; width: 18px; height: 12px; }
+  .menu-btn-bars::before, .menu-btn-bars::after{
+    content:""; position: absolute; left: 0; width: 100%; height: 1.75px; background: currentColor;
+  }
+  .menu-btn-bars::before{ top: 0; }
+  .menu-btn-bars::after{ bottom: 0; }
+  .nav-links-cta{ display: none; }
 
   @media (max-width: 760px){
-    .nav-links{ display:none; }
+    .nav-row{ grid-template-columns: 1fr auto; }
+    .nav-row > nav{ display: contents; }
+    .nav-cta{ display: none; }
+    .menu-btn{ display: inline-flex; }
+    .brand span{ font-size: 1.3rem; }
+    .nav-links{
+      display: none;
+      position: absolute; left: 0; right: 0; top: 100%;
+      flex-direction: column; align-items: stretch; gap: 0;
+      padding: var(--space-1) clamp(1.5rem, 1rem + 5vw, 3rem) var(--space-2);
+      background: var(--bg);
+      border-block: 1px solid var(--border);
+    }
+    header.menu-open .nav-links{ display: flex; }
+    .nav-links a{ display: block; padding-block: 0.85rem; font-size: 1.125rem; }
+    .nav-links a::before{ display: none; }
+    .nav-links a::after{ left: 0; right: auto; width: 2.5rem; transform-origin: left; }
+    .nav-links-cta{ display: block; margin-top: var(--space-1); }
+    .nav-links-cta a{
+      display: block; text-align: center;
+      font-size: var(--step-0); font-weight: 600;
+      color: var(--bg); background: var(--ink);
+      border: 2.42px solid var(--accent); border-radius: 9px;
+      padding: 0.7em 1em;
+    }
+    .nav-links-cta a::after{ display: none; }
+    .nav-links-cta a:hover, .nav-links-cta a:focus-visible{ color: var(--bg); }
   }
 
   .eyebrow{
@@ -682,16 +722,20 @@
       <img src="assets/logo-icon-240.png" alt="Antek Automations">
       <span>Antek Automations</span>
     </a>
-    <nav>
+    <nav id="site-nav" aria-label="Main">
       <ul class="nav-links">
         <li><a href="/">Home</a></li>
         <li><a href="about">About</a></li>
         <li><a href="services">Services</a></li>
         <li><a href="automations" class="is-current">Work</a></li>
         <li><a href="/#faq">FAQ</a></li>
+        <li class="nav-links-cta"><a href="https://calendly.com/kevin-antekautomations/30min" target="_blank" rel="noopener">Book A Call</a></li>
       </ul>
     </nav>
     <a class="nav-cta" href="https://calendly.com/kevin-antekautomations/30min" target="_blank" rel="noopener">Book A Call</a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+      <span class="menu-btn-bars" aria-hidden="true"></span>
+    </button>
   </div>
 </header>
 
@@ -1019,6 +1063,27 @@
     }, { threshold: 0 });
     co.observe(statWrap);
   }
+})();
+</script>
+
+<script>
+(function(){
+  var header = document.querySelector("header");
+  var btn = header && header.querySelector(".menu-btn");
+  if (!btn) return;
+  function setOpen(open){
+    header.classList.toggle("menu-open", open);
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+  }
+  btn.addEventListener("click", function(){ setOpen(!header.classList.contains("menu-open")); });
+  header.querySelectorAll(".nav-links a").forEach(function(a){
+    a.addEventListener("click", function(){ setOpen(false); });
+  });
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && header.classList.contains("menu-open")){ setOpen(false); btn.focus(); }
+  });
+  window.matchMedia("(min-width: 761px)").addEventListener("change", function(m){ if (m.matches) setOpen(false); });
 })();
 </script>
 
