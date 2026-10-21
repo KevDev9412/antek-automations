@@ -252,120 +252,127 @@
     background: var(--accent);
   }
 
-  /* ---------- services page intro ---------- */
-  .services-intro{
-    padding-block: var(--space-3) var(--space-2);
-  }
+  /* ---------- services: a working console ---------- */
+  .cb-hero{ padding-block: var(--space-3) var(--space-4); text-align: center; }
+  .cb-hero h1.headline{ font-size: clamp(2.1rem, 1.2rem + 3vw, 3.9rem); line-height: 1.08; letter-spacing: -0.014em; margin-inline: auto; }
+  .cb-hero h1.headline > span{ display: block; text-wrap: balance; }
+  .cb-hero h1.headline > span + span{ margin-top: 0.14em; }
+  .cb-hero h1.headline .accent{ white-space: nowrap; }
+  .cb-hero .subhead{ margin: var(--space-2) auto 0; max-width: 40rem; }
 
-  /* ---------- capabilities: the six services, spec-sheet style.
-     Deliberately not the homepage's dark card grid and not the Work
-     page's numbered case rows -- icon + large serif title on the left,
-     description + concrete tags on the right, plain hairlines between
-     rows so six of them read as one continuous list, not six cards. ---------- */
-  .capabilities{
-    padding-block: var(--space-2) var(--space-3);
+  .console{
+    margin-top: var(--space-4); text-align: left;
+    display: grid; grid-template-columns: minmax(270px, 330px) minmax(0, 1fr);
+    border: 1px solid var(--border-strong); border-radius: 26px; overflow: hidden;
+    background: color-mix(in oklch, white 58%, var(--bg));
+    box-shadow: 0 1px 0 color-mix(in oklch, white 70%, transparent) inset;
   }
-  .capability-row{
-    display: grid;
-    grid-template-columns: 5fr 7fr;
-    gap: var(--space-3);
-    padding-block: var(--space-3);
-    border-top: 1px solid var(--border);
+  .console-list{ display: flex; flex-direction: column; background: color-mix(in oklch, var(--ink) 3.5%, var(--bg)); border-right: 1px solid var(--border-strong); }
+  .tab{
+    position: relative; display: flex; align-items: center; gap: 0.9rem; text-align: left;
+    padding: 1.15rem 1.35rem; background: none; border: 0; border-bottom: 1px solid var(--border); cursor: pointer;
+    font: inherit; color: var(--ink-soft); flex: 1 1 0;
+    transition: background 240ms var(--ease), color 240ms var(--ease), box-shadow 240ms var(--ease);
   }
-  .capability-row:first-child{ border-top: none; padding-top: 0; }
-  .capability-head{ display:flex; align-items:flex-start; gap: var(--space-2); }
-  .capability-icon{
-    flex-shrink:0; width: 52px; height: 52px; border-radius: 50%;
-    background: color-mix(in oklch, var(--accent) 11%, var(--bg));
-    color: var(--accent-ink);
-    display:flex; align-items:center; justify-content:center;
+  .tab:last-child{ border-bottom: 0; }
+  .tab:hover{ color: var(--ink); background: color-mix(in oklch, white 40%, transparent); }
+  .tab:focus-visible{ outline: 2px solid var(--accent); outline-offset: -3px; }
+  .tab-icon{
+    flex: 0 0 auto; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--bg); color: var(--ink-faint); border: 1px solid var(--border-strong);
+    transition: background 240ms var(--ease), color 240ms var(--ease), border-color 240ms var(--ease);
   }
-  .capability-icon svg{ width: 24px; height: 24px; }
-  .capability-title{
-    margin-top: 0.35rem;
-    font-size: clamp(1.35rem, 1.15rem + 0.9vw, 1.85rem);
-    font-weight: 560;
-    line-height: 1.25;
-    color: var(--ink);
+  .tab-name{ font-family: var(--font-display); font-weight: 560; font-size: 1.28rem; line-height: 1.15; text-wrap: balance; }
+  .tab[aria-selected="true"]{ color: var(--ink); background: color-mix(in oklch, white 72%, var(--bg)); box-shadow: inset 3px 0 0 var(--accent); }
+  .tab[aria-selected="true"] .tab-icon{ background: color-mix(in oklch, var(--accent) 12%, var(--bg)); color: var(--accent-ink); border-color: color-mix(in oklch, var(--accent) 40%, var(--border)); }
+  .tab-bar{ position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: left; }
+  .tab.is-timing .tab-bar{ animation: tabfill var(--cycle, 8s) linear forwards; }
+  @keyframes tabfill{ to{ transform: scaleX(1); } }
+
+  .console-main{ padding: var(--space-3); display: flex; flex-direction: column; gap: var(--space-1); min-width: 0; }
+  .cb-art{ width: 100%; height: auto; max-height: 232px; display: block; overflow: visible; margin-inline: auto; }
+  .cb-art .lane path{ fill: none; stroke: color-mix(in oklch, var(--ink) 26%, var(--bg)); stroke-width: 1.6; stroke-linecap: round; }
+  .cb-art .fa-dots circle{ fill: color-mix(in oklch, var(--ink) 40%, var(--bg)); }
+  .cb-art .gate-halo{ fill: color-mix(in oklch, var(--accent) 10%, transparent); }
+  .cb-art .gate-core{ fill: var(--accent); filter: drop-shadow(0 0 10px color-mix(in oklch, var(--accent) 55%, transparent)); }
+  .cb-art .gate-person{ fill: none; stroke: #fff; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .cb-art .mv use{ fill: color-mix(in oklch, white 88%, var(--bg)); stroke: var(--accent); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .cb-art .mv{ filter: drop-shadow(0 0 5px color-mix(in oklch, var(--accent) 35%, transparent)); }
+  .cb-art .fa-cap{ font: 600 14.5px/1 var(--font-body); fill: var(--ink-soft); }
+  .cb-art .fa-cap--mid{ fill: var(--ink); }
+
+  /* the status readout: a plain statement of what the automation is doing, stage by stage */
+  .console-status{
+    margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.5rem;
+    padding: 0.7rem 0.95rem; border: 1px solid var(--border); border-radius: 12px;
+    background: color-mix(in oklch, var(--ink) 3%, var(--bg));
+    font-family: var(--font-mono); font-size: 0.8125rem; color: var(--ink-faint); min-height: 2.9rem;
   }
-  .capability-body{ padding-top: 0.3rem; }
-  .capability-desc{
-    max-width: 36rem;
-    font-size: var(--step-0);
-    line-height: 1.6;
-    color: var(--ink-soft);
-  }
-  .capability-tags{
-    margin-top: var(--space-2);
-    display:flex; flex-wrap:wrap; gap: 0.5rem;
-  }
+  .live-dot{ width: 7px; height: 7px; border-radius: 50%; background: var(--accent); margin-right: 0.35rem; animation: live-dot 3s cubic-bezier(.45,0,.55,1) infinite; }
+  @keyframes live-dot{ 0%, 100%{ opacity: 1; } 50%{ opacity: 0; } }
+  .stage{ transition: color 260ms var(--ease); }
+  .stage + .stage::before{ content: "\203A"; margin-right: 0.5rem; color: var(--ink-faint); }
+  .stage.is-done{ color: var(--ink-soft); }
+  .stage.is-now{ color: var(--accent-ink); font-weight: 500; }
+
+  .capability-tags{ display: flex; flex-wrap: wrap; gap: 0.5rem; }
   .capability-tag{
-    font-family: var(--font-mono); font-size: var(--step--1);
-    color: var(--ink-soft);
-    border: 1px solid var(--border-strong);
-    border-radius: 999px;
-    padding: 0.35em 0.9em;
-    background: var(--surface);
+    font-family: var(--font-mono); font-size: var(--step--1); color: var(--ink-soft);
+    border: 1px solid var(--border-strong); border-radius: 999px; padding: 0.35em 0.9em; background: var(--surface);
   }
 
-  @media (max-width: 760px){
-    .capability-row{ grid-template-columns: 1fr; gap: var(--space-2); }
-  }
+  .panels{ padding-top: var(--space-1); }
+  .panel[hidden]{ display: none; }
+  .panel{ animation: panel-in 460ms var(--ease) both; }
+  @keyframes panel-in{ from{ opacity: 0; transform: translateY(10px); } to{ opacity: 1; transform: none; } }
+  .panel-title{ font-size: clamp(1.7rem, 1.3rem + 1.2vw, 2.4rem); font-weight: 560; line-height: 1.12; color: var(--ink); text-wrap: balance; }
+  .panel-desc{ margin-top: 0.7rem; font-size: var(--step-0); line-height: 1.6; color: var(--ink-soft); max-width: 42rem; }
+  .panel-foot{ margin-top: var(--space-2); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-1) var(--space-2); }
+  .cb-demo{ font-size: var(--step--1); color: var(--accent-ink); border-bottom-color: color-mix(in oklch, var(--accent) 45%, transparent); }
 
-  /* ---------- process: a connected step rail, echoing the hero's flow-node
-     dots at a small scale -- a new device for the site, not a numbered
-     card grid and not the about section's bordered point list. ---------- */
-  .process{ padding-block: var(--space-3) var(--space-3); }
-  .process-head{ max-width: 34rem; }
-  .process-title{
-    font-size: clamp(1.9rem, 1.5rem + 2vw, 2.8rem);
-    font-weight: 560;
-    line-height: 1.2;
-    color: var(--ink);
+  /* process: one line, four stops, the human step filled */
+  .sv-process{ padding-block: var(--space-3) var(--space-4); }
+  .sv-process-head{ max-width: 34rem; margin-bottom: var(--space-4); }
+  .sv-process-title{ font-size: clamp(1.9rem, 1.5rem + 2vw, 2.8rem); font-weight: 560; line-height: 1.2; color: var(--ink); }
+  .sv-process-lede{ margin-top: var(--space-1); font-size: var(--step-1); line-height: 1.5; color: var(--ink-soft); }
+  .pline{ position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-3); }
+  .pline::before{ content: ""; position: absolute; left: 28px; right: 28px; top: 28px; height: 2px; background: color-mix(in oklch, var(--ink) 16%, var(--bg)); }
+  .pline::after{ content: ""; position: absolute; left: 28px; top: 28px; height: 2px; width: calc((100% - 56px) * var(--pp, 0)); background: var(--accent); transition: width 900ms var(--ease); }
+  .pstep{ position: relative; z-index: 1; }
+  .pstep-icon{
+    width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; margin-bottom: var(--space-2);
+    background: var(--bg); color: var(--ink-faint); border: 1.5px solid var(--border-strong);
+    transition: color 420ms var(--ease), border-color 420ms var(--ease), background 420ms var(--ease), box-shadow 420ms var(--ease);
   }
-  .process-lede{
-    margin-top: var(--space-1);
-    font-size: var(--step-1);
-    line-height: 1.5;
-    color: var(--ink-soft);
-  }
+  .pstep.is-lit .pstep-icon{ color: var(--accent); border-color: var(--accent); background: color-mix(in oklch, var(--accent) 10%, var(--bg)); box-shadow: 0 0 0 5px color-mix(in oklch, var(--accent) 10%, transparent); }
+  .pstep--person.is-lit .pstep-icon{ background: var(--accent); color: #fff; }
+  .pstep h3{ font-family: var(--font-body); font-weight: 600; font-size: var(--step-1); line-height: 1.25; color: var(--ink); margin: 0 0 0.5rem; text-wrap: balance; }
+  .pstep p{ margin: 0; font-size: var(--step-0); line-height: 1.55; color: var(--ink-soft); }
 
-  .process-rail{
-    margin-top: var(--space-4);
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-3);
-  }
-  .process-rail::before{
-    content:"";
-    position: absolute; left: 0; right: 0; top: 6px;
-    height: 1px; background: var(--border);
-  }
-  .process-step{ position: relative; padding-top: var(--space-3); }
-  .process-dot{
-    position: absolute; top: 0; left: 0;
-    width: 13px; height: 13px; border-radius: 50%;
-    background: var(--bg); border: 2px solid var(--accent);
-  }
-  .process-step h3{
-    font-family: var(--font-body); font-weight: 600; font-size: var(--step-0);
-    color: var(--ink); margin: 0 0 0.4rem;
-  }
-  .process-step p{
-    font-size: var(--step--1); line-height: 1.55; color: var(--ink-soft); margin: 0;
-  }
 
-  @media (max-width: 760px){
-    .process-rail{ grid-template-columns: 1fr; gap: 0; }
-    .process-rail::before{
-      left: 6px; right: auto; top: 0; bottom: 0; width: 1px; height: auto;
-    }
-    .process-step{
-      padding-top: 0; padding-left: var(--space-3); padding-bottom: var(--space-3);
-    }
-    .process-step:last-child{ padding-bottom: 0; }
-    .process-dot{ top: 0.35rem; left: 0; }
+  @media (max-width: 900px){
+    .console{ grid-template-columns: 1fr; }
+    .console-list{ flex-direction: row; overflow-x: auto; scroll-snap-type: x mandatory; border-right: 0; border-bottom: 1px solid var(--border-strong); }
+    .tab{ flex: 0 0 auto; scroll-snap-align: start; padding: 0.95rem 1.05rem; border-bottom: 0; border-right: 1px solid var(--border); }
+    .tab-icon{ display: none; }
+    .tab-name{ font-size: 1.05rem; white-space: nowrap; }
+    .tab[aria-selected="true"]{ box-shadow: inset 0 -3px 0 var(--accent); }
+    .tab-bar{ display: none; }
+    .console-main{ padding: var(--space-2); }
+    .pline{ grid-template-columns: 1fr; gap: var(--space-3); }
+    .pline::before, .pline::after{ left: 28px; right: auto; top: 0; bottom: 0; width: 2px; height: auto; }
+    .pline::after{ height: calc(100% * var(--pp, 0)); width: 2px; }
+    .pstep{ display: grid; grid-template-columns: 56px 1fr; column-gap: var(--space-2); }
+    .pstep-icon{ grid-row: 1 / span 2; margin-bottom: 0; }
+  }
+  @media (max-width: 700px){
+    .cb-art .fa-cap{ font-size: 27px; }
+    .console-status{ font-size: 0.75rem; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .tab, .tab-icon, .stage, .pstep-icon, .pline::after{ transition: none; }
+    .panel{ animation: none; }
+    .live-dot{ animation: none; }
   }
 
   /* ---------- closing cta (light field, shares the page background) ---------- */
@@ -504,176 +511,102 @@
   </div>
 </header>
 
-<section class="services-intro">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+  <g id="g-env"><rect x="-10" y="-7" width="20" height="14" rx="2.5"/><path d="M-10,-5 L0,2 L10,-5" fill="none"/></g>
+  <g id="g-page"><path d="M-7,-10 H3 L8,-5 V10 H-7 Z"/><path d="M3,-10 V-5 H8" fill="none"/><path d="M-4,1 H5 M-4,5 H2" fill="none"/></g>
+  <g id="g-rows"><rect x="-10" y="-8" width="20" height="16" rx="2"/><path d="M-10,-2.5 H10 M-10,3 H10 M-3,-8 V8" fill="none"/></g>
+  <g id="g-cal"><rect x="-10" y="-8" width="20" height="18" rx="2.5"/><path d="M-10,-2 H10 M-5,-11 V-6 M5,-11 V-6" fill="none"/></g>
+  <g id="g-chart"><path d="M-9,10 H9" fill="none"/><rect x="-8" y="0" width="4" height="10" rx="1"/><rect x="-2" y="-8" width="4" height="18" rx="1"/><rect x="4" y="-3" width="4" height="13" rx="1"/></g>
+  <g id="g-help"><circle r="10"/><path d="M-3.5,-3 a3.5,3.5 0 1 1 5,3.1 c-1.2,0.7 -1.5,1.3 -1.5,2.6 M0,6.4 v0.2" fill="none"/></g>
+  <g id="g-person"><circle cx="0" cy="-4" r="4"/><path d="M-8,10 c0,-6 3.5,-8 8,-8 s8,2 8,8" fill="none"/></g>
+  <g id="g-check"><circle r="9.5" fill="var(--accent)" stroke="var(--accent)"/><path d="M-4.2,0.6 L-1.2,3.6 L4.6,-3" fill="none" stroke="#fff" stroke-width="2"/></g>
+  <g id="g-phone"><path d="M-8,-9 h5 l2,5 -3,2 a11,11 0 0 0 5,5 l2,-3 5,2 v5 a3,3 0 0 1 -3,3 A16,16 0 0 1 -11,-6 a3,3 0 0 1 3,-3 z" fill="none"/></g>
+  <g id="g-scope"><rect x="-8" y="-10" width="16" height="20" rx="2" fill="none"/><path d="M-4,-4 H4 M-4,0 H4 M-4,4 H1" fill="none"/></g>
+  <g id="g-live"><circle r="9" fill="none"/><path d="M-3.5,-4 L5,0 L-3.5,4 Z" fill="none"/></g>
+  <g id="g-shield"><path d="M0,-10 L9,-6 V1 C9,6 5,9 0,11 C-5,9 -9,6 -9,1 V-6 Z" fill="none"/><path d="M-4,0.5 L-1,3.5 L4.5,-2.5" fill="none"/></g>
+</defs></svg>
+<section class="cb-hero">
   <div class="wrap">
-    <div class="hero-copy">
-      <h1 class="headline">
-        <span data-reveal>Manual work hides in</span>
-        <span data-reveal>many places, we know how</span>
-        <span data-reveal>to take it <span class="accent">off your plate</span>.</span>
-      </h1>
-      <p class="subhead" data-reveal>
-        Client communication, billing, records, scheduling, reporting: every automation starts with how your team already works today, then removes the repetitive part underneath it.
-      </p>
-    </div>
-  </div>
-</section>
+    <h1 class="headline" data-reveal><span>Manual work hides in many places.</span><span>We know how to take it <span class="accent">off your plate.</span></span></h1>
+    <p class="subhead" data-reveal>Invoices, reconciliation, records, replies, scheduling: every automation starts with how your team already works today, then removes the repetitive part, with a human approving every result.</p>
 
-<section class="capabilities" id="capabilities">
-  <div class="wrap">
-
-    <div class="capability-row" data-reveal>
-      <div class="capability-head">
-        <div class="capability-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+    <div class="console" id="console" data-reveal>
+      <div class="console-list" role="tablist" aria-label="Services" aria-orientation="vertical">
+<button class="tab" role="tab" id="tab-0" aria-controls="panel-0" aria-selected="true" tabindex="0" data-glyph="g-page" data-a="Invoice arrives" data-c="Posted" data-stages="Invoice arrives|Read|Matched to the PO|Someone approves|Posted"><span class="tab-icon"><svg viewBox="-14 -14 28 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><use href="#g-page"/></svg></span><span class="tab-name">Billing &amp; Invoicing</span><span class="tab-bar" aria-hidden="true"></span></button>
+<button class="tab" role="tab" id="tab-1" aria-controls="panel-1" aria-selected="false" tabindex="-1" data-glyph="g-chart" data-a="Sources pulled" data-c="Report sent" data-stages="Sources pulled|Numbers checked|Variances flagged|Someone reviews|Report sent"><span class="tab-icon"><svg viewBox="-14 -14 28 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><use href="#g-chart"/></svg></span><span class="tab-name">Reporting &amp; Reconciliation</span><span class="tab-bar" aria-hidden="true"></span></button>
+<button class="tab" role="tab" id="tab-2" aria-controls="panel-2" aria-selected="false" tabindex="-1" data-glyph="g-rows" data-a="A change is made" data-c="Systems in sync" data-stages="A change is made|Copied across|Duplicates removed|Someone signs off|Systems in sync"><span class="tab-icon"><svg viewBox="-14 -14 28 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><use href="#g-rows"/></svg></span><span class="tab-name">Data Entry &amp; Records</span><span class="tab-bar" aria-hidden="true"></span></button>
+<button class="tab" role="tab" id="tab-3" aria-controls="panel-3" aria-selected="false" tabindex="-1" data-glyph="g-env" data-a="Email arrives" data-c="Reply sent" data-stages="Email arrives|Sorted|Reply drafted|Someone approves|Reply sent"><span class="tab-icon"><svg viewBox="-14 -14 28 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><use href="#g-env"/></svg></span><span class="tab-name">Client Communication</span><span class="tab-bar" aria-hidden="true"></span></button>
+<button class="tab" role="tab" id="tab-4" aria-controls="panel-4" aria-selected="false" tabindex="-1" data-glyph="g-cal" data-a="Booking request" data-c="On the calendar" data-stages="Booking request|Conflicts checked|Someone confirms|On the calendar|Reminder sent"><span class="tab-icon"><svg viewBox="-14 -14 28 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><use href="#g-cal"/></svg></span><span class="tab-name">Scheduling &amp; Coordination</span><span class="tab-bar" aria-hidden="true"></span></button>
+<button class="tab" role="tab" id="tab-5" aria-controls="panel-5" aria-selected="false" tabindex="-1" data-glyph="g-help" data-a="Your task" data-c="Handled" data-stages="Task described|Scoped|Built|Someone approves|Handled"><span class="tab-icon"><svg viewBox="-14 -14 28 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><use href="#g-help"/></svg></span><span class="tab-name">Something More Specific</span><span class="tab-bar" aria-hidden="true"></span></button>
+      </div>
+      <div class="console-main">
+        <div class="console-art"><svg class="cb-art" id="cbArt" viewBox="0 0 640 236" role="img" aria-label="Work comes in on the left, someone approves it in the middle, and finished work goes out on the right">
+  <defs>
+    <path id="cb1" d="M22,44 C150,44 236,118 300,118"/>
+    <path id="cb2" d="M22,118 H300"/>
+    <path id="cb3" d="M22,192 C150,192 236,118 300,118"/>
+    <path id="cbo" d="M356,118 H618"/>
+  </defs>
+  <g class="lane"><path d="M22,44 C150,44 236,118 300,118"/><path d="M22,118 H300"/><path d="M22,192 C150,192 236,118 300,118"/><path d="M356,118 H618"/></g>
+  <g class="fa-dots"><circle cx="22" cy="44" r="3.4"/><circle cx="22" cy="118" r="3.4"/><circle cx="22" cy="192" r="3.4"/><circle cx="618" cy="118" r="3.4"/></g>
+  <g class="gate"><circle cx="328" cy="118" r="46" class="gate-halo"/><circle cx="328" cy="118" r="32" class="gate-core"/><use href="#g-person" transform="translate(328,118) scale(1.4)" class="gate-person"/></g>
+  <g class="movers"><g class="mv mv-in" opacity="0"><use href="#g-env"/><animateMotion dur="4.2s" begin="0s" repeatCount="indefinite" calcMode="linear" keyPoints="0;1;1" keyTimes="0;0.7;1"><mpath href="#cb1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.08;0.66;0.74;1" dur="4.2s" begin="0s" repeatCount="indefinite"/></g><g class="mv mv-in" opacity="0"><use href="#g-env"/><animateMotion dur="4.2s" begin="1.4s" repeatCount="indefinite" calcMode="linear" keyPoints="0;1;1" keyTimes="0;0.7;1"><mpath href="#cb2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.08;0.66;0.74;1" dur="4.2s" begin="1.4s" repeatCount="indefinite"/></g><g class="mv mv-in" opacity="0"><use href="#g-env"/><animateMotion dur="4.2s" begin="2.8s" repeatCount="indefinite" calcMode="linear" keyPoints="0;1;1" keyTimes="0;0.7;1"><mpath href="#cb3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.08;0.66;0.74;1" dur="4.2s" begin="2.8s" repeatCount="indefinite"/></g><g class="mv" opacity="0"><use href="#g-check"/><animateMotion dur="4.2s" begin="0s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.74;0.98;1"><mpath href="#cbo"/></animateMotion><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.74;0.78;0.96;0.99;1" dur="4.2s" begin="0s" repeatCount="indefinite"/></g><g class="mv" opacity="0"><use href="#g-check"/><animateMotion dur="4.2s" begin="1.4s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.74;0.98;1"><mpath href="#cbo"/></animateMotion><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.74;0.78;0.96;0.99;1" dur="4.2s" begin="1.4s" repeatCount="indefinite"/></g><g class="mv" opacity="0"><use href="#g-check"/><animateMotion dur="4.2s" begin="2.8s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.74;0.98;1"><mpath href="#cbo"/></animateMotion><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.74;0.78;0.96;0.99;1" dur="4.2s" begin="2.8s" repeatCount="indefinite"/></g></g>
+  <text x="22" y="228" class="fa-cap" id="capA">Invoice arrives</text>
+  <text x="328" y="52" class="fa-cap fa-cap--mid" text-anchor="middle">Someone approves</text>
+  <text x="618" y="228" class="fa-cap" text-anchor="end" id="capC">Posted</text>
+</svg></div>
+        <p class="console-status" aria-hidden="true"><span class="live-dot"></span><span class="status-text" id="statusText"></span></p>
+        <div class="panels">
+      <div class="panel" role="tabpanel" id="panel-0" aria-labelledby="tab-0">
+        <h2 class="panel-title">Billing &amp; Invoicing</h2>
+        <p class="panel-desc">Incoming invoices get read, matched to the purchase order, and entered into your accounting system. Someone approves each one before it posts. Outgoing invoices and payment reminders can go out on schedule too.</p>
+        <div class="panel-foot"><div class="capability-tags"><span class="capability-tag">Invoice capture</span><span class="capability-tag">PO matching</span><span class="capability-tag">Invoice generation</span><span class="capability-tag">Overdue reminders</span></div><a class="link-light cb-demo" href="automations#case-03">Watch a working demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a></div>
+      </div>
+<div class="panel" role="tabpanel" id="panel-1" aria-labelledby="tab-1" hidden>
+        <h2 class="panel-title">Reporting &amp; Reconciliation</h2>
+        <p class="panel-desc">The reports someone builds by hand every week or month assemble themselves from the same sources, and numbers that should match get checked against each other. Someone reviews each report before it goes out, and anything that doesn't reconcile comes with the reason attached.</p>
+        <div class="panel-foot"><div class="capability-tags"><span class="capability-tag">Recurring reports</span><span class="capability-tag">Reconciliation checks</span><span class="capability-tag">Variance flags</span></div><a class="link-light cb-demo" href="automations#case-03">Watch a working demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a></div>
+      </div>
+<div class="panel" role="tabpanel" id="panel-2" aria-labelledby="tab-2" hidden>
+        <h2 class="panel-title">Data Entry &amp; Records</h2>
+        <p class="panel-desc">Information stops living in three places at once. When something changes in one system, the others catch up, and someone signs off on each batch before it goes in.</p>
+        <div class="panel-foot"><div class="capability-tags"><span class="capability-tag">Cross-system sync</span><span class="capability-tag">Record cleanup</span><span class="capability-tag">Duplicate removal</span></div><a class="link-light cb-demo" href="automations#case-01">Watch a working demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a></div>
+      </div>
+<div class="panel" role="tabpanel" id="panel-3" aria-labelledby="tab-3" hidden>
+        <h2 class="panel-title">Client Communication</h2>
+        <p class="panel-desc">Inbound emails, form submissions and status requests get sorted, and replies are drafted from your own past answers. A human approves each reply before it sends, so nothing goes out that you haven't seen.</p>
+        <div class="panel-foot"><div class="capability-tags"><span class="capability-tag">Inbox triage</span><span class="capability-tag">Auto-replies</span><span class="capability-tag">Handoff flags</span></div><a class="link-light cb-demo" href="automations#case-02">Watch a working demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a></div>
+      </div>
+<div class="panel" role="tabpanel" id="panel-4" aria-labelledby="tab-4" hidden>
+        <h2 class="panel-title">Scheduling &amp; Coordination</h2>
+        <p class="panel-desc">Bookings, appointments and internal calendars stay lined up without three people checking the same thread. Conflicts get caught before they cause a problem, and someone confirms each booking.</p>
+        <div class="panel-foot"><div class="capability-tags"><span class="capability-tag">Booking sync</span><span class="capability-tag">Conflict checks</span><span class="capability-tag">Reminder sends</span></div></div>
+      </div>
+<div class="panel" role="tabpanel" id="panel-5" aria-labelledby="tab-5" hidden>
+        <h2 class="panel-title">Something More Specific</h2>
+        <p class="panel-desc">Most manual work fits one of the five above. If yours doesn't, describe it anyway. We'll tell you plainly whether it's worth automating.</p>
+        <div class="panel-foot"><div class="capability-tags"><span class="capability-tag">Tell us what it is</span><span class="capability-tag">We'll scope it</span><span class="capability-tag">Straight answer</span></div></div>
+      </div>
         </div>
-        <h2 class="capability-title">Client Communication</h2>
-      </div>
-      <div class="capability-body">
-        <p class="capability-desc">Inbound emails, form submissions, and status requests get sorted and answered without someone babysitting an inbox all day. Routine questions get an instant reply in your voice. Anything that needs a real person gets flagged, with the context already attached.</p>
-        <div class="capability-tags">
-          <span class="capability-tag">Inbox triage</span>
-          <span class="capability-tag">Auto-replies</span>
-          <span class="capability-tag">Handoff flags</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="capability-row" data-reveal>
-      <div class="capability-head">
-        <div class="capability-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>
-        </div>
-        <h2 class="capability-title">Billing &amp; Invoicing</h2>
-      </div>
-      <div class="capability-body">
-        <p class="capability-desc">Invoices generate and go out the moment a job closes, not whenever someone has a free hour. Payments get matched to the right account automatically, and overdue accounts get a reminder before you have to chase them yourself.</p>
-        <div class="capability-tags">
-          <span class="capability-tag">Invoice generation</span>
-          <span class="capability-tag">Payment matching</span>
-          <span class="capability-tag">Overdue reminders</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="capability-row" data-reveal>
-      <div class="capability-head">
-        <div class="capability-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
-        </div>
-        <h2 class="capability-title">Data Entry &amp; Records</h2>
-      </div>
-      <div class="capability-body">
-        <p class="capability-desc">Information stops living in three places at once. When something changes in one system, the others catch up automatically, and nobody spends their afternoon copying numbers between spreadsheets.</p>
-        <div class="capability-tags">
-          <span class="capability-tag">Cross-system sync</span>
-          <span class="capability-tag">Record cleanup</span>
-          <span class="capability-tag">Duplicate removal</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="capability-row" data-reveal>
-      <div class="capability-head">
-        <div class="capability-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-        </div>
-        <h2 class="capability-title">Scheduling &amp; Coordination</h2>
-      </div>
-      <div class="capability-body">
-        <p class="capability-desc">Bookings, appointments, and internal calendars stay lined up without three people checking the same thread. Conflicts get caught before they become a problem, not after someone shows up twice.</p>
-        <div class="capability-tags">
-          <span class="capability-tag">Booking sync</span>
-          <span class="capability-tag">Conflict checks</span>
-          <span class="capability-tag">Reminder sends</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="capability-row" data-reveal>
-      <div class="capability-head">
-        <div class="capability-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-6"/><path d="M2 20h20"/></svg>
-        </div>
-        <h2 class="capability-title">Reporting &amp; Reconciliation</h2>
-      </div>
-      <div class="capability-body">
-        <p class="capability-desc">The weekly and monthly reports someone currently builds by hand assemble themselves from the same sources on the same schedule, every time. Numbers that should match get checked against each other automatically.</p>
-        <div class="capability-tags">
-          <span class="capability-tag">Recurring reports</span>
-          <span class="capability-tag">Reconciliation checks</span>
-          <span class="capability-tag">Variance flags</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="capability-row" data-reveal>
-      <div class="capability-head">
-        <div class="capability-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
-        </div>
-        <h2 class="capability-title">Something More Specific</h2>
-      </div>
-      <div class="capability-body">
-        <p class="capability-desc">Most manual work fits one of the five above. If yours doesn't, describe it anyway. We've likely automated something close to it before, and if we haven't, we'll tell you plainly whether it's worth doing.</p>
-        <div class="capability-tags">
-          <span class="capability-tag">Tell us what it is</span>
-          <span class="capability-tag">We'll scope it</span>
-          <span class="capability-tag">Straight answer</span>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<div class="wrap">
-  <div class="section-divider" aria-hidden="true">
-    <span class="section-divider-line"></span>
-    <span class="section-divider-dot"></span>
-    <span class="section-divider-line"></span>
-  </div>
-</div>
-
-<section class="process" id="process">
-  <div class="wrap">
-    <div class="process-head">
-      <h2 class="process-title" data-reveal>How it actually happens.</h2>
-      <p class="process-lede" data-reveal>The same four steps, every time.</p>
-    </div>
-
-    <div class="process-rail">
-      <div class="process-step" data-reveal>
-        <span class="process-dot" aria-hidden="true"></span>
-        <h3>Tell us what's eating time</h3>
-        <p>You describe what's manual and slow. No audit deck, no discovery phase to sit through.</p>
-      </div>
-      <div class="process-step" data-reveal>
-        <span class="process-dot" aria-hidden="true"></span>
-        <h3>We scope the first piece</h3>
-        <p>We pick the highest-impact piece and scope exactly what removing it takes.</p>
-      </div>
-      <div class="process-step" data-reveal>
-        <span class="process-dot" aria-hidden="true"></span>
-        <h3>It goes live quietly</h3>
-        <p>It runs behind the tools you already use. No new software, no new login.</p>
-      </div>
-      <div class="process-step" data-reveal>
-        <span class="process-dot" aria-hidden="true"></span>
-        <h3>We keep it running</h3>
-        <p>If something upstream changes, we fix it. That's part of working with us.</p>
       </div>
     </div>
   </div>
 </section>
 
-<div class="wrap">
-  <div class="section-divider" aria-hidden="true">
-    <span class="section-divider-line"></span>
-    <span class="section-divider-dot"></span>
-    <span class="section-divider-line"></span>
+<section class="sv-process" id="process">
+  <div class="wrap">
+    <div class="sv-process-head">
+      <h2 class="sv-process-title">How it actually happens.</h2>
+      <p class="sv-process-lede">Four steps, every time.</p>
+    </div>
+    <div class="pline" id="pline">
+      <div class="pstep"><div class="pstep-icon"><svg viewBox="-14 -14 28 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="26" height="26" aria-hidden="true"><use href="#g-phone"/></svg></div><h3>Tell us what&#39;s slow</h3><p>A 15-minute call. You describe the manual work, and we tell you if automation fits.</p></div>
+      <div class="pstep"><div class="pstep-icon"><svg viewBox="-14 -14 28 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="26" height="26" aria-hidden="true"><use href="#g-scope"/></svg></div><h3>We scope the first piece</h3><p>We look at how the work runs today, ask for access to the tools involved and a few sample documents, and agree exactly what gets automated.</p></div>
+      <div class="pstep pstep--person"><div class="pstep-icon"><svg viewBox="-14 -14 28 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="26" height="26" aria-hidden="true"><use href="#g-person"/></svg></div><h3>We build it and try it live</h3><p>We test on your own samples, then run it on real items with someone approving each result.</p></div>
+      <div class="pstep"><div class="pstep-icon"><svg viewBox="-14 -14 28 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="26" height="26" aria-hidden="true"><use href="#g-shield"/></svg></div><h3>It goes live, and we stay</h3><p>Go-live, then 30 days of free support. A support plan after that keeps it maintained, if you want one.</p></div>
+    </div>
   </div>
-</div>
+</section>
 
 <section class="cta-close">
   <div class="wrap">
@@ -682,19 +615,13 @@
         <svg viewBox="0 0 960 420" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
           <path d="M -20,340 C 220,300 420,360 640,260 C 780,200 860,160 980,120" stroke="var(--accent)" stroke-width="1.4" fill="none" stroke-linecap="round" opacity="0.14"/>
           <path d="M -20,90 C 200,140 380,120 560,200 C 720,270 840,300 980,260" stroke="var(--ink-faint)" stroke-width="1.4" fill="none" stroke-linecap="round" opacity="0.16"/>
-          <circle cx="640" cy="260" r="4" fill="var(--accent)" opacity="0.3"/>
-          <circle cx="560" cy="200" r="3.5" fill="var(--ink-faint)" opacity="0.3"/>
+          <circle cx="640" cy="260" r="4" fill="var(--accent)" opacity="0.3"/><circle cx="560" cy="200" r="3.5" fill="var(--ink-faint)" opacity="0.3"/>
         </svg>
       </div>
       <div class="cta-close-content">
-        <h2 class="cta-close-title" data-reveal>Pick the one costing you the most time first.</h2>
-        <p class="cta-close-lede" data-reveal>We'll scope it together and tell you plainly whether it's worth automating.</p>
-        <div class="cta-close-row" data-reveal>
-          <a class="btn btn-primary" href="https://calendly.com/kevin-antekautomations/30min" target="_blank" rel="noopener">
-            Ask How
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
-          </a>
-        </div>
+        <h2 class="cta-close-title">Pick the one costing you the most time first.</h2>
+        <p class="cta-close-lede">Tell us what's slow and we'll tell you if automation fits, in 15 minutes.</p>
+        <div class="cta-close-row"><a class="btn btn-primary" href="https://calendly.com/kevin-antekautomations/30min" target="_blank" rel="noopener">Book A Call <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a></div>
       </div>
     </div>
   </div>
@@ -735,14 +662,14 @@
 (function(){
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // page-intro entrance reveal: visible on load, so stagger by time
-  var introRevealEls = document.querySelectorAll(".services-intro [data-reveal]");
+  // hero entrance reveal: visible on load, so stagger by time
+  var introRevealEls = document.querySelectorAll(".cb-hero [data-reveal]");
   introRevealEls.forEach(function(el, i){
     setTimeout(function(){ el.classList.add("is-in"); }, reduced ? 0 : 90 * i);
   });
 
   // below-the-fold reveals: stagger by scroll position instead, one-shot
-  var scrollRevealEls = document.querySelectorAll("section:not(.services-intro) [data-reveal]");
+  var scrollRevealEls = document.querySelectorAll("section:not(.cb-hero) [data-reveal]");
   if (reduced || !("IntersectionObserver" in window)){
     scrollRevealEls.forEach(function(el){ el.classList.add("is-in"); });
   } else {
@@ -786,5 +713,79 @@
 })();
 </script>
 
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var tabs = [].slice.call(document.querySelectorAll('.tab'));
+  var panels = [].slice.call(document.querySelectorAll('.panel'));
+  var art = document.getElementById('cbArt');
+  var capA = document.getElementById('capA'), capC = document.getElementById('capC');
+  var statusEl = document.getElementById('statusText');
+  var current = 0, auto = !reduced, stageTimer = null, started = false;
+
+  function setStages(list){
+    statusEl.innerHTML = '';
+    list.forEach(function(t){ var sp = document.createElement('span'); sp.className = 'stage'; sp.textContent = t; statusEl.appendChild(sp); });
+    var els = [].slice.call(statusEl.children), n = 0;
+    clearInterval(stageTimer);
+    function paint(){
+      els.forEach(function(e, i){ e.classList.toggle('is-done', i < n); e.classList.toggle('is-now', i === n); });
+      n = (n + 1) % (els.length + 1);
+    }
+    if (reduced){ n = Math.min(3, els.length - 1); paint(); return; }
+    n = 0; paint(); stageTimer = setInterval(paint, 950);
+  }
+
+  function select(i, fromUser){
+    current = i;
+    tabs.forEach(function(t, k){
+      var on = k === i;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      t.classList.remove('is-timing');
+    });
+    panels.forEach(function(p, k){ p.hidden = k !== i; });
+    var t = tabs[i];
+    // re-label and re-glyph the shared diagram
+    [].slice.call(art.querySelectorAll('.mv-in use')).forEach(function(u){ u.setAttribute('href', '#' + t.dataset.glyph); });
+    capA.textContent = t.dataset.a; capC.textContent = t.dataset.c;
+    setStages(t.dataset.stages.split('|'));
+    if (auto && started && !fromUser){ void t.offsetWidth; t.classList.add('is-timing'); }
+    if (fromUser){ auto = false; }
+  }
+
+  tabs.forEach(function(t, i){
+    t.addEventListener('click', function(){ select(i, true); });
+    t.addEventListener('keydown', function(e){
+      var k = e.key, n = null;
+      if (k === 'ArrowDown' || k === 'ArrowRight') n = (i + 1) % tabs.length;
+      if (k === 'ArrowUp' || k === 'ArrowLeft') n = (i - 1 + tabs.length) % tabs.length;
+      if (k === 'Home') n = 0; if (k === 'End') n = tabs.length - 1;
+      if (n !== null){ e.preventDefault(); select(n, true); tabs[n].focus(); }
+    });
+    t.querySelector('.tab-bar').addEventListener('animationend', function(){ if (auto) select((current + 1) % tabs.length, false); });
+  });
+
+  select(0, false);
+  // start the auto-tour once the console is on screen
+  if ('IntersectionObserver' in window && !reduced){
+    new IntersectionObserver(function(es, io){
+      es.forEach(function(e){ if (e.isIntersecting){ started = true; if (auto){ tabs[current].classList.add('is-timing'); } io.disconnect(); } });
+    }, {threshold: 0, rootMargin: '0px 0px -30% 0px'}).observe(document.getElementById('console'));
+  }
+  if (reduced && art.pauseAnimations) art.pauseAnimations();
+
+  // process line lights up once
+  var pline = document.getElementById('pline'), pst = [].slice.call(pline.querySelectorAll('.pstep'));
+  function runProcess(){
+    if (reduced){ pst.forEach(function(x){ x.classList.add('is-lit'); }); pline.style.setProperty('--pp', 1); return; }
+    pst.forEach(function(x, i){ setTimeout(function(){ x.classList.add('is-lit'); pline.style.setProperty('--pp', (i / (pst.length - 1)).toFixed(3)); }, 200 + i * 700); });
+  }
+  if ('IntersectionObserver' in window && !reduced){
+    new IntersectionObserver(function(es, io){ es.forEach(function(e){ if (e.isIntersecting){ runProcess(); io.disconnect(); } }); }, {threshold: 0, rootMargin: '0px 0px -22% 0px'}).observe(pline);
+  } else { runProcess(); }
+})();
+</script>
 </body>
 </html>
