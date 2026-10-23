@@ -407,7 +407,7 @@
     position: relative;
     border-radius: 16px;
     overflow: hidden;
-    border: 1px solid var(--border);
+    border: 1px solid color-mix(in oklch, var(--accent) 38%, var(--border));
     background: var(--ink);
     aspect-ratio: 4 / 3;
   }
@@ -415,78 +415,87 @@
     position: absolute; inset: 0;
     width: 100%; height: 100%; border: 0; display: block;
   }
-  /* designed rest state: navy field carrying a line-art schematic of the
-     automation (built from the site's flow-node vocabulary -- same as the
-     hero lines, the FAQ circuit trace, the Services process rail), one
-     rust play control punched clean out of it. Each poster shares the
-     grammar; the schematic geometry differs per automation. The Loom
-     embed only mounts on click. */
+  /* poster rest state: a light, miniature scene of what the automation does,
+     in the same glyph language as the homepage and Services console. The
+     Loom embed still only mounts on click. */
   .case-poster{
-    position: absolute; inset: 0;
-    width: 100%; height: 100%;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    gap: var(--space-2);
-    background: var(--ink);
-    color: var(--bg);
-    border: 0; cursor: pointer;
-    overflow: hidden;
+    position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; display: block; overflow: hidden;
+    border: 0; cursor: pointer; color: var(--ink); font-family: var(--font-body);
+    background-color: color-mix(in oklch, white 62%, var(--bg));
+    background-image: radial-gradient(color-mix(in oklch, var(--ink) 11%, transparent) 1px, transparent 1.4px);
+    background-size: 18px 18px;
   }
-  .case-poster::before{
-    content:""; position: absolute; inset: 12px; z-index: 1;
-    border: 1px solid var(--dark-border);
-    border-radius: 9px;
-    pointer-events: none;
+  .case-poster-art{ position: absolute; left: 0; right: 0; top: 0; width: 100%; height: calc(100% - 56px); display: block; transition: transform 500ms var(--ease); }
+  .case-poster-art .sc-card{ fill: color-mix(in oklch, white 90%, var(--bg)); stroke: var(--border-strong); stroke-width: 1.4; }
+  .case-poster-art .sc-card--hot{ stroke: color-mix(in oklch, var(--accent) 45%, var(--border)); }
+  .case-poster-art .sc-bar{ fill: color-mix(in oklch, var(--ink) 13%, var(--bg)); }
+  .case-poster-art .sc-bar-d{ fill: color-mix(in oklch, var(--ink) 28%, var(--bg)); }
+  .case-poster-art .sc-chip{ fill: color-mix(in oklch, var(--accent) 12%, var(--bg)); stroke: color-mix(in oklch, var(--accent) 32%, transparent); stroke-width: 1; }
+  .case-poster-art .sc-acc{ fill: var(--accent); }
+  .case-poster-art .sc-tick{ fill: none; stroke: #fff; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .case-poster-art .sc-acc-big{ fill: var(--accent); filter: drop-shadow(0 0 8px color-mix(in oklch, var(--accent) 45%, transparent)); }
+  .case-poster-art .sc-icon{ fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .case-poster-art .sc-icon-dark{ fill: var(--accent-ink); }
+  .case-poster-art .sc-wire{ fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; }
+  .case-poster-art .sc-head{ fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .case-poster-art .sc-box{ fill: none; stroke: color-mix(in oklch, var(--ink) 34%, var(--bg)); stroke-width: 1.5; }
+  .case-poster-art .sc-env{ fill: none; stroke: var(--accent-ink); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+  .case-poster-art .sc-ini{ font: 700 11px/1 var(--font-body); fill: var(--accent-ink); }
+  .case-poster-art .sc-txt{ font: 600 13px/1 var(--font-body); fill: var(--ink-soft); }
+  .case-poster-art .sc-clock{ fill: none; stroke: var(--accent-ink); stroke-width: 1.5; stroke-linecap: round; }
+  .case-poster-art .sc-doc{ fill: color-mix(in oklch, white 94%, var(--bg)); stroke: color-mix(in oklch, var(--ink) 36%, var(--bg)); stroke-width: 1.5; stroke-linejoin: round; }
+  .case-poster-art .sc-doc-s{ fill: none; stroke: var(--accent-ink); stroke-width: 1.3; stroke-linejoin: round; }
+  .case-poster-art .sc-flag{ fill: color-mix(in oklch, var(--accent) 11%, var(--bg)); stroke: color-mix(in oklch, var(--accent) 50%, transparent); stroke-width: 1.2; }
+  .case-poster-art .sc-pill{ fill: var(--accent); }
+  .case-poster-art .sc-pill-t{ font: 700 10.5px/1 var(--font-body); fill: #fff; }
+  .case-poster-art .sc-btn{ fill: var(--accent); }
+  .case-poster-art .sc-btn-t{ font: 700 11.5px/1 var(--font-body); fill: #fff; }
+  .case-poster-art .sc-btn-o{ fill: none; stroke: color-mix(in oklch, var(--ink) 38%, var(--bg)); stroke-width: 1.3; }
+  .case-poster-art .sc-btn-ot{ font: 700 11.5px/1 var(--font-body); fill: var(--ink-soft); }
+
+  /* a video-player bar along the bottom: play, label, a track and the real running time.
+     Together they say "video" at a glance. */
+  .poster-bar{
+    position: absolute; z-index: 2; left: 0; right: 0; bottom: 0; height: 56px;
+    display: flex; align-items: center; gap: 0.85rem; padding: 0 16px;
+    background: color-mix(in oklch, white 82%, var(--bg)); border-top: 1px solid var(--border);
   }
-  .case-poster-art{
-    position: absolute; inset: 0; z-index: 0;
-    width: 100%; height: 100%; display: block;
-    transition: transform 500ms var(--ease);
-  }
-  .case-poster-art .ln{ stroke: var(--dark-border); stroke-width: 1.5; fill: none; stroke-linecap: round; opacity: 0.4; }
-  .case-poster-art .nd{ fill: var(--dark-text-soft); opacity: 0.55; }
-  .case-poster-art .ac{ stroke: var(--accent); stroke-width: 2.4; fill: none; stroke-linecap: round; opacity: 0.75; }
-  .case-poster-art .ac-f{ fill: var(--accent); opacity: 0.8; }
-  /* the automation's name: centred near the top, in the display serif */
-  .case-poster-tag{
-    position: absolute; top: 13%; left: 50%;
-    transform: translateX(-50%);
-    z-index: 2;
-    max-width: 82%;
-    font-family: var(--font-display);
-    font-size: clamp(1.3rem, 1.05rem + 1vw, 1.7rem);
-    font-weight: 500; letter-spacing: 0; text-transform: none;
-    line-height: 1.2;
-    text-align: center; text-wrap: balance;
-    color: var(--bg);
-  }
-  .case-poster-play{
-    position: absolute; z-index: 2;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 66px; height: 66px; border-radius: 50%;
-    background: var(--accent);
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 0 0 12px var(--ink);
+  .pp-disc{
+    flex: 0 0 auto; width: 36px; height: 36px; border-radius: 50%; background: var(--accent); display: grid; place-items: center;
     transition: transform 240ms var(--ease), background 240ms var(--ease);
   }
-  .case-poster-play svg{ width: 24px; height: 24px; fill: var(--bg); margin-left: 3px; }
-  .case-poster-cap{
-    position: absolute; z-index: 2;
-    bottom: var(--space-2); left: 50%;
-    transform: translateX(-50%);
-    font-family: var(--font-mono); font-size: var(--step--1);
-    letter-spacing: 0.07em; text-transform: uppercase;
-    color: var(--dark-text-soft);
-  }
-  .case-poster:hover .case-poster-play{ transform: translate(-50%, -50%) scale(1.06); background: var(--accent-hover); }
-  .case-poster:hover .case-poster-art{ transform: scale(1.03); }
+  .pp-disc svg{ width: 15px; height: 15px; fill: #fff; margin-left: 2px; }
+  .pp-label{ flex: 0 0 auto; font-size: var(--step--1); font-weight: 600; color: var(--ink); white-space: nowrap; }
+  .pp-track{ position: relative; flex: 1 1 auto; min-width: 24px; height: 4px; border-radius: 2px; background: color-mix(in oklch, var(--ink) 14%, var(--bg)); }
+  .pp-knob{ position: absolute; left: 0; top: 50%; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); transform: translateY(-50%); transition: left 700ms var(--ease); }
+  .pp-time{ flex: 0 0 auto; font-family: var(--font-mono); font-size: var(--step--1); font-variant-numeric: tabular-nums; color: var(--ink-soft); }
+  .case-poster:hover .pp-disc{ background: var(--accent-hover); transform: scale(1.07); }
+  .case-poster:hover .pp-knob{ left: calc(100% - 10px); }
+  .case-poster:hover .poster-bar{ background: color-mix(in oklch, white 94%, var(--bg)); }
+  .case-poster:hover .case-poster-art{ transform: scale(1.02); }
   .case-poster:focus-visible{ outline: 2px solid var(--accent); outline-offset: 3px; }
   @media (prefers-reduced-motion: reduce){
-    .case-poster-art{ transition: none; }
-    .case-poster:hover .case-poster-art{ transform: none; }
-    .case-poster:hover .case-poster-play{ transform: translate(-50%, -50%); }
+    .case-poster-art, .pp-disc, .pp-knob{ transition: none; }
+    .case-poster:hover .case-poster-art, .case-poster:hover .pp-disc{ transform: none; }
+    .case-poster:hover .pp-knob{ left: 0; }
   }
+
+  @media (max-width: 700px){
+    .poster-bar{ height: 48px; gap: 0.6rem; padding: 0 12px; }
+    .case-poster-art{ height: calc(100% - 48px); }
+    .pp-disc{ width: 32px; height: 32px; }
+  }
+
+  /* "in a live setup" line under each description */
+  .case-live{
+    margin-top: var(--space-2); display: flex; align-items: flex-start; gap: 0.7rem;
+    font-size: var(--step-0); line-height: 1.5; color: var(--ink-soft); max-width: 36rem;
+  }
+  .case-live-ico{
+    flex: 0 0 auto; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+    background: color-mix(in oklch, var(--accent) 12%, var(--bg)); color: var(--accent-ink);
+  }
+  .case-live-ico svg{ width: 17px; height: 17px; }
 
   /* flagship marker: a short rust rule above the case number, no label text */
   .case--feature .case-num{ opacity: 1; }
@@ -540,10 +549,6 @@
   }
   @media (max-width: 560px){
     .feature-results-grid{ grid-template-columns: 1fr; gap: var(--space-2); }
-  }
-  @media (prefers-reduced-motion: reduce){
-    .case-poster-play{ transition: none; }
-    .case-poster:hover .case-poster-play{ transform: translate(-50%, -50%); }
   }
 
   /* ---------- closing cta (light field, shares the page background) ---------- */
@@ -791,25 +796,7 @@
     <article class="case" id="case-01">
       <div class="case-media-col" data-reveal>
         <div class="case-media" data-loom="e160d0dcfeff4bbab7341b928c8bb09c" data-title="Antek automation: Task Generation">
-          <button class="case-poster" type="button" aria-label="Play video: Task Generation">
-            <span class="case-poster-tag">Task Generation</span>
-            <svg class="case-poster-art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-              <circle class="nd" cx="64" cy="88" r="6"/>
-              <path class="ln" d="M64 88 C 110 104 150 122 196 150"/>
-              <path class="ln" d="M204 150 C 250 132 296 104 340 92"/>
-              <path class="ln" d="M206 150 L 344 150"/>
-              <path class="ln" d="M204 150 C 250 168 296 196 340 208"/>
-              <circle class="nd" cx="344" cy="92" r="5"/>
-              <circle class="nd" cx="348" cy="150" r="5"/>
-              <circle class="nd" cx="344" cy="208" r="5"/>
-              <path class="ac" d="M198 154 C 208 200 224 236 246 256"/>
-              <circle class="ac-f" cx="250" cy="260" r="6"/>
-            </svg>
-            <span class="case-poster-play" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            </span>
-            <span class="case-poster-cap">Watch it run</span>
-          </button>
+          <button class="case-poster" type="button" aria-label="Play video: Task Generation"><svg class="case-poster-art" viewBox="0 22 400 246" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect class="sc-card" x="24" y="44" width="140" height="212" rx="12"/><circle class="sc-chip" cx="46" cy="68" r="10"/><rect class="sc-bar-d" x="64" y="62" width="62" height="6" rx="3"/><rect class="sc-bar" x="64" y="74" width="40" height="5" rx="2.5"/><rect class="sc-bar" x="40" y="98" width="112" height="5" rx="2.5"/><rect class="sc-bar" x="40" y="113" width="104" height="5" rx="2.5"/><rect class="sc-bar" x="40" y="128" width="112" height="5" rx="2.5"/><rect class="sc-bar" x="40" y="143" width="96" height="5" rx="2.5"/><rect class="sc-bar" x="40" y="158" width="112" height="5" rx="2.5"/><rect class="sc-bar" x="40" y="173" width="108" height="5" rx="2.5"/><rect class="sc-bar" x="40" y="188" width="88" height="5" rx="2.5"/><rect class="sc-bar" x="40" y="203" width="112" height="5" rx="2.5"/><rect class="sc-bar" x="40" y="218" width="100" height="5" rx="2.5"/><rect class="sc-bar" x="40" y="233" width="70" height="5" rx="2.5"/><path class="sc-wire" d="M164 150 H182"/><circle class="sc-acc-big" cx="197" cy="150" r="15"/><path class="sc-icon" d="M189 150 h9 m0 0 l7 -6 m-7 6 l7 6"/><path class="sc-wire" d="M212 150 C 224 150 220 82 232 82"/><path class="sc-wire" d="M212 150 H232"/><path class="sc-wire" d="M212 150 C 224 150 220 218 232 218"/><rect class="sc-card" x="232" y="57" width="148" height="50" rx="10"/><circle class="sc-box" cx="251" cy="82" r="7"/><rect class="sc-bar-d" x="267" y="72" width="66" height="6" rx="3"/><rect class="sc-bar" x="267" y="85" width="46" height="5" rx="2.5"/><rect class="sc-card" x="232" y="125" width="148" height="50" rx="10"/><circle class="sc-box" cx="251" cy="150" r="7"/><rect class="sc-bar-d" x="267" y="140" width="66" height="6" rx="3"/><rect class="sc-bar" x="267" y="153" width="46" height="5" rx="2.5"/><rect class="sc-card" x="232" y="193" width="148" height="50" rx="10"/><circle class="sc-box" cx="251" cy="218" r="7"/><rect class="sc-bar-d" x="267" y="208" width="66" height="6" rx="3"/><rect class="sc-bar" x="267" y="221" width="46" height="5" rx="2.5"/><circle class="sc-chip" cx="360" cy="82" r="11"/><text class="sc-ini" x="360" y="86.5" text-anchor="middle">A</text><circle class="sc-chip" cx="360" cy="150" r="11"/><text class="sc-ini" x="360" y="154.5" text-anchor="middle">B</text><rect class="sc-chip" x="347" y="210" width="26" height="17" rx="3.5"/><path class="sc-env" d="M347 212.5 L360 221 L373 212.5"/></svg><span class="poster-bar" aria-hidden="true"><span class="pp-disc"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="pp-label">Watch it run</span><span class="pp-track"><span class="pp-knob"></span></span><span class="pp-time">3:34</span></span></button>
         </div>
         <div class="case-touches">
           <span class="case-touches-cap">What it connects</span>
@@ -826,6 +813,7 @@
         </div>
         <div class="case-detail">
           <p class="case-desc">A single daily email carries the day's tasks in one long block of text. This automation opens it first, splits it into assignments for the right people, and loops in anyone else the work touches, drafting a note to an outside vendor on its own when a task depends on them.</p>
+          <p class="case-live"><span class="case-live-ico"><svg viewBox="-14 -14 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="0" cy="-4" r="4"/><path d="M-8 10 c0-6 3.5-8 8-8 s8 2 8 8"/></svg></span><span>In a live setup, someone approves the task assignments and the vendor note before they go out.</span></p>
         </div>
       </div>
     </article>
@@ -839,21 +827,7 @@
     <article class="case case--flip" id="case-02">
       <div class="case-media-col" data-reveal>
         <div class="case-media" data-loom="cb519650a9204d1c95684d3ac171b6fd" data-title="Antek automation: Client Requests">
-          <button class="case-poster" type="button" aria-label="Play video: Client Requests">
-            <span class="case-poster-tag">Client Requests</span>
-            <svg class="case-poster-art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-              <path class="ln" d="M60 150 L 340 150"/>
-              <path class="ln" d="M340 150 C 340 252 60 252 60 150"/>
-              <circle class="nd" cx="60" cy="150" r="6"/>
-              <circle class="nd" cx="340" cy="150" r="6"/>
-              <circle class="nd" cx="200" cy="252" r="5"/>
-              <circle class="ac" cx="200" cy="150" r="46"/>
-            </svg>
-            <span class="case-poster-play" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            </span>
-            <span class="case-poster-cap">Watch it run</span>
-          </button>
+          <button class="case-poster" type="button" aria-label="Play video: Client Requests"><svg class="case-poster-art" viewBox="0 22 400 246" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><g transform="translate(0,16)"><rect class="sc-chip" x="146" y="34" width="108" height="26" rx="13"/><circle class="sc-clock" cx="166" cy="47" r="7"/><path class="sc-clock" d="M166 43 V47 L169 49"/><text class="sc-txt" x="214" y="52" text-anchor="middle">in seconds</text><rect class="sc-card" x="20" y="84" width="108" height="132" rx="12"/><circle class="sc-chip" cx="40" cy="104" r="9"/><rect class="sc-bar-d" x="56" y="99" width="50" height="6" rx="3"/><rect class="sc-chip" x="34" y="124" width="58" height="18" rx="9"/><rect class="sc-bar-d" x="44" y="130" width="38" height="5" rx="2.5"/><rect class="sc-bar" x="34" y="154" width="80" height="5" rx="2.5"/><rect class="sc-bar" x="34" y="168" width="72" height="5" rx="2.5"/><rect class="sc-bar" x="34" y="182" width="80" height="5" rx="2.5"/><rect class="sc-bar" x="34" y="196" width="50" height="5" rx="2.5"/><path class="sc-wire" d="M128 150 H146"/><path class="sc-head" d="M141 145 L148 150 L141 155"/><rect class="sc-card sc-card--hot" x="146" y="84" width="108" height="132" rx="12"/><path class="sc-doc" d="M176 102 H206 L222 118 V198 H176 Z"/><path class="sc-doc" d="M206 102 V118 H222"/><rect class="sc-bar" x="184" y="132" width="30" height="5" rx="2.5"/><rect class="sc-bar" x="184" y="146" width="36" height="5" rx="2.5"/><rect class="sc-bar" x="184" y="160" width="30" height="5" rx="2.5"/><rect class="sc-bar" x="184" y="174" width="22" height="5" rx="2.5"/><circle class="sc-acc" cx="224" cy="196" r="11"/><path class="sc-tick" d="M219.1 196.2 L222.9 200.4 L229.5 191.6"/><path class="sc-wire" d="M254 150 H272"/><path class="sc-head" d="M267 145 L274 150 L267 155"/><rect class="sc-card" x="272" y="84" width="108" height="132" rx="12"/><circle class="sc-chip" cx="292" cy="104" r="9"/><path class="sc-icon-dark" d="M287 105 L292 100 V103 C297 103 299 106 300 110 C297 107 295 107 292 107 V110 Z"/><rect class="sc-bar-d" x="308" y="99" width="50" height="6" rx="3"/><rect class="sc-bar" x="286" y="126" width="80" height="5" rx="2.5"/><rect class="sc-bar" x="286" y="140" width="72" height="5" rx="2.5"/><rect class="sc-bar" x="286" y="154" width="58" height="5" rx="2.5"/><rect class="sc-chip" x="286" y="172" width="80" height="24" rx="12"/><path class="sc-doc-s" d="M298 177 H306 L310 181 V191 H298 Z"/><rect class="sc-bar-d" x="316" y="180" width="36" height="5" rx="2.5"/></g></svg><span class="poster-bar" aria-hidden="true"><span class="pp-disc"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="pp-label">Watch it run</span><span class="pp-track"><span class="pp-knob"></span></span><span class="pp-time">2:01</span></span></button>
         </div>
         <div class="case-touches">
           <span class="case-touches-cap">What it connects</span>
@@ -870,6 +844,7 @@
         </div>
         <div class="case-detail">
           <p class="case-desc">This one keeps a quiet watch on the inbox for a single, specific kind of ask. The moment it shows up, the automation puts the requested document together and replies with it, the whole exchange finishes before anyone on staff would have even opened the message.</p>
+          <p class="case-live"><span class="case-live-ico"><svg viewBox="-14 -14 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="0" cy="-4" r="4"/><path d="M-8 10 c0-6 3.5-8 8-8 s8 2 8 8"/></svg></span><span>The video shows the fast version. In a live setup, someone approves the document before the reply goes out.</span></p>
         </div>
       </div>
     </article>
@@ -883,24 +858,7 @@
     <article class="case case--feature" id="case-03">
       <div class="case-media-col" data-reveal>
         <div class="case-media" data-loom="2f827ee022f3499ab4411a893bd4cf08" data-title="Antek automation: Invoice Reconciliation">
-          <button class="case-poster" type="button" aria-label="Play video: Invoice Reconciliation">
-            <span class="case-poster-tag">Invoice Reconciliation</span>
-            <svg class="case-poster-art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-              <path class="ln" d="M56 96 L 344 96"/>
-              <path class="ln" d="M56 204 L 344 204"/>
-              <path class="ln" d="M92 96 L 92 204"/>
-              <path class="ln" d="M140 96 L 140 204"/>
-              <path class="ln" d="M260 96 L 260 204"/>
-              <path class="ac" d="M308 88 L 308 212"/>
-              <circle class="ac-f" cx="308" cy="150" r="6"/>
-              <circle class="nd" cx="308" cy="96" r="4"/>
-              <circle class="nd" cx="308" cy="204" r="4"/>
-            </svg>
-            <span class="case-poster-play" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            </span>
-            <span class="case-poster-cap">Watch it run</span>
-          </button>
+          <button class="case-poster" type="button" aria-label="Play video: Invoice Reconciliation"><svg class="case-poster-art" viewBox="0 22 400 246" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><text class="sc-txt" x="34" y="50">Quote</text><rect class="sc-card" x="22" y="60" width="118" height="180" rx="12"/><rect class="sc-bar-d" x="36" y="76" width="56" height="6" rx="3"/><rect class="sc-bar" x="36" y="104" width="60" height="5" rx="2.5"/><rect class="sc-bar-d" x="36" y="114" width="34" height="5" rx="2.5"/><circle class="sc-acc" cx="122" cy="112" r="6"/><path class="sc-tick" d="M119.3 112.2 L121.4 114.4 L125.0 109.6"/><rect class="sc-bar" x="36" y="136" width="52" height="5" rx="2.5"/><rect class="sc-bar-d" x="36" y="146" width="34" height="5" rx="2.5"/><circle class="sc-acc" cx="122" cy="144" r="6"/><path class="sc-tick" d="M119.3 144.2 L121.4 146.4 L125.0 141.6"/><rect class="sc-bar" x="36" y="168" width="64" height="5" rx="2.5"/><rect class="sc-bar-d" x="36" y="178" width="34" height="5" rx="2.5"/><circle class="sc-acc" cx="122" cy="176" r="6"/><path class="sc-tick" d="M119.3 176.2 L121.4 178.4 L125.0 173.6"/><rect class="sc-bar" x="36" y="200" width="48" height="5" rx="2.5"/><rect class="sc-bar-d" x="36" y="210" width="34" height="5" rx="2.5"/><circle class="sc-acc" cx="122" cy="208" r="6"/><path class="sc-tick" d="M119.3 208.2 L121.4 210.4 L125.0 205.6"/><path class="sc-wire" d="M140 150 H152"/><path class="sc-wire" d="M188 150 H200"/><circle class="sc-acc-big" cx="170" cy="150" r="18"/><path class="sc-icon" d="M162.5 146 H177.5 M162.5 154 H177.5 M166 161 L174 139"/><text class="sc-txt" x="212" y="50">Invoice</text><rect class="sc-card" x="200" y="60" width="180" height="196" rx="12"/><rect class="sc-bar-d" x="214" y="76" width="64" height="6" rx="3"/><rect class="sc-bar" x="216" y="106" width="70" height="5" rx="2.5"/><circle class="sc-acc" cx="356" cy="111" r="6"/><path class="sc-tick" d="M353.3 111.2 L355.4 113.4 L359.0 108.6"/><rect class="sc-bar" x="216" y="136" width="58" height="5" rx="2.5"/><circle class="sc-acc" cx="356" cy="141" r="6"/><path class="sc-tick" d="M353.3 141.2 L355.4 143.4 L359.0 138.6"/><rect class="sc-flag" x="208" y="158" width="164" height="26" rx="7"/><rect class="sc-bar" x="216" y="166" width="76" height="5" rx="2.5"/><rect class="sc-pill" x="296" y="162" width="68" height="18" rx="9"/><text class="sc-pill-t" x="330" y="174.5" text-anchor="middle">Variance</text><rect class="sc-bar" x="216" y="196" width="52" height="5" rx="2.5"/><circle class="sc-acc" cx="356" cy="201" r="6"/><path class="sc-tick" d="M353.3 201.2 L355.4 203.4 L359.0 198.6"/><rect class="sc-btn" x="214" y="224" width="74" height="24" rx="12"/><text class="sc-btn-t" x="251" y="240" text-anchor="middle">Approve</text><rect class="sc-btn-o" x="296" y="224" width="68" height="24" rx="12"/><text class="sc-btn-ot" x="330" y="240" text-anchor="middle">Reject</text></svg><span class="poster-bar" aria-hidden="true"><span class="pp-disc"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="pp-label">Watch it run</span><span class="pp-track"><span class="pp-knob"></span></span><span class="pp-time">1:39</span></span></button>
         </div>
         <div class="case-touches">
           <span class="case-touches-cap">What it connects</span>
@@ -917,6 +875,7 @@
         </div>
         <div class="case-detail">
           <p class="case-desc">Every incoming invoice gets checked against what was actually quoted, quantities, prices, anything billed for work that was never agreed to. A mismatch triggers a notice with the exact variance and a one-click way to approve or reject it, so a routine-looking invoice can't get approved by mistake.</p>
+          <p class="case-live"><span class="case-live-ico"><svg viewBox="-14 -14 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="0" cy="-4" r="4"/><path d="M-8 10 c0-6 3.5-8 8-8 s8 2 8 8"/></svg></span><span>In a live setup, someone on your team makes that call on every flagged invoice, and nothing posts until they do.</span></p>
           <p class="case-note">In the video, we reject a flagged invoice and the system drafts the vendor email on its own, ready to send or hold for review.</p>
         </div>
       </div>
