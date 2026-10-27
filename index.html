@@ -204,10 +204,9 @@
     /* padding-top carries the +15% eyebrow gap so the block re-centres to the
        same eyebrow position (eyebrow stays put, headline + rest shift down) */
     /* extra padding-top = the headline's growth (14% bigger than the original, 2 lines) + the 0.5rem
-       added below the eyebrow, so the eyebrow stays where it was and only the
-       headline and everything under it move down. */
+       added below the eyebrow, then 1.25rem taken back so the whole hero block sits 10px higher. */
     --h1-size: calc(clamp(2.4rem, 1.5rem + 2.9vw, 3.7rem) * 1.05 * 1.14);
-    padding-block: calc(var(--space-4) + var(--space-2) * 0.2915 + var(--h1-size) * 0.275 + 0.5rem) var(--space-3);
+    padding-block: calc(var(--space-4) + var(--space-2) * 0.2915 + var(--h1-size) * 0.275 - 0.75rem) var(--space-3);
     overflow: clip;
     isolation: isolate;
   }
