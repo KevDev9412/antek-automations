@@ -253,41 +253,25 @@
 
   .hero-inner{ position: relative; z-index: 2; width: 100%; }
 
-  .eyebrow{
-    display:flex; align-items:center; justify-content:center; gap: 0.75rem;
-    flex-wrap: wrap;
-    font-family: var(--font-body); font-size: 1.2292rem;
-    letter-spacing: 0.005em;
-    color: var(--ink-soft); font-weight: 500;
+  /* the line above the headline: a small icon row that says how it works without a word.
+     Work comes in, the automation (the bold blue square) does it, someone approves the
+     finished result (the lighter outlined person), and it is done. Static on purpose. */
+  .eyebrow-flow{
+    display: flex; justify-content: center;
     margin-bottom: calc(var(--space-2) * 1.3915 + 0.5rem);
   }
-  /* the eyebrow device: a quiet pill around the load-bearing phrase --
-     it names the reader's situation, not the product category */
-  .eyebrow-chip{
-    display:inline-flex; align-items:center; gap: 0.5em;
-    padding: 0.3em 0.85em 0.3em 0.7em;
-    border: 1px solid color-mix(in oklch, var(--accent) 28%, var(--border));
-    border-radius: 999px;
-    background: color-mix(in oklch, white 70%, var(--bg));
-    color: var(--accent-ink);
-    font-size: 1.1042rem; font-weight: 500; letter-spacing: 0;
-  }
-  .eyebrow-chip::before{
-    content:""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent);
-  }
-
-  /* live-status dot: fades in and out like a recording indicator. No ring,
-     no movement, just opacity. A symmetric sine-like curve is used here
-     because the site's --ease is a one-way decelerating curve and would make
-     the fade lopsided. Only runs where motion is allowed. */
-  .eyebrow-chip::before{ flex: 0 0 auto; }
-  @media (prefers-reduced-motion: no-preference){
-    .eyebrow-chip::before{ animation: live-dot 3s cubic-bezier(.45,0,.55,1) infinite; }
-  }
-  @keyframes live-dot{
-    0%, 100% { opacity: 1; }
-    50%      { opacity: 0; }
-  }
+  .eyebrow-flow svg{ width: 235px; max-width: 100%; height: auto; display: block; overflow: visible; }
+  .eyebrow-flow .ef-in{ fill: none; stroke: var(--ink-soft); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .eyebrow-flow .ef-arrow{ fill: none; stroke: color-mix(in oklch, var(--ink) 30%, var(--bg)); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .eyebrow-flow .ef-auto{ fill: var(--accent); filter: drop-shadow(0 0 7px color-mix(in oklch, var(--accent) 40%, transparent)); }
+  .eyebrow-flow .ef-gear{ fill: #fff; }
+  .eyebrow-flow .ef-hole{ fill: var(--accent); }
+  .eyebrow-flow .ef-badge{ fill: var(--accent); stroke: color-mix(in oklch, white 70%, var(--bg)); stroke-width: 1.5; }
+  .eyebrow-flow .ef-tick{ fill: none; stroke: #fff; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .eyebrow-flow .ef-tick--lg{ stroke-width: 1.9; }
+  .eyebrow-flow .ef-human{ fill: color-mix(in oklch, white 82%, var(--bg)); stroke: var(--accent); stroke-width: 1.6; }
+  .eyebrow-flow .ef-person{ fill: none; stroke: var(--accent-ink); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .eyebrow-flow .ef-done{ fill: var(--accent); }
 
   /* .hero-copy is a size container so the headline can be capped by the width
      it actually has (cqi), which keeps "No new software. No new hires." on
@@ -1045,10 +1029,17 @@
   <div class="wrap hero-inner">
     <div class="hero-copy">
 
-      <p class="eyebrow" data-reveal>
-        <span>Workflow automation for SMEs</span>
-        <span class="eyebrow-chip">growing or streamlining</span>
-      </p>
+      <div class="eyebrow-flow" data-reveal>
+      <svg viewBox="0 0 198.6 36" role="img" aria-label="Work comes in, the automation does the work, someone approves the result, and it is done">
+        <g class="ef-in" transform="translate(11.5,18) scale(1.15)"><path d="M-7,-10 H3 L8,-5 V10 H-7 Z"/><path d="M3,-10 V-5 H8"/><path d="M-4,1 H5 M-4,5 H2"/></g>
+        <path class="ef-arrow" d="M24.7 18 H45.5 M40.5 13 L45.5 18 L40.5 23"/>
+        <g transform="translate(66.5,18)"><rect class="ef-auto" x="-17.0" y="-17.0" width="34" height="34" rx="9.5"/><path class="ef-gear" d="M7.8 -2.4 L10.8 -1.9 L10.8 1.9 L7.8 2.4 L7.3 3.8 L9.0 6.4 L6.4 9.0 L3.8 7.3 L2.4 7.8 L1.9 10.8 L-1.9 10.8 L-2.4 7.8 L-3.8 7.3 L-6.4 9.0 L-9.0 6.4 L-7.3 3.8 L-7.8 2.4 L-10.8 1.9 L-10.8 -1.9 L-7.8 -2.4 L-7.3 -3.8 L-9.0 -6.4 L-6.4 -9.0 L-3.8 -7.3 L-2.4 -7.8 L-1.9 -10.8 L1.9 -10.8 L2.4 -7.8 L3.8 -7.3 L6.4 -9.0 L9.0 -6.4 L7.3 -3.8 Z" transform="scale(0.850)"/><circle class="ef-hole" r="3.4"/></g>
+        <path class="ef-arrow" d="M87.5 18 H108.3 M103.3 13 L108.3 18 L103.3 23"/>
+        <g transform="translate(127.3,18)"><circle class="ef-human" r="15"/><g class="ef-person" transform="scale(0.981)"><circle cx="0" cy="-4" r="4"/><path d="M-8,10 c0,-6 3.5,-8 8,-8 s8,2 8,8"/></g><circle class="ef-badge" cx="11.6" cy="11.6" r="6.9"/><path class="ef-tick" d="M8.7 11.8 L11.0 14.3 L15.0 8.9"/></g>
+        <path class="ef-arrow" d="M146.3 18 H167.1 M162.1 13 L167.1 18 L162.1 23"/>
+        <g transform="translate(183.1,18)"><circle class="ef-done" r="12"/><path class="ef-tick ef-tick--lg" d="M-5.0 0.2 L-1.0 4.8 L6.0 -4.6"/></g>
+      </svg>
+      </div>
 
       <h1 class="headline">
         <span data-reveal>Your back office, handled.</span>
