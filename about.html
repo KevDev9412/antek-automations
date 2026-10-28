@@ -507,6 +507,9 @@
     letter-spacing: -0.02em;
     font-weight: 560;
   }
+  /* the reveal clips to each line's box; at this line-height that box is shorter than the
+     ascenders, so give it room and pull the lines back together */
+  h1.headline.big > span{ padding-block: 0.12em 0.06em; margin-block: -0.12em -0.06em; }
   .about-hero{
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(16rem, 23rem);
