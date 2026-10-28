@@ -744,6 +744,65 @@
     .hero-left > .origin-title{ margin-top: var(--space-4); }
     .about-hero .origin-lead{ max-width: 44rem; }
   }
+
+  /* SCAN steps: the initial of each step set large, so the four letters read down the page */
+  .scan-key{ display: flex; align-items: baseline; gap: clamp(1rem, 0.6rem + 1.6vw, 2rem); }
+  .scan-letter{
+    flex: 0 0 auto; min-width: 0.78em;
+    font-family: var(--font-display); font-weight: 560;
+    font-size: clamp(3.6rem, 2.4rem + 4vw, 6.2rem); line-height: 0.8;
+    color: var(--accent-ink);
+  }
+  .scan-row{ align-items: center; }
+
+  /* ---- SCAN, v2: four columns, each with an outlined initial that fills in, and a
+     four-bar meter that shows how far through the method you are ---- */
+  .scan-grid{
+    list-style: none; margin: var(--space-4) 0 0; padding: 0;
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: var(--space-3);
+  }
+  .scan-step{
+    position: relative;
+    padding: var(--space-2) var(--space-2) var(--space-3) 0;
+    border-top: 1px solid var(--border-strong);
+  }
+  .scan-grid .scan-letter{
+    display: block;
+    font-family: var(--font-display); font-weight: 600;
+    font-size: clamp(6rem, 3rem + 6.4vw, 10.5rem); line-height: 0.82;
+    color: color-mix(in oklch, var(--accent) 10%, var(--bg));
+    -webkit-text-stroke: 2px var(--accent);
+    transition: color 700ms var(--ease);
+    transition-delay: calc(var(--n) * 140ms + 300ms);
+  }
+  .scan-step.is-in .scan-letter{ color: var(--accent); }
+  .scan-meter{ display: flex; gap: 5px; margin-top: var(--space-2); }
+  .scan-meter i{ display: block; width: 26px; height: 4px; border-radius: 2px; background: var(--border-strong); }
+  .scan-meter i.on{ background: var(--accent); }
+  .scan-step h3{
+    margin-top: var(--space-1);
+    font-size: clamp(1.4rem, 1.15rem + 0.9vw, 1.9rem); font-weight: 580; line-height: 1.15; color: var(--ink);
+  }
+  .scan-step p{
+    margin-top: 0.7rem; font-size: var(--step-0); line-height: 1.6; color: var(--ink-soft);
+  }
+  /* the A step carries the approval promise, so it gets the one quiet emphasis */
+  .scan-step:nth-child(3) .scan-meter i.on:last-child{ box-shadow: 0 0 0 3px color-mix(in oklch, var(--accent) 22%, transparent); }
+  @media (max-width: 1100px){
+    .scan-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--space-3); }
+  }
+  @media (max-width: 640px){
+    .scan-grid{ grid-template-columns: 1fr; }
+    .scan-step{ display: grid; grid-template-columns: 4.4rem 1fr; column-gap: var(--space-2); padding-right: 0; }
+    .scan-grid .scan-letter{ grid-row: 1 / span 3; font-size: 4.4rem; -webkit-text-stroke-width: 1.6px; }
+    .scan-meter{ margin-top: 0; grid-column: 2; }
+    .scan-step h3{ margin-top: 0.6rem; grid-column: 2; }
+    .scan-step p{ grid-column: 2; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .scan-grid .scan-letter{ transition: none; color: var(--accent); }
+  }
   /* reveal-on-load */
   [data-reveal]{
     opacity: 0;
@@ -832,7 +891,7 @@
 <section class="compare" id="compare">
   <div class="wrap">
     <div class="compare-head">
-      <h2 class="compare-title" data-reveal>We're not your typical automation agency.</h2>
+      <h2 class="compare-title" data-reveal>Not your typical automation agency.</h2>
       <p class="compare-lede" data-reveal>Side by side, here's where we work differently.</p>
     </div>
 
@@ -877,27 +936,35 @@
 <section class="values" id="values">
   <div class="wrap">
     <div class="values-head">
-      <h2 class="values-title" data-reveal>How we actually work.</h2>
+      <h2 class="values-title" data-reveal>How it works.</h2>
     </div>
 
-    <div class="house">
-      <div class="house-row" data-reveal>
-        <h3>One piece at a time</h3>
-        <p>We start with whatever manual work is costing you the most time, get it running, then move to the next. Not a company-wide rollout on day one.</p>
-      </div>
-      <div class="house-row" data-reveal>
-        <h3>Someone approves every result</h3>
-        <p>Each result goes to a person on your team before it posts, sends or files. We set it up so the details are already pulled out and checked, which makes each review a quick look.</p>
-      </div>
-      <div class="house-row" data-reveal>
-        <h3>Only what we can stand behind</h3>
-        <p>If we build it, we stand behind it: 30 days of free support, then a support plan if you want one. It's also why we don't take on more than we can stay on top of.</p>
-      </div>
-      <div class="house-row" data-reveal>
-        <h3>A straight answer either way</h3>
-        <p>Sometimes the honest answer is that something isn't worth automating yet. We'll say that instead of building it anyway.</p>
-      </div>
-    </div>
+    <ol class="scan-grid">
+      <li class="scan-step" data-reveal style="--n:1">
+        <span class="scan-letter" aria-hidden="true">S</span>
+        <span class="scan-meter" aria-hidden="true"><i class="on"></i><i class=""></i><i class=""></i><i class=""></i></span>
+        <h3>Study the business</h3>
+        <p>We start with a short call about how your work actually gets done: who touches it, how long it takes, where it gets stuck. Then we pick the piece costing you the most time and start there, not with a company-wide rollout on day one.</p>
+      </li>
+      <li class="scan-step" data-reveal style="--n:2">
+        <span class="scan-letter" aria-hidden="true">C</span>
+        <span class="scan-meter" aria-hidden="true"><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></span>
+        <h3>Calculate the opportunity</h3>
+        <p>We put numbers on it: the hours it takes now, what that costs you, and what an automation would give back. Sometimes the honest answer is that something isn't worth automating yet. We'll say so instead of building it anyway.</p>
+      </li>
+      <li class="scan-step" data-reveal style="--n:3">
+        <span class="scan-letter" aria-hidden="true">A</span>
+        <span class="scan-meter" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span>
+        <h3>Architect the solution</h3>
+        <p>We design the automation around how your team already works, then build and test it. Every result goes to someone on your team for approval before it posts, sends or files, set up so each review is a quick look.</p>
+      </li>
+      <li class="scan-step" data-reveal style="--n:4">
+        <span class="scan-letter" aria-hidden="true">N</span>
+        <span class="scan-meter" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>
+        <h3>Narrate the results</h3>
+        <p>Once it's live, we show you what changed, in hours and dollars you can check against the numbers from step two. Every automation comes with 30 days of free support, then a support plan if you want one.</p>
+      </li>
+    </ol>
   </div>
 </section>
 
