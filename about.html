@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About | Antek Automations</title>
-<meta name="description" content="Antek is a small operation that builds your automation and stays around to run it. You deal directly with the person doing the work.">
+<meta name="description" content="Antek is a small operation that builds your automation and stays on to support it. You deal directly with the people doing the work.">
 <link rel="canonical" href="https://www.antekautomations.com/about">
 <meta name="theme-color" content="#eef3fb">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Antek Automations">
 <meta property="og:title" content="About | Antek Automations">
-<meta property="og:description" content="Antek is a small operation that builds your automation and stays around to run it. You deal directly with the person doing the work.">
+<meta property="og:description" content="Antek is a small operation that builds your automation and stays on to support it. You deal directly with the people doing the work.">
 <meta property="og:url" content="https://www.antekautomations.com/about">
 <meta property="og:image" content="https://www.antekautomations.com/assets/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -18,7 +18,7 @@
 <meta property="og:image:alt" content="Antek Automations: Your back office, handled.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="About | Antek Automations">
-<meta name="twitter:description" content="Antek is a small operation that builds your automation and stays around to run it. You deal directly with the person doing the work.">
+<meta name="twitter:description" content="Antek is a small operation that builds your automation and stays on to support it. You deal directly with the people doing the work.">
 <meta name="twitter:image" content="https://www.antekautomations.com/assets/og-image.png">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
@@ -497,6 +497,253 @@
     .footer-top{ flex-direction: column; }
   }
 
+
+  /* ================= V2 ADDITIONS ================= */
+
+  /* hero: oversized two-line headline, subhead hung to the right on the last baseline */
+  h1.headline.big{
+    font-size: clamp(2.5rem, 0.8rem + 8vw, 9rem);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    font-weight: 560;
+  }
+  .about-hero{
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 23rem);
+    column-gap: var(--space-4);
+    align-items: end;
+  }
+  .about-hero .subhead{ margin-top: 0; padding-bottom: 0.6em; max-width: 23rem; }
+  @media (max-width: 980px){
+    .about-hero{ grid-template-columns: 1fr; row-gap: var(--space-2); }
+    .about-hero .subhead{ padding-bottom: 0; margin-top: var(--space-1); }
+  }
+  .about-intro{ padding-block: var(--space-4) var(--space-3); }
+
+  /* compare: two quotes, printed like the dot-matrix paperwork in the photo above */
+  .quotes{
+    margin-top: var(--space-4);
+    display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);
+    align-items: start;
+  }
+  .quote{
+    position: relative;
+    background: color-mix(in oklch, white 78%, var(--bg));
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: var(--space-3) var(--space-3) var(--space-3) calc(var(--space-3) + 34px);
+    box-shadow: 0 1px 0 var(--border);
+  }
+  /* tractor-feed holes and perforation down the left edge */
+  .quote::before{
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 34px;
+    background:
+      radial-gradient(circle at 17px 50%, var(--bg) 0 5px, var(--border-strong) 5px 5.8px, transparent 6px) 0 0 / 34px 34px repeat-y;
+    border-right: 1px dashed var(--border-strong);
+  }
+  .quote-head{
+    display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+    padding-bottom: var(--space-1);
+    border-bottom: 2px solid var(--ink);
+  }
+  .quote-title{ font-family: var(--font-display); font-size: var(--step-2); font-weight: 580; color: var(--ink); line-height: 1.1; }
+  .quote-tag{
+    font-family: var(--font-mono); font-size: var(--step--1);
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint);
+  }
+  .quote-lines{ list-style: none; margin: 0; padding: 0; counter-reset: ln; }
+  .quote-lines li{
+    counter-increment: ln;
+    display: grid; grid-template-columns: 2.2rem 1fr; gap: 0.5rem;
+    padding-block: 0.95rem;
+    border-bottom: 1px dotted var(--border-strong);
+    font-size: var(--step-0); line-height: 1.45;
+  }
+  .quote-lines li::before{
+    content: counter(ln, decimal-leading-zero);
+    font-family: var(--font-mono); font-size: var(--step--1); color: var(--ink-faint);
+    padding-top: 0.2em;
+  }
+  .quote-total{
+    margin-top: var(--space-1);
+    display: flex; justify-content: space-between; gap: 1rem; align-items: baseline;
+    font-family: var(--font-mono); font-size: var(--step--1);
+    letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .quote-total b{ font-weight: 500; }
+  .quote.them{ color: var(--ink-faint); background: transparent; }
+  .quote.them .quote-head{ border-bottom-color: var(--border-strong); }
+  .quote.them .quote-title{ color: var(--ink-soft); }
+  .quote.us{ color: var(--ink); border-color: var(--border-strong); }
+  .quote.us .quote-lines li{ font-weight: 500; }
+  .quote.us .quote-total{ color: var(--accent-ink); }
+  .stamp{
+    position: absolute; right: var(--space-2); top: var(--space-2);
+    padding: 0.3em 0.7em;
+    font-family: var(--font-mono); font-size: var(--step--1); font-weight: 500;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--accent-ink);
+    border: 2.5px solid var(--accent); border-radius: 4px;
+    transform: rotate(-7deg);
+    background: color-mix(in oklch, white 78%, var(--bg));
+  }
+  @media (max-width: 860px){
+    .quotes{ grid-template-columns: 1fr; }
+  }
+  /* lines print in one at a time, wiped in from the left; the stamp lands last.
+     hidden only when JS has loaded, so the page is complete without it. */
+  .js .quote .quote-lines li{ clip-path: inset(0 100% 0 0); transition: clip-path 620ms var(--ease); transition-delay: calc(var(--i) * 110ms + 150ms); }
+  .js .quote.is-in .quote-lines li{ clip-path: inset(0 0 0 0); }
+  .js .quote .stamp{ opacity: 0; transform: rotate(-7deg) scale(1.7); transition: opacity 180ms var(--ease) 1100ms, transform 420ms var(--ease) 1100ms; }
+  .js .quote.is-in .stamp{ opacity: 1; transform: rotate(-7deg) scale(1); }
+  @media (prefers-reduced-motion: reduce){
+    .js .quote .quote-lines li, .js .quote .stamp{ transition: none; }
+  }
+
+  /* values: plain-terms rows, term left, explanation right. No icons, no numbers. */
+  .house{ margin-top: var(--space-4); border-top: 1px solid var(--border); }
+  .house-row{
+    display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    column-gap: var(--space-4); row-gap: 0.5rem;
+    padding-block: var(--space-3);
+    border-bottom: 1px solid var(--border);
+    align-items: baseline;
+  }
+  .house-row h3{
+    font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.2rem);
+    font-weight: 560; line-height: 1.15; color: var(--ink);
+  }
+  .house-row p{ font-size: var(--step-1); line-height: 1.55; color: var(--ink-soft); max-width: 36rem; }
+  @media (max-width: 860px){
+    .house-row{ grid-template-columns: 1fr; padding-block: var(--space-2); }
+  }
+
+
+  /* origin without a photo: a large lead paragraph, then the rest set smaller and offset */
+  .origin-story{ margin-top: var(--space-3); }
+  .origin-lead{
+    font-family: var(--font-display); font-weight: 480;
+    font-size: clamp(1.55rem, 1.15rem + 1.9vw, 2.55rem);
+    line-height: 1.28; letter-spacing: -0.005em;
+    color: var(--ink); max-width: 54rem;
+    text-wrap: pretty;
+  }
+  .origin-after{
+    margin-top: var(--space-3);
+    max-width: 36rem;
+    font-size: var(--step-1); line-height: 1.6; color: var(--ink-soft);
+  }
+  @media (min-width: 981px){ .origin-after{ margin-left: calc(54rem - 36rem); } }
+
+
+  /* ---- hero v3: headline + a stack of sheets. The top sheet is what you see once an
+     automation is running; the sheets behind it are what happened to get it there. ---- */
+  .about-hero{ display: grid; grid-template-columns: 1fr; row-gap: var(--space-4); align-items: center; }
+  @media (min-width: 1280px){
+    .about-hero{ grid-template-columns: minmax(0, 1fr) 26rem; column-gap: var(--space-4); }
+    h1.headline.big{ font-size: clamp(3.6rem, 1rem + 6.4vw, 9rem); }
+    .about-intro{ padding-bottom: 0; }
+    .origin{ padding-top: 0; }
+  }
+
+  .stack{
+    --h: 236px; --step: 42px;
+    position: relative; width: 100%; max-width: 26rem;
+    height: calc(var(--h) + 4 * var(--step));
+  }
+  .sheet{
+    position: absolute; left: 0; right: 0;
+    height: calc(var(--h) - 50px);
+    top: calc(var(--h) + (var(--k) - 1) * var(--step) - (var(--h) - 50px) + var(--step));
+    background: color-mix(in oklch, white 80%, var(--bg));
+    border: 1px solid var(--border-strong);
+    border-radius: 14px;
+    z-index: calc(10 - var(--k));
+    transform: translateY(calc(var(--k) * var(--step) * -1)) rotate(0deg);
+    transition: transform 900ms var(--ease);
+    transition-delay: calc((5 - var(--k)) * 120ms + 250ms);
+  }
+  .stack.is-open .sheet{ transform: translateY(0) rotate(var(--rot, 0deg)) translateX(var(--dx, 0px)); }
+  .sheet-1{ --rot: -0.5deg; --dx: 0px; }
+  .sheet-2{ --rot: 0.6deg; --dx: 5px; }
+  .sheet-3{ --rot: -0.7deg; --dx: -4px; }
+  .sheet-4{ --rot: 0.5deg; --dx: 3px; }
+  .sheet-label{
+    position: absolute; left: 0; right: 0; bottom: 0; height: var(--step);
+    display: flex; align-items: center; gap: 0.8rem; padding-inline: 1.1rem;
+    font-size: var(--step--1); font-weight: 500; color: var(--ink-soft);
+  }
+  .sheet-label i{
+    font-style: normal; font-family: var(--font-mono); font-size: 0.78rem;
+    color: var(--ink-faint); letter-spacing: 0.06em;
+  }
+  .sheet-1 .sheet-label{ color: var(--accent-ink); }
+  .sheet-1 .sheet-label i{ color: var(--accent-ink); }
+
+  .sheet-front{
+    position: absolute; left: 0; right: 0; top: 0; height: var(--h);
+    z-index: 20;
+    background: #fff;
+    border: 1px solid var(--border-strong);
+    border-radius: 16px;
+    padding: 1.4rem 1.5rem;
+    box-shadow: 0 18px 40px -22px color-mix(in oklch, var(--ink) 38%, transparent);
+    display: flex; flex-direction: column;
+  }
+  .front-top{
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--font-mono); font-size: var(--step--1);
+    letter-spacing: 0.06em; color: var(--ink-faint);
+  }
+  .front-ex{
+    padding: 0.15em 0.6em; border: 1px solid var(--border-strong); border-radius: 999px;
+    text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.1em;
+  }
+  .front-title{
+    margin-top: var(--space-2);
+    font-family: var(--font-display); font-weight: 560; font-size: var(--step-2); line-height: 1.2; color: var(--ink);
+  }
+  .front-sub{ margin-top: 0.5rem; font-size: var(--step-0); color: var(--ink-soft); }
+  .front-actions{ margin-top: auto; display: flex; gap: 0.6rem; }
+  .front-approve, .front-review{
+    padding: 0.55em 1.1em; border-radius: 7px;
+    font-size: var(--step--1); font-weight: 600;
+  }
+  .front-approve{ background: var(--ink); color: var(--bg); border: 3px solid var(--accent); padding: 0.4em 1em; }
+  .front-review{ border: 1px solid var(--border-strong); color: var(--ink-soft); }
+  .no-js .sheet{ transform: none; }
+  @media (prefers-reduced-motion: reduce){
+    .sheet{ transition: none; }
+  }
+
+  /* ---- top section v4: one two-column composition. Left: headline, then the story's
+     lead. Right: the stack, then the rest of the story. Both columns end together. ---- */
+  .about-hero{ align-items: start; row-gap: 0; }
+  .hero-left, .hero-right{ display: contents; }
+  .hero-left > h1{ order: 1; }
+  .hero-right > .stack{ order: 2; margin-top: var(--space-4); }
+  .hero-left > .origin-title{ order: 3; margin-top: var(--space-4); }
+  .hero-left > .origin-lead{ order: 4; }
+  .hero-left > .origin-after{ order: 5; }
+  .about-hero .origin-title{ font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.1rem); font-weight: 580; }
+  .about-hero .origin-lead{
+    margin-top: var(--space-1);
+    font-family: var(--font-display); font-weight: 480;
+    font-size: clamp(1.4rem, 1.1rem + 1.15vw, 2.05rem);
+    line-height: 1.3; color: var(--ink); max-width: 40rem; text-wrap: pretty;
+  }
+  .about-hero .origin-after{
+    margin-top: var(--space-2); max-width: 36rem; margin-left: 0;
+    font-size: var(--step-1); line-height: 1.6; color: var(--ink-soft);
+  }
+  @media (min-width: 1280px){
+    .about-intro{ padding-top: var(--space-2); padding-bottom: var(--space-2); }
+    .about-hero{ grid-template-columns: minmax(0, 1fr) 26rem; column-gap: var(--space-4); }
+    .hero-left, .hero-right{ display: block; }
+    .hero-right > .stack{ margin-top: var(--space-1); }
+    .hero-left > .origin-title{ margin-top: var(--space-4); }
+    .about-hero .origin-lead{ max-width: 44rem; }
+  }
   /* reveal-on-load */
   [data-reveal]{
     opacity: 0;
@@ -544,34 +791,35 @@
 </header>
 
 <section class="about-intro">
-  <div class="wrap">
-    <div class="hero-copy">
-      <h1 class="headline">
-        <span data-reveal>What Antek actually is,</span>
-        <span data-reveal>and what it <span class="accent">isn't</span>.</span>
+  <div class="wrap about-hero">
+    <div class="hero-left">
+      <h1 class="headline big">
+        <span data-reveal>Behind the</span>
+        <span data-reveal><span class="accent">Automations</span></span>
       </h1>
-      <p class="subhead" data-reveal>
-        Not a software platform, and not an agency with layers between you and the work. A small operation that builds the automation and stays around to run it.
-      </p>
+      <h2 class="origin-title" data-reveal>Built out of necessity.</h2>
+      <p class="origin-lead" data-reveal>Our founder, Kevin, comes from a business background and is at home with computers and software. When he went looking for ways to make his own business run more efficiently, he learned to build automations for it, and they worked.</p>
+      <p class="origin-after" data-reveal>That turned into a real appetite for learning more. Other businesses were stuck on the same repetitive work he had been, so he started building automations for them too. That's Antek: automation for the day-to-day operations of small and mid-sized businesses, so the work takes less time and costs less.</p>
+    </div>
+
+    <div class="hero-right">
+      <div class="stack" id="stack" role="img" aria-label="A finished automation result, an invoice ready for approval, with the layers behind it: approved by someone on your team, built and tested by us, scoped around the work costing you time, and started with a short call.">
+      <div class="sheet sheet-4" style="--k:4"><span class="sheet-label"><i>04</i>Started with a short call</span></div>
+      <div class="sheet sheet-3" style="--k:3"><span class="sheet-label"><i>03</i>Scoped around the work costing you time</span></div>
+      <div class="sheet sheet-2" style="--k:2"><span class="sheet-label"><i>02</i>Built and tested by us</span></div>
+      <div class="sheet sheet-1" style="--k:1"><span class="sheet-label"><i>01</i>Approved by someone on your team</span></div>
+      <div class="sheet sheet-front">
+        <div class="front-top"><span>INV-4821</span><span class="front-ex">Example</span></div>
+        <p class="front-title">Invoice read and matched to the purchase order.</p>
+        <p class="front-sub">Three line items. Totals agree.</p>
+        <div class="front-actions"><span class="front-approve">Approve</span><span class="front-review">Review</span></div>
+      </div>
+    </div>
     </div>
   </div>
 </section>
 
-<section class="origin">
-  <div class="wrap">
-    <div class="origin-grid">
-      <div>
-        <h2 class="origin-title" data-reveal>Where this started.</h2>
-        <div class="origin-body">
-          <p data-reveal>Antek started by automating one kind of manual work for one kind of business. What became clear fast: the problem was never specific to that business. Repetitive work costs the same hours everywhere, no matter what the company actually does. So the approach stayed the same, and the scope widened.</p>
-        </div>
-      </div>
-      <div class="origin-media" data-reveal>
-        <img src="assets/origin-paperwork.jpg" alt="A stack of old dot-matrix invoice printouts next to a calculator and reading glasses on a desk" loading="lazy">
-      </div>
-    </div>
-  </div>
-</section>
+
 
 <div class="wrap">
   <div class="section-divider" aria-hidden="true">
@@ -584,70 +832,36 @@
 <section class="compare" id="compare">
   <div class="wrap">
     <div class="compare-head">
-      <h2 class="compare-title" data-reveal>How this is different from a typical automation agency.</h2>
-      <p class="compare-lede" data-reveal>Not a claim to be better at everything. Just different in the parts that actually affect you.</p>
+      <h2 class="compare-title" data-reveal>We're not your typical automation agency.</h2>
+      <p class="compare-lede" data-reveal>Side by side, here's where we work differently.</p>
     </div>
 
-    <div class="compare-table" data-reveal>
-      <div class="compare-columns-head">
-        <span class="them">Most automation agencies</span>
-        <span class="us">Antek</span>
-      </div>
-
-      <div class="compare-row">
-        <div class="compare-cell them">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>
-          <span><span class="compare-tag">Most agencies</span>A rotating account manager relays your request.</span>
-        </div>
-        <div class="compare-cell us">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-          <span><span class="compare-tag">Antek</span>You talk to the person building it.</span>
-        </div>
-      </div>
-
-      <div class="compare-row">
-        <div class="compare-cell them">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>
-          <span><span class="compare-tag">Most agencies</span>A new platform to license, learn, and pay for every month.</span>
-        </div>
-        <div class="compare-cell us">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-          <span><span class="compare-tag">Antek</span>Runs behind the tools you already use.</span>
-        </div>
-      </div>
-
-      <div class="compare-row">
-        <div class="compare-cell them">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>
-          <span><span class="compare-tag">Most agencies</span>One fixed package, whether you need all of it or not.</span>
-        </div>
-        <div class="compare-cell us">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-          <span><span class="compare-tag">Antek</span>Scoped around the manual work that's actually costing you time.</span>
-        </div>
-      </div>
-
-      <div class="compare-row">
-        <div class="compare-cell them">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>
-          <span><span class="compare-tag">Most agencies</span>A support ticket if something breaks.</span>
-        </div>
-        <div class="compare-cell us">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-          <span><span class="compare-tag">Antek</span>The person who built it fixes it.</span>
-        </div>
-      </div>
-
-      <div class="compare-row">
-        <div class="compare-cell them">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>
-          <span><span class="compare-tag">Most agencies</span>A new project and a new invoice when your process changes.</span>
-        </div>
-        <div class="compare-cell us">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-          <span><span class="compare-tag">Antek</span>Adjusted as you go. No extra project.</span>
-        </div>
-      </div>
+    <div class="quotes" data-reveal>
+      <article class="quote them" aria-label="A typical agency's quote">
+        <div class="quote-head"><h3 class="quote-title">A typical agency</h3><span class="quote-tag">Many agencies</span></div>
+        <ol class="quote-lines">
+          <li style="--i:0">A rotating account manager relays your requests.</li>
+          <li style="--i:1">A platform to license, learn, and pay for every month.</li>
+          <li style="--i:2">One fixed package, whether you need all of it or not.</li>
+          <li style="--i:3">Results go out without anyone checking them.</li>
+          <li style="--i:4">A support ticket if something breaks.</li>
+          <li style="--i:5">A new project and a new invoice when your process changes.</li>
+        </ol>
+        <p class="quote-total"><span>Total</span><b>Priced as a package</b></p>
+      </article>
+      <article class="quote us" aria-label="Antek's quote">
+        <div class="quote-head"><h3 class="quote-title">Antek</h3></div>
+        <ol class="quote-lines">
+          <li style="--i:0">You talk to the people building it.</li>
+          <li style="--i:1">Runs behind the tools you already use.</li>
+          <li style="--i:2">Scoped around the manual work that's costing you time.</li>
+          <li style="--i:3">Someone on your team approves every result.</li>
+          <li style="--i:4">The people who built it fix it.</li>
+          <li style="--i:5">Fixes and tweaks are free for 30 days. After that, a support plan if you want one.</li>
+        </ol>
+        <p class="quote-total"><span>Total</span><b>Scoped after a short call</b></p>
+        <span class="stamp" aria-hidden="true">Approved</span>
+      </article>
     </div>
   </div>
 </section>
@@ -666,19 +880,20 @@
       <h2 class="values-title" data-reveal>How we actually work.</h2>
     </div>
 
-    <div class="values-grid">
-      <div class="value-col" data-reveal>
-        <div class="value-col-rule" aria-hidden="true"></div>
+    <div class="house">
+      <div class="house-row" data-reveal>
         <h3>One piece at a time</h3>
         <p>We start with whatever manual work is costing you the most time, get it running, then move to the next. Not a company-wide rollout on day one.</p>
       </div>
-      <div class="value-col" data-reveal>
-        <div class="value-col-rule" aria-hidden="true"></div>
-        <h3>Only what we can maintain</h3>
-        <p>If we build it, we're the ones who keep it working. That's part of why we don't take on more than we can actually stay on top of.</p>
+      <div class="house-row" data-reveal>
+        <h3>Someone approves every result</h3>
+        <p>Each result goes to a person on your team before it posts, sends or files. We set it up so the details are already pulled out and checked, which makes each review a quick look.</p>
       </div>
-      <div class="value-col" data-reveal>
-        <div class="value-col-rule" aria-hidden="true"></div>
+      <div class="house-row" data-reveal>
+        <h3>Only what we can stand behind</h3>
+        <p>If we build it, we stand behind it: 30 days of free support, then a support plan if you want one. It's also why we don't take on more than we can stay on top of.</p>
+      </div>
+      <div class="house-row" data-reveal>
         <h3>A straight answer either way</h3>
         <p>Sometimes the honest answer is that something isn't worth automating yet. We'll say that instead of building it anyway.</p>
       </div>
@@ -743,6 +958,7 @@
 </footer>
 
 <script>
+document.documentElement.classList.add("js");
 (function(){
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -794,6 +1010,36 @@
     if (e.key === "Escape" && header.classList.contains("menu-open")){ setOpen(false); btn.focus(); }
   });
   window.matchMedia("(min-width: 761px)").addEventListener("change", function(m){ if (m.matches) setOpen(false); });
+})();
+</script>
+
+
+<script>
+(function(){
+  var quotes = [].slice.call(document.querySelectorAll(".quote"));
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduced || !("IntersectionObserver" in window)){
+    quotes.forEach(function(q){ q.classList.add("is-in"); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      e.target.classList.add("is-in");
+      io.unobserve(e.target);
+    });
+  }, { threshold: 0, rootMargin: "0px 0px -15% 0px" });
+  quotes.forEach(function(q){ io.observe(q); });
+})();
+</script>
+
+
+<script>
+(function(){
+  var st = document.getElementById("stack");
+  if (!st) return;
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  setTimeout(function(){ st.classList.add("is-open"); }, reduced ? 0 : 350);
 })();
 </script>
 
