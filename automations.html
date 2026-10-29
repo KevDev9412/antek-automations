@@ -544,7 +544,10 @@
     }
     .case-media-col, .case--flip .case-media-col,
     .case-text-col, .case--flip .case-text-col{ grid-column: 1; }
-    .case-media-col{ order: -1; }
+    /* stack: video row first, text row second (both were pinned to row 1 and overlapped) */
+    .case-media-col, .case--flip .case-media-col{ grid-row: 1; }
+    .case-text-col, .case--flip .case-text-col{ grid-row: 2; }
+    .feature-results{ grid-row: 3; }
     .work-intro .hero-copy{ max-width: 40rem; }
   }
   @media (max-width: 560px){
