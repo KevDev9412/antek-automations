@@ -36,6 +36,9 @@
     --ink-faint: color-mix(in oklch, var(--ink) 34%, var(--bg));
     --accent: oklch(56% 0.224 252);
     --accent-ink: oklch(48% 0.205 254);
+    --a2: oklch(82% 0.165 82); /* saffron: second accent, status + marker jobs only */
+    --a2-ink: oklch(50% 0.12 66);
+    --a2-on: var(--ink);
     --accent-soft: color-mix(in oklch, var(--accent) 12%, var(--bg));
     --accent-hover: color-mix(in oklch, var(--accent) 86%, black);
     --border: color-mix(in oklch, var(--ink) 12%, var(--bg));
@@ -805,6 +808,23 @@
   #case-01{ padding-top: var(--space-4); }
   .sr-only{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
   @media (prefers-reduced-motion: reduce){ .oc-pill{ transition: none; } }
+
+  /* saffron second accent: takes status and marker jobs off the blue (Work page only) */
+  .oc-dot--live{ background: var(--a2); border-color: var(--a2); box-shadow: 0 0 0 4px color-mix(in oklch, var(--a2) 30%, transparent); }
+  .oc-turn{ background: linear-gradient(transparent 70%, color-mix(in oklch, var(--a2) 55%, transparent) 70% 92%, transparent 92%); width: fit-content; margin-inline: auto; padding-inline: 0.08em; }
+  .oc-nodes .oc-live{ fill: var(--a2); }
+  .oc-flow--b{ stroke: var(--a2); }
+  .oc-pill b{ color: var(--a2-ink); }
+  .oc-pill:hover{ border-color: var(--a2); box-shadow: 0 14px 26px -20px color-mix(in oklch, var(--a2) 80%, transparent); }
+  .nav-links a::before, .nav-links a::after{ background: var(--a2); }
+  .case-tag--solid{ background: var(--a2); color: var(--a2-on); }
+  .case-num{ color: var(--a2-ink); }
+  .case-outcome::before{ background: var(--a2); }
+  .case-live-ico{ background: color-mix(in oklch, var(--a2) 26%, var(--bg)); color: var(--a2-ink); }
+  .case--feature .case-num::before{ background: var(--a2); }
+  .footer-cta{ background: var(--a2); color: var(--a2-on); }
+  .footer-cta:hover{ background: color-mix(in oklch, var(--a2) 86%, black); color: var(--a2-on); }
+  .footer-col a:hover{ color: var(--a2); }
 </style>
 <!-- Vercel Web Analytics and Speed Insights -->
 <script>
