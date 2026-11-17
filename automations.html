@@ -752,6 +752,59 @@
   .case-more:hover svg{ transform: translateX(4px); }
   @media (max-width: 640px){ .case-proof{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-1); } .case-proof-n{ font-size: clamp(1.5rem, 1rem + 2.4vw, 2rem); } }
   @media (prefers-reduced-motion: reduce){ .case-more svg{ transition: none; } }
+/* ---------- C ---------- */
+  .oc{ position: relative; overflow: hidden; padding-block: calc(var(--space-4) * 1.6) calc(var(--space-4) * 1.5); text-align: center; }
+  .oc-net{ position: absolute; inset: 0; width: 100%; height: 100%; color: color-mix(in oklch, var(--ink) 30%, var(--bg));
+    -webkit-mask-image: radial-gradient(ellipse 70% 80% at 50% 50%, transparent 0 34%, #000 78%); mask-image: radial-gradient(ellipse 70% 80% at 50% 50%, transparent 0 34%, #000 78%); }
+  .oc-nodes circle{ fill: color-mix(in oklch, var(--ink) 38%, var(--bg)); }
+  .oc-nodes .oc-live{ fill: var(--accent); }
+  .oc-flow{ stroke: var(--accent); stroke-width: 2.2; stroke-linecap: round; stroke-dasharray: 90 700; stroke-dashoffset: 0; }
+  @media (prefers-reduced-motion: no-preference){
+    .oc-flow{ animation: ocflow 5.5s linear infinite; }
+    .oc-flow--b{ animation-delay: -2.7s; }
+    .oc-live{ animation: ocpulse 3.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+  }
+  @keyframes ocflow{ to{ stroke-dashoffset: -790; } }
+  @keyframes ocpulse{ 50%{ transform: scale(1.5); opacity: 0.6; } }
+  .oc-in{ position: relative; }
+  .oc-k{ display: inline-flex; align-items: center; gap: 0.6rem; margin: 0 0 var(--space-2); font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); }
+  .oc-k i{ width: 7px; height: 7px; background: var(--accent); }
+  .oc-h{ margin: 0; font-family: var(--font-display); font-weight: 560; font-size: clamp(2.4rem, 1.2rem + 5.8vw, 6.4rem); line-height: 1.04; letter-spacing: -0.015em; color: var(--ink); }
+  .oc-h span{ display: block; }
+  .oc-turn{ color: var(--accent-ink); }
+  .oc-pills{ display: flex; flex-wrap: wrap; justify-content: center; gap: 0.7rem; margin-top: var(--space-4); }
+  .oc-pill{ display: inline-flex; align-items: center; gap: 0.7rem; padding: 0.75em 1.2em; border-radius: 999px; border: 1px solid var(--border-strong); background: color-mix(in oklch, var(--bg) 70%, white); color: var(--ink); text-decoration: none; font-size: var(--step--1); font-weight: 500;
+    transition: border-color 260ms var(--ease), transform 260ms var(--ease), box-shadow 260ms var(--ease); }
+  .oc-pill:hover{ border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 14px 26px -20px color-mix(in oklch, var(--accent) 70%, transparent); }
+  .oc-pill b{ font-family: var(--font-mono); font-weight: 500; color: var(--accent-ink); }
+  .oc-pill em{ font-style: normal; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); padding-left: 0.7rem; border-left: 1px solid var(--border-strong); }
+  .oc-dot{ width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--ink-faint); flex: none; }
+  .oc-dot--live{ background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 4px color-mix(in oklch, var(--accent) 22%, transparent); }
+
+    @media (max-width: 640px){
+    .oc-pill{ width: 100%; justify-content: flex-start; }
+    .oc-pill em{ margin-left: auto; }
+    .oc-h span{ display: inline; }
+  }
+
+  /* mockup C: the hero carries the network now, so the page-long thread starts below it */
+  .page-flow .pf-thread, .page-flow .pf-node--head{ display: none; }
+  .page-flow{ -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent 640px, #000 860px); mask-image: linear-gradient(to bottom, transparent 0, transparent 640px, #000 860px); }
+  @keyframes pf-drift{
+    0%   { top: 22%; left: 92%; opacity: 0; }
+    7%   { opacity: 0.72; }
+    27%  { left: 96%; }
+    47%  { left: 90%; }
+    68%  { left: 96.5%; }
+    90%  { opacity: 0.72; }
+    100% { top: 82%; left: 93.5%; opacity: 0; }
+  }
+  /* tighter hand-off from the hero to the first case */
+  .oc{ padding-block: calc(var(--space-4) * 1.4) var(--space-3); }
+  .work-cases{ padding-top: 0; }
+  #case-01{ padding-top: var(--space-4); }
+  .sr-only{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+  @media (prefers-reduced-motion: reduce){ .oc-pill{ transition: none; } }
 </style>
 <!-- Vercel Web Analytics and Speed Insights -->
 <script>
@@ -808,21 +861,26 @@
   </div>
 </header>
 
-<section class="work-intro">
-  <div class="wrap">
-    <div class="hero-copy">
-      <h1 class="headline">
-        <span data-reveal>Automations</span>
-      </h1>
-      <p class="subhead" data-reveal>
-        See what we've built. Imagine the possibilities.
-      </p>
-      <div class="work-contents" data-reveal>
-        <span class="work-contents-label">On this page</span>
-        <a class="work-contents-item" href="#case-01"><span class="work-contents-num">01</span> Task Generation</a>
-        <a class="work-contents-item" href="#case-02"><span class="work-contents-num">02</span> Client Requests</a>
-        <a class="work-contents-item" href="#case-03"><span class="work-contents-num">03</span> Invoice Reconciliation</a>
-      </div>
+<section class="oc">
+  <svg class="oc-net" viewBox="0 0 1600 560" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <g fill="none" stroke="currentColor" stroke-width="1.4">
+      <path class="oc-l" d="M140 30V530"/><path class="oc-l" d="M1460 30V530"/>
+      <path class="oc-l" d="M140 120H300V200H380"/><path class="oc-l" d="M140 330H240V410H420"/><path class="oc-l" d="M140 470H330"/>
+      <path class="oc-l" d="M1460 100H1300V190H1220"/><path class="oc-l" d="M1460 300H1360V400H1180"/><path class="oc-l" d="M1460 470H1270"/>
+      <path class="oc-flow" d="M140 30V280"/><path class="oc-flow oc-flow--b" d="M1460 530V260"/>
+    </g>
+    <g class="oc-nodes">
+      <circle cx="380" cy="200" r="4"/><circle cx="420" cy="410" r="4"/><circle cx="330" cy="470" r="4"/>
+      <circle cx="1220" cy="190" r="4"/><circle cx="1180" cy="400" r="4"/><circle cx="1270" cy="470" r="4"/>
+      <circle class="oc-live" cx="140" cy="120" r="5.5"/><circle class="oc-live" cx="1460" cy="300" r="5.5"/>
+    </g>
+  </svg>
+  <div class="wrap oc-in">
+    <h1 class="oc-h"><span class="sr-only">Automations. </span><span>See what we've built.</span><span class="oc-turn">Imagine the possibilities.</span></h1>
+    <div class="oc-pills">
+      <a class="oc-pill" href="#case-01"><span class="oc-dot oc-dot--live"></span><b>01</b> Task Generation<em>Case study</em></a>
+      <a class="oc-pill" href="#case-02"><span class="oc-dot"></span><b>02</b> Client Requests<em>Demo</em></a>
+      <a class="oc-pill" href="#case-03"><span class="oc-dot"></span><b>03</b> Invoice Reconciliation<em>Prospect build</em></a>
     </div>
   </div>
 </section>
