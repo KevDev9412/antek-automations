@@ -906,6 +906,97 @@
   /* "More about us" in the accent colour (the darker accent, which is the one this site uses for blue text on light) */
   .about-foot .link-light{ color: var(--accent-ink); border-bottom-color: color-mix(in oklch, var(--accent) 45%, transparent); }
   .about-foot .link-light:hover{ border-bottom-color: var(--accent-ink); }
+
+  /* ---------- case-study billboard (replaces the proof strip under the hero) ---------- */
+  .bb{ padding-block: var(--space-3) var(--space-4); }
+  .bb-card{
+    position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr);
+    column-gap: clamp(2rem, 1rem + 4vw, 6rem); align-items: center;
+    padding: calc(clamp(1.6rem, 1.1rem + 2vw, 3rem) * 0.6) clamp(1.5rem, 1rem + 3vw, 3.6rem);
+    text-decoration: none; color: var(--ink);
+    border: 1.5px solid color-mix(in oklch, var(--accent) 46%, var(--border));
+    border-radius: 26px; overflow: hidden; isolation: isolate;
+    background-color: color-mix(in oklch, white 74%, var(--bg));
+    box-shadow: 0 1px 0 color-mix(in oklch, white 80%, transparent) inset,
+                0 18px 40px -26px color-mix(in oklch, var(--accent) 55%, transparent);
+    transition: transform 320ms var(--ease), box-shadow 320ms var(--ease), border-color 320ms var(--ease);
+  }
+  .bb-card::before{ /* soft accent bloom behind the numbers, keeps them the focal point */
+    content: ""; position: absolute; z-index: -1; right: -6%; top: -30%; width: 62%; height: 160%;
+    background: radial-gradient(closest-side, color-mix(in oklch, var(--accent) 13%, transparent), transparent);
+    pointer-events: none;
+  }
+  .bb-card::after{ /* signal rings radiating up from behind the numbers */
+    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background-image: repeating-radial-gradient(circle at 74% 100%, transparent 0 58px, color-mix(in oklch, var(--accent) 22%, transparent) 58px 59px);
+    -webkit-mask-image: radial-gradient(70% 150% at 74% 100%, #000 0%, transparent 72%);
+            mask-image: radial-gradient(70% 150% at 74% 100%, #000 0%, transparent 72%);
+  }
+  .bb-card:hover{ transform: translateY(-3px); border-color: var(--accent);
+    box-shadow: 0 1px 0 color-mix(in oklch, white 80%, transparent) inset, 0 26px 50px -26px color-mix(in oklch, var(--accent) 65%, transparent); }
+  .bb-card:focus-visible{ outline: 2px solid var(--accent); outline-offset: 4px; }
+  .bb-tags{ display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap; }
+  .bb-tag{
+    font-family: var(--font-mono); font-size: var(--step--1); font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; color: #fff; background: var(--accent);
+    padding: 0.32em 0.8em; border-radius: 999px;
+  }
+  .bb-eyebrow{ font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-ink); }
+  .bb-title{
+    margin-top: var(--space-2);
+    font-size: clamp(2.2rem, 1.3rem + 2vw, 3.1rem); font-weight: 588; line-height: 1.06; letter-spacing: 0;
+    color: var(--ink);
+  }
+  .bb-title > span{ display: block; white-space: nowrap; }
+  .bb-body{ margin-top: var(--space-1); max-width: 28rem; font-size: var(--step-0); line-height: 1.5; color: var(--ink-soft); text-wrap: pretty; }
+  .bb-link{
+    margin-top: var(--space-2); display: inline-flex; align-items: center; gap: 0.5rem;
+    font-weight: 600; font-size: var(--step-0); color: var(--accent-ink);
+  }
+  .bb-link svg{ width: 16px; height: 16px; transition: transform 240ms var(--ease); }
+  .bb-card:hover .bb-link svg{ transform: translateX(4px); }
+  .bb-figs{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1rem, 0.4rem + 2vw, 2.4rem); }
+  .bb-fig{ min-width: 0; }
+  .bb-num{
+    font-family: var(--font-display); font-weight: 560; font-optical-sizing: auto;
+    font-size: clamp(2.6rem, 1.4rem + 2.4vw, 4rem); line-height: 1; white-space: nowrap; letter-spacing: -0.015em;
+    color: var(--ink); font-variant-numeric: lining-nums tabular-nums;
+  }
+  .bb-num small{ font-size: 0.46em; font-weight: 500; color: var(--accent-ink); margin-left: 0.04em; letter-spacing: 0; }
+  .bb-meter{
+    position: relative; height: 4px; margin-top: clamp(0.8rem, 0.6rem + 0.6vw, 1.2rem);
+    border-radius: 2px; background: color-mix(in oklch, var(--ink) 12%, var(--bg));
+  }
+  .bb-meter::after{
+    content: ""; position: absolute; inset: 0; border-radius: 2px; background: var(--accent);
+    transform-origin: left center; transform: scaleX(var(--p));
+    box-shadow: 0 0 12px color-mix(in oklch, var(--accent) 55%, transparent);
+    transition: transform 1500ms var(--ease);
+  }
+  .bb-armed .bb-meter::after{ transform: scaleX(0); }
+  .bb-armed.bb-live .bb-meter::after{ transform: scaleX(var(--p)); }
+  .bb-armed .bb-fig:nth-child(2) .bb-meter::after{ transition-delay: 140ms; }
+  .bb-armed .bb-fig:nth-child(3) .bb-meter::after{ transition-delay: 280ms; }
+  .bb-label{ margin-top: 0.7rem; font-size: var(--step--1); line-height: 1.4; color: var(--ink-soft); text-wrap: balance; max-width: 13rem; }
+
+  @media (max-width: 1100px){
+    .bb-card{ grid-template-columns: 1fr; row-gap: var(--space-3); }
+  }
+  @media (max-width: 640px){
+    .bb-wk{ display: none; }
+    .bb-card{ padding-block: clamp(1.6rem, 1.1rem + 2vw, 3rem); }
+    .bb-title > span{ white-space: normal; display: inline; }
+    .bb-figs{ grid-template-columns: 1fr; gap: 1.1rem; }
+    .bb-fig{ display: grid; grid-template-columns: minmax(0, 8.2rem) minmax(0, 1fr); column-gap: 1rem; align-items: center; }
+    .bb-num{ font-size: clamp(2.5rem, 1.6rem + 6vw, 3.2rem); grid-row: 1 / span 2; }
+    .bb-meter{ margin-top: 0; align-self: end; }
+    .bb-label{ margin-top: 0.55rem; max-width: none; align-self: start; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .bb-card, .bb-link svg, .bb-meter::after{ transition: none; }
+    .bb-card:hover{ transform: none; }
+  }
+
 </style>
 <!-- Vercel Web Analytics and Speed Insights -->
 <script>
@@ -994,7 +1085,7 @@
           Ask How
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
         </a>
-        <a class="hero-textlink" href="automations">
+        <a class="hero-textlink" href="work/case-study">
           See our work
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
         </a>
@@ -1004,23 +1095,33 @@
   </div>
 </section>
 
-<section class="proof" aria-label="What it adds up to">
+<section class="bb" aria-label="Case study">
   <div class="wrap">
-    <div class="proof-row" data-reveal>
-      <div class="proof-stat">
-        <div class="proof-num"><span aria-hidden="true"><span class="count" data-to="71"><span class="count-final">71</span><span class="count-live">71</span></span><small>hours</small></span><span class="sr-only">71 hours</span></div>
-        <p class="proof-label">a month back, out of about 83 spent by hand</p>
+    <a class="bb-card" href="work/case-study" data-reveal>
+      <div class="bb-copy">
+        <div class="bb-tags"><span class="bb-tag">Case study</span><span class="bb-eyebrow">LT Homes<span class="bb-wk"> &middot; First week live</span></span></div>
+        <h2 class="bb-title"><span>Nothing falls</span> <span>through the cracks.</span></h2>
+        <p class="bb-body">Every comment in a builder's daily email, sent to the right person. No new software for the team to learn.</p>
+        <span class="bb-link">Read the case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span>
       </div>
-      <div class="proof-stat">
-        <div class="proof-num"><span aria-hidden="true"><span class="count" data-to="16"><span class="count-final">16</span><span class="count-live">16</span></span><small>hours</small></span><span class="sr-only">16 hours</span></div>
-        <p class="proof-label">a week, about 40% of a full-time AP role</p>
+      <div class="bb-figs">
+        <div class="bb-fig" style="--p:1">
+          <div class="bb-num"><span aria-hidden="true"><span class="bb-n" data-to="116" data-dec="0">116</span></span><span class="sr-only">116</span></div>
+          <div class="bb-meter" aria-hidden="true"></div>
+          <p class="bb-label">comments read, none missed</p>
+        </div>
+        <div class="bb-fig" style="--p:.9714">
+          <div class="bb-num"><span aria-hidden="true"><span class="bb-n" data-to="97.1" data-dec="1">97.1</span><small>%</small></span><span class="sr-only">97.1%</span></div>
+          <div class="bb-meter" aria-hidden="true"></div>
+          <p class="bb-label">of tasks captured</p>
+        </div>
+        <div class="bb-fig" style="--p:1">
+          <div class="bb-num"><span aria-hidden="true"><span class="bb-n" data-to="100" data-dec="0">100</span><small>%</small></span><span class="sr-only">100%</span></div>
+          <div class="bb-meter" aria-hidden="true"></div>
+          <p class="bb-label">sent to the right person</p>
+        </div>
       </div>
-      <div class="proof-stat">
-        <div class="proof-num"><span aria-hidden="true">$<span class="count" data-to="21250" data-group="1"><span class="count-final">21,250</span><span class="count-live">21,250</span></span></span><span class="sr-only">$21,250</span></div>
-        <p class="proof-label">a year in staff time, at the Ontario median wage</p>
-      </div>
-    </div>
-    <p class="proof-foot" data-reveal>At 500 invoices a month</p>
+    </a>
   </div>
 </section>
 
@@ -1425,6 +1526,35 @@
     new IntersectionObserver(function(entries, io){
       entries.forEach(function(en){ if (en.isIntersecting){ once(); io.disconnect(); } });
     }, { threshold: 0, rootMargin: "0px 0px -18% 0px" }).observe(row);
+  })();
+
+
+  // billboard: figures roll up and the meters fill once, as the card scrolls into view
+  (function(){
+    var card = document.querySelector(".bb-card");
+    if (!card) return;
+    var nums = [].slice.call(card.querySelectorAll(".bb-n"));
+    if (reduced || !("IntersectionObserver" in window)) return;
+    var wrap = card.closest(".bb");
+    wrap.classList.add("bb-armed");
+    var set = function(el, v){ el.textContent = v.toFixed(parseInt(el.getAttribute("data-dec"), 10)); };
+    nums.forEach(function(el){ set(el, 0); });
+    function run(){
+      wrap.classList.add("bb-live");
+      var t0 = null, dur = 1500;
+      function frame(t){
+        if (t0 === null) t0 = t;
+        var p = Math.min(1, (t - t0) / dur);
+        var e = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
+        nums.forEach(function(el){ set(el, e * parseFloat(el.getAttribute("data-to"))); });
+        if (p < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+    new IntersectionObserver(function(entries, io){
+      entries.forEach(function(en){ if (en.isIntersecting){ run(); io.disconnect(); } });
+    }, { threshold: 0, rootMargin: "0px 0px -12% 0px" }).observe(card);
+    setTimeout(function(){ if (!wrap.classList.contains("bb-live")){ nums.forEach(function(el){ set(el, parseFloat(el.getAttribute("data-to"))); }); wrap.classList.add("bb-live"); } }, 6000);
   })();
 
   // faq accordion: single item open at a time
