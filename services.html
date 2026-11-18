@@ -509,6 +509,9 @@
 .tab[aria-selected="true"]{ box-shadow: inset 3px 0 0 var(--a2); }
 .tab-bar, .pline::after{ background: var(--a2); }
 @media (max-width: 760px){ .tab[aria-selected="true"]{ box-shadow: inset 0 -3px 0 var(--a2); } }
+
+  /* mobile: the 3rem side gutter ate over a quarter of a phone screen */
+  @media (max-width: 640px){ .wrap{ padding-inline: 1.4rem; } }
 </style>
 <!-- Vercel Web Analytics and Speed Insights -->
 <script>

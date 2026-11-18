@@ -831,6 +831,9 @@
 .compare-columns-head span.us, .compare-cell.us svg, .compare-cell.us .compare-tag{ color: var(--a2-ink); }
 .scan-meter i.on{ background: var(--a2); }
 .sheet-1 .sheet-label, .sheet-1 .sheet-label i{ color: var(--a2-ink); }
+
+  /* mobile: the 3rem side gutter ate over a quarter of a phone screen */
+  @media (max-width: 640px){ .wrap{ padding-inline: 1.4rem; } }
 </style>
 <!-- Vercel Web Analytics and Speed Insights -->
 <script>

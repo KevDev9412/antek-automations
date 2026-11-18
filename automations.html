@@ -787,7 +787,7 @@
     @media (max-width: 640px){
     .oc-pill{ width: 100%; justify-content: flex-start; }
     .oc-pill em{ margin-left: auto; }
-    .oc-h span{ display: inline; }
+    .oc-h span{ display: block; }
   }
 
   /* mockup C: the hero carries the network now, so the page-long thread starts below it */
@@ -825,6 +825,15 @@
   .footer-cta{ background: var(--ink); color: #fff; border: 2.5px solid var(--accent); padding: calc(0.65em - 2.5px) calc(1.3em - 2.5px); }
   .footer-cta:hover{ background: color-mix(in oklch, var(--accent) 22%, var(--ink)); color: #fff; border-color: var(--accent); }
   .footer-col a:hover{ color: var(--a2); }
+
+  /* mobile: the 3rem side gutter ate over a quarter of a phone screen */
+  @media (max-width: 640px){ .wrap{ padding-inline: 1.4rem; } }
+  @media (max-width: 640px){
+    .oc-h{ font-size: clamp(2.1rem, 1.4rem + 4.6vw, 2.7rem); }
+    .oc-h > span{ text-wrap: balance; }
+    .oc-h .oc-turn{ display: inline; margin-inline: 0; width: auto; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+    .oc-pill{ text-align: left; }
+  }
 </style>
 <!-- Vercel Web Analytics and Speed Insights -->
 <script>
