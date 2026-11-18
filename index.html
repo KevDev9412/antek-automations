@@ -34,8 +34,8 @@
     --ink: oklch(16% 0.026 264);
     --ink-soft: color-mix(in oklch, var(--ink) 64%, var(--bg));
     --ink-faint: color-mix(in oklch, var(--ink) 34%, var(--bg));
-    --accent: oklch(56% 0.224 252);
-    --accent-ink: oklch(48% 0.205 254);
+    --accent: oklch(54% 0.2 236);
+    --accent-ink: oklch(54% 0.2 236);
     --accent-soft: color-mix(in oklch, var(--accent) 12%, var(--bg));
     --accent-hover: color-mix(in oklch, var(--accent) 86%, black);
     --border: color-mix(in oklch, var(--ink) 12%, var(--bg));
@@ -101,7 +101,8 @@
   }
   .nav-row{ display:grid; grid-template-columns: 1fr auto 1fr; align-items:center; gap: var(--space-2); }
   .brand{ display:flex; align-items:center; gap: 0.325rem; text-decoration:none; justify-self: start; }
-  .brand img{ height: 45px; width:auto; }
+  .brand img{ height: 64px; width:auto; display:block; margin-block: -8px; }
+  .footer-brand .brand img{ height: 72px; margin-block: 0; }
   .brand span{
     font-family: var(--font-display); font-weight: 600; font-size: 1.625rem;
     letter-spacing: -0.015em; color: var(--ink); white-space: nowrap;
@@ -169,7 +170,8 @@
     .nav-row > nav{ display: contents; }
     .nav-cta{ display: none; }
     .menu-btn{ display: inline-flex; }
-    .brand span{ font-size: 1.3rem; }
+    .brand img{ height: 52px; margin-block: -4px; }
+    .footer-brand .brand img{ height: 60px; margin-block: 0; }
     .nav-links{
       display: none;
       position: absolute; left: 0; right: 0; top: 100%;
@@ -336,7 +338,7 @@
         color: transparent;
         background-image: linear-gradient(95deg,
           var(--accent-ink) 0 42%,
-          oklch(82% 0.12 250) 50%,
+          oklch(82% 0.12 236) 50%,
           var(--accent-ink) 58% 100%);
         background-size: 300% 100%;
         background-repeat: no-repeat;
@@ -1033,8 +1035,7 @@
 <header>
   <div class="wrap nav-row">
     <a class="brand" href="/">
-      <img src="assets/logo-icon-240.png" alt="Antek Automations">
-      <span>Antek Automations</span>
+      <img src="assets/logo-full.png" alt="Antek Automations">
     </a>
     <nav id="site-nav" aria-label="Main">
       <ul class="nav-links">
@@ -1457,9 +1458,8 @@
     <div class="footer-top">
       <div class="footer-brand">
         <a class="brand" href="/">
-          <img src="assets/logo-icon-240.png" alt="Antek Automations">
-          <span>Antek Automations</span>
-        </a>
+      <img src="assets/logo-full-dark.png" alt="Antek Automations">
+    </a>
         <p class="footer-tagline">Back-office automation that stays out of your way.</p>
         <a class="footer-cta" href="https://calendly.com/kevin-antekautomations/30min" target="_blank" rel="noopener">Book A Call</a>
       </div>
