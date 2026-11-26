@@ -422,9 +422,7 @@
     position: absolute; inset: 0;
     width: 100%; height: 100%; border: 0; display: block;
   }
-  /* poster rest state: a light, miniature scene of what the automation does,
-     in the same glyph language as the homepage and Services console. The
-     Loom embed still only mounts on click. */
+  /* poster rest state: a drawn video thumbnail. The embed still only mounts on click. */
   .case-poster{
     position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; display: block; overflow: hidden;
     border: 0; cursor: pointer; color: var(--ink); font-family: var(--font-body);
@@ -432,41 +430,11 @@
     background-image: radial-gradient(color-mix(in oklch, var(--ink) 11%, transparent) 1px, transparent 1.4px);
     background-size: 18px 18px;
   }
-  .case-poster-art{ position: absolute; left: 0; right: 0; top: 0; width: 100%; height: 100%; display: block; transition: transform 500ms var(--ease); }
-  .case-poster-art .sc-card{ fill: color-mix(in oklch, white 90%, var(--bg)); stroke: var(--border-strong); stroke-width: 1.4; }
-  .case-poster-art .sc-card--hot{ stroke: color-mix(in oklch, var(--accent) 45%, var(--border)); }
-  .case-poster-art .sc-bar{ fill: color-mix(in oklch, var(--ink) 13%, var(--bg)); }
-  .case-poster-art .sc-bar-d{ fill: color-mix(in oklch, var(--ink) 28%, var(--bg)); }
-  .case-poster-art .sc-chip{ fill: color-mix(in oklch, var(--accent) 12%, var(--bg)); stroke: color-mix(in oklch, var(--accent) 32%, transparent); stroke-width: 1; }
-  .case-poster-art .sc-acc{ fill: var(--accent); }
-  .case-poster-art .sc-tick{ fill: none; stroke: #fff; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
-  .case-poster-art .sc-acc-big{ fill: var(--accent); filter: drop-shadow(0 0 8px color-mix(in oklch, var(--accent) 45%, transparent)); }
-  .case-poster-art .sc-icon{ fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .case-poster-art .sc-icon-dark{ fill: var(--accent-ink); }
-  .case-poster-art .sc-wire{ fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; }
-  .case-poster-art .sc-head{ fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .case-poster-art .sc-box{ fill: none; stroke: color-mix(in oklch, var(--ink) 34%, var(--bg)); stroke-width: 1.5; }
-  .case-poster-art .sc-env{ fill: none; stroke: var(--accent-ink); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
-  .case-poster-art .sc-ini{ font: 700 11px/1 var(--font-body); fill: var(--accent-ink); }
-  .case-poster-art .sc-txt{ font: 600 13px/1 var(--font-body); fill: var(--ink-soft); }
-  .case-poster-art .sc-clock{ fill: none; stroke: var(--accent-ink); stroke-width: 1.5; stroke-linecap: round; }
-  .case-poster-art .sc-doc{ fill: color-mix(in oklch, white 94%, var(--bg)); stroke: color-mix(in oklch, var(--ink) 36%, var(--bg)); stroke-width: 1.5; stroke-linejoin: round; }
-  .case-poster-art .sc-doc-s{ fill: none; stroke: var(--accent-ink); stroke-width: 1.3; stroke-linejoin: round; }
-  .case-poster-art .sc-flag{ fill: color-mix(in oklch, var(--accent) 11%, var(--bg)); stroke: color-mix(in oklch, var(--accent) 50%, transparent); stroke-width: 1.2; }
-  .case-poster-art .sc-pill{ fill: var(--accent); }
-  .case-poster-art .sc-pill-t{ font: 700 10.5px/1 var(--font-body); fill: #fff; }
-  .case-poster-art .sc-btn{ fill: var(--accent); }
-  .case-poster-art .sc-btn-t{ font: 700 11.5px/1 var(--font-body); fill: #fff; }
-  .case-poster-art .sc-btn-o{ fill: none; stroke: color-mix(in oklch, var(--ink) 38%, var(--bg)); stroke-width: 1.3; }
-  .case-poster-art .sc-btn-ot{ font: 700 11.5px/1 var(--font-body); fill: var(--ink-soft); }
-
-  /* one large play button dead centre, a soft wash behind it so it lifts off the
-     artwork, and a small label pill with the running time bottom-left. */
-  .poster-wash{ position: absolute; inset: 0; z-index: 1; pointer-events: none;
-    background: radial-gradient(closest-side at 50% 50%, color-mix(in oklch, white 70%, transparent), transparent 85%); }
+  /* video thumbnails: input on the left, play in the middle, result on the right,
+     with a title and player bar. All sizes are container units so they scale together. */
   .bigplay{
-    position: absolute; z-index: 3; left: 50%; top: 50%; width: clamp(68px, 22%, 92px); aspect-ratio: 1;
-    transform: translate(-50%, -50%); border-radius: 50%; background: var(--accent); display: grid; place-items: center;
+    position: absolute; left: 50%; transform: translate(-50%, -50%); aspect-ratio: 1; border-radius: 50%;
+    background: var(--accent); place-items: center;
     box-shadow: 0 0 0 10px color-mix(in oklch, var(--accent) 22%, transparent), 0 18px 40px -12px color-mix(in oklch, var(--accent) 70%, transparent);
     transition: transform 260ms var(--ease), background 260ms var(--ease);
   }
@@ -474,21 +442,79 @@
   .bigplay::after{ content: ""; position: absolute; inset: -10px; border-radius: 50%;
     border: 3px solid color-mix(in oklch, var(--a2) 90%, transparent); animation: bp-pulse 2.6s var(--ease) infinite; }
   @keyframes bp-pulse{ 0%{ transform: scale(.92); opacity: .9; } 70%, 100%{ transform: scale(1.4); opacity: 0; } }
-  .poster-pill{
-    position: absolute; z-index: 3; left: 14px; bottom: 14px; display: inline-flex; align-items: center; gap: 0.55rem;
-    padding: 0.42rem 0.8rem; border-radius: 999px; background: color-mix(in oklch, var(--ink) 88%, transparent);
-    color: #fff; font: 600 0.82rem var(--font-body);
+  .th{ position:absolute; inset:0; container-type:inline-size; overflow:hidden; text-align:left; display:block;
+       background: linear-gradient(150deg, color-mix(in oklch, var(--accent) 26%, white), color-mix(in oklch, var(--accent) 12%, var(--bg))); }
+  .th span,.th strong,.th small,.th em,.th b{ display:block; font-style:normal; }
+  .th-screen{ position:absolute; inset:0; transition: transform 500ms var(--ease); }
+  .case-poster:hover .th-screen{ transform: scale(1.025); }
+  .th .pn{ position:absolute; top:6cqw; width:35cqw; height:60cqw; background:#fff; border-radius:2cqw; box-shadow:0 3cqw 7cqw -3cqw rgba(8,20,55,.4); overflow:hidden; }
+  .th .pn.l{ left:4cqw; }
+  .th .pn.r{ right:4cqw; }
+  .th .pn.out{ border:.45cqw solid var(--accent); }
+  .th .pn.flag{ border-color:oklch(55% .19 27); }
+  .th .pn-top{ padding:2cqw 2.4cqw; font:600 2.5cqw var(--font-body); color:var(--ink-soft); border-bottom:1px solid var(--border); background:color-mix(in oklch, var(--bg) 55%, white); }
+  .th .pn-body{ padding:2.4cqw; }
+  .th .rb{ display:block; height:1.5cqw; border-radius:1cqw; background:color-mix(in oklch, var(--ink) 14%, white); margin:1.3cqw 0; max-width:100%; }
+  .th .msg{ padding:.4cqw 1.4cqw; margin-bottom:1cqw; }
+  .th .msg.hot{ padding:1.8cqw 1.8cqw; border-radius:1.4cqw; background:color-mix(in oklch, var(--a2) 32%, white); box-shadow: inset .7cqw 0 0 var(--a2); }
+  .th .tx{ font:600 3.1cqw/1.35 var(--font-body); color:var(--ink); }
+  .th .tx em{ display:inline; font-weight:800; color:var(--accent); }
+  .th .pn strong{ font:700 3.4cqw/1.25 var(--font-body); color:var(--ink); margin:1.6cqw 0; }
+  .th .tag{ display:inline-block; font:700 2.2cqw var(--font-mono); letter-spacing:.04em; text-transform:uppercase; padding:.7cqw 1.6cqw; border-radius:99px; }
+  .th .tag.ok{ background:var(--a2); color:var(--ink); }
+  .th .tag.bad{ background:oklch(55% .19 27); color:#fff; }
+  .th .who{ display:flex; align-items:center; gap:1.4cqw; font:500 2.5cqw var(--font-body); color:var(--ink-soft); margin-bottom:1.6cqw; }
+  .th .av{ width:4.8cqw; height:4.8cqw; border-radius:50%; display:grid; place-items:center; background:color-mix(in oklch, var(--accent) 16%, white); color:var(--accent); font:700 2.4cqw/1 var(--font-body); font-style:normal; }
+  .th .doc-g{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:.7cqw; margin:1.8cqw 0; }
+  .th .doc-g i{ height:3.8cqw; background:color-mix(in oklch, var(--accent) 10%, white); border:1px solid var(--border); }
+  .th .tr{ display:flex; justify-content:space-between; gap:1cqw; padding:1.9cqw 1.2cqw; border-bottom:1px solid var(--border); }
+  .th .tr b{ font:500 2.8cqw var(--font-body); color:var(--ink); font-variant-numeric:tabular-nums; }
+  .th .tr.th-row{ padding-block:.4cqw 1.2cqw; }
+  .th .tr.th-row b{ font:600 2cqw var(--font-mono); text-transform:uppercase; color:var(--ink-soft); }
+  .th .tr.bad{ background:oklch(93% .055 25); box-shadow: inset .7cqw 0 0 oklch(55% .19 27); }
+  .th .tr.bad b{ font-weight:800; color:oklch(46% .19 27); }
+  .th .cmp{ display:grid; grid-template-columns:1fr auto; gap:.8cqw 1cqw; margin-bottom:2cqw; }
+  .th .cmp b{ font:500 2.6cqw var(--font-body); color:var(--ink-soft); font-variant-numeric:tabular-nums; }
+  .th .cmp b:last-child{ font-weight:800; color:oklch(46% .19 27); }
+  .th .btns{ display:flex; gap:1.2cqw; }
+  .th .b{ font:700 2.3cqw var(--font-body); padding:1cqw 2cqw; border-radius:1cqw; }
+  .th .b.ok{ border:1px solid var(--border-strong); color:var(--ink); }
+  .th .b.no{ background:var(--ink); color:#fff; }
+  .th-scrim{ position:absolute; inset:0; z-index:1; background: linear-gradient(to top, rgba(7,11,26,.97) 0, rgba(7,11,26,.94) 18%, rgba(7,11,26,.12) 34%, rgba(7,11,26,.08)); }
+  .case-poster .th .bigplay{ z-index:3; top:42%; width:16cqw; display:grid; }
+  .case-poster:hover .th .bigplay{ transform:translate(-50%,-50%) scale(1.08); }
+  .th-foot{ position:absolute; z-index:2; left:3.6cqw; right:3.6cqw; bottom:2.4cqw; }
+  .th .th-title{ font:600 4.4cqw/1.15 var(--font-display); color:#fff; margin-bottom:1.6cqw; }
+  .th .th-bar{ display:flex; align-items:center; gap:2cqw; }
+  .th .th-i{ width:3.4cqw; height:3.4cqw; fill:#fff; flex:0 0 auto; }
+  .th .th-o{ fill:none; stroke:#fff; stroke-width:2.2; stroke-linecap:round; }
+  .th .th-time{ font:500 2.2cqw var(--font-mono); color:#fff; white-space:nowrap; }
+  .th .th-track{ flex:1; height:1cqw; border-radius:1cqw; background:rgba(255,255,255,.35); }
+  .th .th-track span{ width:2.2cqw; height:2.2cqw; margin-top:-.6cqw; border-radius:50%; background:var(--a2); }
+  .th .th-time em{ display:inline; }
+  /* phone: fewer, larger things so the text stays readable */
+  @container (max-width: 430px){
+    .th .pn{ top:4cqw; width:38cqw; }
+    .th .pn.l{ left:3cqw; } .th .pn.r{ right:3cqw; }
+    .th .pn-top{ font-size:3.1cqw; padding:1.8cqw 2cqw; }
+    .th .pn-body{ padding:2cqw; }
+    .th .tx{ font-size:3.9cqw; }
+    .th .pn strong{ font-size:3.9cqw; margin:1.4cqw 0 0; }
+    .th .tag{ font-size:2.8cqw; }
+    .th .tr b{ font-size:3.4cqw; }
+    .th .tr.th-row, .th .who, .th .cmp, .th .btns, .th .doc-g, .th .out .rb{ display:none; }
+    .th .tr{ padding:1.8cqw 1cqw; }
+    .th .th-title{ font-size:5.6cqw; }
+    .th .th-time{ font-size:3.2cqw; }
+    .th .th-i{ width:4.4cqw; height:4.4cqw; }
   }
-  .poster-pill i{ font: 500 0.8rem var(--font-mono); font-style: normal; opacity: 0.8; font-variant-numeric: tabular-nums; }
-  .poster-pill b{ width: 7px; height: 7px; border-radius: 50%; background: var(--a2); }
-  .case-poster:hover .bigplay{ transform: translate(-50%, -50%) scale(1.08); background: var(--accent-hover); }
-  .case-poster:hover .case-poster-art{ transform: scale(1.02); }
+  .case-poster:hover .th .bigplay{ background: var(--accent-hover); }
   .case-poster:focus-visible{ outline: 2px solid var(--accent); outline-offset: 3px; }
   @media (prefers-reduced-motion: reduce){
-    .case-poster-art, .bigplay{ transition: none; }
+    .th-screen, .bigplay{ transition: none; }
     .bigplay::after{ animation: none; opacity: 0; }
-    .case-poster:hover .case-poster-art, .case-poster:hover .bigplay{ transform: none; }
-    .case-poster:hover .bigplay{ transform: translate(-50%, -50%); }
+    .case-poster:hover .th-screen{ transform: none; }
+    .case-poster:hover .th .bigplay{ transform: translate(-50%, -50%); }
   }
 
   /* "in a live setup" line under each description */
@@ -921,7 +947,7 @@
     <article class="case" id="case-01">
       <div class="case-media-col" data-reveal>
         <div class="case-media" id="watch" data-youtube="mFjupnKMf-0" data-title="Antek automation: Task Generation">
-          <button class="case-poster" type="button" aria-label="Play video: Task Generation"><svg class="case-poster-art" viewBox="0 22 400 246" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect class="sc-card" x="24" y="44" width="140" height="212" rx="12"/><circle class="sc-chip" cx="46" cy="68" r="10"/><rect class="sc-bar-d" x="64" y="62" width="62" height="6" rx="3"/><rect class="sc-bar" x="64" y="74" width="40" height="5" rx="2.5"/><rect class="sc-bar" x="40" y="98" width="112" height="5" rx="2.5"/><rect class="sc-bar" x="40" y="113" width="104" height="5" rx="2.5"/><rect class="sc-bar" x="40" y="128" width="112" height="5" rx="2.5"/><rect class="sc-bar" x="40" y="143" width="96" height="5" rx="2.5"/><rect class="sc-bar" x="40" y="158" width="112" height="5" rx="2.5"/><rect class="sc-bar" x="40" y="173" width="108" height="5" rx="2.5"/><rect class="sc-bar" x="40" y="188" width="88" height="5" rx="2.5"/><rect class="sc-bar" x="40" y="203" width="112" height="5" rx="2.5"/><rect class="sc-bar" x="40" y="218" width="100" height="5" rx="2.5"/><rect class="sc-bar" x="40" y="233" width="70" height="5" rx="2.5"/><path class="sc-wire" d="M164 150 H182"/><circle class="sc-acc-big" cx="197" cy="150" r="15"/><path class="sc-icon" d="M189 150 h9 m0 0 l7 -6 m-7 6 l7 6"/><path class="sc-wire" d="M212 150 C 224 150 220 82 232 82"/><path class="sc-wire" d="M212 150 H232"/><path class="sc-wire" d="M212 150 C 224 150 220 218 232 218"/><rect class="sc-card" x="232" y="57" width="148" height="50" rx="10"/><circle class="sc-box" cx="251" cy="82" r="7"/><rect class="sc-bar-d" x="267" y="72" width="66" height="6" rx="3"/><rect class="sc-bar" x="267" y="85" width="46" height="5" rx="2.5"/><rect class="sc-card" x="232" y="125" width="148" height="50" rx="10"/><circle class="sc-box" cx="251" cy="150" r="7"/><rect class="sc-bar-d" x="267" y="140" width="66" height="6" rx="3"/><rect class="sc-bar" x="267" y="153" width="46" height="5" rx="2.5"/><rect class="sc-card" x="232" y="193" width="148" height="50" rx="10"/><circle class="sc-box" cx="251" cy="218" r="7"/><rect class="sc-bar-d" x="267" y="208" width="66" height="6" rx="3"/><rect class="sc-bar" x="267" y="221" width="46" height="5" rx="2.5"/><circle class="sc-chip" cx="360" cy="82" r="11"/><text class="sc-ini" x="360" y="86.5" text-anchor="middle">A</text><circle class="sc-chip" cx="360" cy="150" r="11"/><text class="sc-ini" x="360" y="154.5" text-anchor="middle">B</text><rect class="sc-chip" x="347" y="210" width="26" height="17" rx="3.5"/><path class="sc-env" d="M347 212.5 L360 221 L373 212.5"/></svg><span class="poster-wash" aria-hidden="true"></span><span class="bigplay" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="poster-pill" aria-hidden="true"><b></b>Watch it run <i>1:31</i></span></button>
+          <button class="case-poster" type="button" aria-label="Play video: Task Generation"><span class="th" aria-hidden="true"><span class="th-screen"><span class="pn l "><span class="pn-top">Daily summary email</span><span class="pn-body"><span class="msg"><i class="rb" style="width:22cqw"></i><i class="rb" style="width:27cqw"></i></span><span class="msg hot"><span class="tx"><em>@Nathan</em> Possible to get pics of the painted rooms?</span></span><span class="msg"><i class="rb" style="width:25cqw"></i><i class="rb" style="width:18cqw"></i></span></span></span><span class="pn r out"><span class="pn-top">Team tasks</span><span class="pn-body"><span class="tag ok">Task created</span><strong>Send photos of painted rooms</strong><span class="who"><i class="av">N</i>Assigned to Nathan</span><i class="rb" style="width:24cqw"></i><i class="rb" style="width:17cqw"></i></span></span></span><span class="th-scrim"></span><span class="bigplay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="th-foot"><span class="th-title">An email comment becomes a task</span><span class="th-bar"><svg class="th-i" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span class="th-time"><em>0:00 / </em>1:31</span><span class="th-track"><span></span></span><svg class="th-i th-o" viewBox="0 0 24 24"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></svg></span></span></span></button>
         </div>
         <div class="case-touches">
           <span class="case-touches-cap">What it connects</span>
@@ -958,7 +984,7 @@
     <article class="case case--flip" id="case-02">
       <div class="case-media-col" data-reveal>
         <div class="case-media" data-loom="cb519650a9204d1c95684d3ac171b6fd" data-title="Antek automation: Client Requests">
-          <button class="case-poster" type="button" aria-label="Play video: Client Requests"><svg class="case-poster-art" viewBox="0 22 400 246" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><g transform="translate(0,16)"><rect class="sc-chip" x="146" y="34" width="108" height="26" rx="13"/><circle class="sc-clock" cx="166" cy="47" r="7"/><path class="sc-clock" d="M166 43 V47 L169 49"/><text class="sc-txt" x="214" y="52" text-anchor="middle">in seconds</text><rect class="sc-card" x="20" y="84" width="108" height="132" rx="12"/><circle class="sc-chip" cx="40" cy="104" r="9"/><rect class="sc-bar-d" x="56" y="99" width="50" height="6" rx="3"/><rect class="sc-chip" x="34" y="124" width="58" height="18" rx="9"/><rect class="sc-bar-d" x="44" y="130" width="38" height="5" rx="2.5"/><rect class="sc-bar" x="34" y="154" width="80" height="5" rx="2.5"/><rect class="sc-bar" x="34" y="168" width="72" height="5" rx="2.5"/><rect class="sc-bar" x="34" y="182" width="80" height="5" rx="2.5"/><rect class="sc-bar" x="34" y="196" width="50" height="5" rx="2.5"/><path class="sc-wire" d="M128 150 H146"/><path class="sc-head" d="M141 145 L148 150 L141 155"/><rect class="sc-card sc-card--hot" x="146" y="84" width="108" height="132" rx="12"/><path class="sc-doc" d="M176 102 H206 L222 118 V198 H176 Z"/><path class="sc-doc" d="M206 102 V118 H222"/><rect class="sc-bar" x="184" y="132" width="30" height="5" rx="2.5"/><rect class="sc-bar" x="184" y="146" width="36" height="5" rx="2.5"/><rect class="sc-bar" x="184" y="160" width="30" height="5" rx="2.5"/><rect class="sc-bar" x="184" y="174" width="22" height="5" rx="2.5"/><circle class="sc-acc" cx="224" cy="196" r="11"/><path class="sc-tick" d="M219.1 196.2 L222.9 200.4 L229.5 191.6"/><path class="sc-wire" d="M254 150 H272"/><path class="sc-head" d="M267 145 L274 150 L267 155"/><rect class="sc-card" x="272" y="84" width="108" height="132" rx="12"/><circle class="sc-chip" cx="292" cy="104" r="9"/><path class="sc-icon-dark" d="M287 105 L292 100 V103 C297 103 299 106 300 110 C297 107 295 107 292 107 V110 Z"/><rect class="sc-bar-d" x="308" y="99" width="50" height="6" rx="3"/><rect class="sc-bar" x="286" y="126" width="80" height="5" rx="2.5"/><rect class="sc-bar" x="286" y="140" width="72" height="5" rx="2.5"/><rect class="sc-bar" x="286" y="154" width="58" height="5" rx="2.5"/><rect class="sc-chip" x="286" y="172" width="80" height="24" rx="12"/><path class="sc-doc-s" d="M298 177 H306 L310 181 V191 H298 Z"/><rect class="sc-bar-d" x="316" y="180" width="36" height="5" rx="2.5"/></g></svg><span class="poster-wash" aria-hidden="true"></span><span class="bigplay" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="poster-pill" aria-hidden="true"><b></b>Watch it run <i>2:01</i></span></button>
+          <button class="case-poster" type="button" aria-label="Play video: Client Requests"><span class="th" aria-hidden="true"><span class="th-screen"><span class="pn l "><span class="pn-top">New email</span><span class="pn-body"><span class="msg hot"><span class="tx">Can you send our certificate of insurance?</span></span><span class="msg"><i class="rb" style="width:26cqw"></i><i class="rb" style="width:21cqw"></i></span><span class="msg"><i class="rb" style="width:23cqw"></i><i class="rb" style="width:15cqw"></i></span></span></span><span class="pn r out"><span class="pn-top">Reply sent</span><span class="pn-body"><span class="tag ok">Attached</span><strong>Certificate of Insurance</strong><i class="rb" style="width:27cqw"></i><i class="rb" style="width:20cqw"></i><span class="doc-g"><i></i><i></i><i></i><i></i><i></i><i></i></span><i class="rb" style="width:22cqw"></i></span></span></span><span class="th-scrim"></span><span class="bigplay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="th-foot"><span class="th-title">A certificate request, answered</span><span class="th-bar"><svg class="th-i" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span class="th-time"><em>0:00 / </em>2:01</span><span class="th-track"><span></span></span><svg class="th-i th-o" viewBox="0 0 24 24"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></svg></span></span></span></button>
         </div>
         <div class="case-touches">
           <span class="case-touches-cap">What it connects</span>
@@ -990,7 +1016,7 @@
     <article class="case case--feature" id="case-03">
       <div class="case-media-col" data-reveal>
         <div class="case-media" data-loom="2f827ee022f3499ab4411a893bd4cf08" data-title="Antek automation: Invoice Reconciliation">
-          <button class="case-poster" type="button" aria-label="Play video: Invoice Reconciliation"><svg class="case-poster-art" viewBox="0 22 400 246" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><text class="sc-txt" x="34" y="50">Quote</text><rect class="sc-card" x="22" y="60" width="118" height="180" rx="12"/><rect class="sc-bar-d" x="36" y="76" width="56" height="6" rx="3"/><rect class="sc-bar" x="36" y="104" width="60" height="5" rx="2.5"/><rect class="sc-bar-d" x="36" y="114" width="34" height="5" rx="2.5"/><circle class="sc-acc" cx="122" cy="112" r="6"/><path class="sc-tick" d="M119.3 112.2 L121.4 114.4 L125.0 109.6"/><rect class="sc-bar" x="36" y="136" width="52" height="5" rx="2.5"/><rect class="sc-bar-d" x="36" y="146" width="34" height="5" rx="2.5"/><circle class="sc-acc" cx="122" cy="144" r="6"/><path class="sc-tick" d="M119.3 144.2 L121.4 146.4 L125.0 141.6"/><rect class="sc-bar" x="36" y="168" width="64" height="5" rx="2.5"/><rect class="sc-bar-d" x="36" y="178" width="34" height="5" rx="2.5"/><circle class="sc-acc" cx="122" cy="176" r="6"/><path class="sc-tick" d="M119.3 176.2 L121.4 178.4 L125.0 173.6"/><rect class="sc-bar" x="36" y="200" width="48" height="5" rx="2.5"/><rect class="sc-bar-d" x="36" y="210" width="34" height="5" rx="2.5"/><circle class="sc-acc" cx="122" cy="208" r="6"/><path class="sc-tick" d="M119.3 208.2 L121.4 210.4 L125.0 205.6"/><path class="sc-wire" d="M140 150 H152"/><path class="sc-wire" d="M188 150 H200"/><circle class="sc-acc-big" cx="170" cy="150" r="18"/><path class="sc-icon" d="M162.5 146 H177.5 M162.5 154 H177.5 M166 161 L174 139"/><text class="sc-txt" x="212" y="50">Invoice</text><rect class="sc-card" x="200" y="60" width="180" height="196" rx="12"/><rect class="sc-bar-d" x="214" y="76" width="64" height="6" rx="3"/><rect class="sc-bar" x="216" y="106" width="70" height="5" rx="2.5"/><circle class="sc-acc" cx="356" cy="111" r="6"/><path class="sc-tick" d="M353.3 111.2 L355.4 113.4 L359.0 108.6"/><rect class="sc-bar" x="216" y="136" width="58" height="5" rx="2.5"/><circle class="sc-acc" cx="356" cy="141" r="6"/><path class="sc-tick" d="M353.3 141.2 L355.4 143.4 L359.0 138.6"/><rect class="sc-flag" x="208" y="158" width="164" height="26" rx="7"/><rect class="sc-bar" x="216" y="166" width="76" height="5" rx="2.5"/><rect class="sc-pill" x="296" y="162" width="68" height="18" rx="9"/><text class="sc-pill-t" x="330" y="174.5" text-anchor="middle">Variance</text><rect class="sc-bar" x="216" y="196" width="52" height="5" rx="2.5"/><circle class="sc-acc" cx="356" cy="201" r="6"/><path class="sc-tick" d="M353.3 201.2 L355.4 203.4 L359.0 198.6"/><rect class="sc-btn" x="214" y="224" width="74" height="24" rx="12"/><text class="sc-btn-t" x="251" y="240" text-anchor="middle">Approve</text><rect class="sc-btn-o" x="296" y="224" width="68" height="24" rx="12"/><text class="sc-btn-ot" x="330" y="240" text-anchor="middle">Reject</text></svg><span class="poster-wash" aria-hidden="true"></span><span class="bigplay" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="poster-pill" aria-hidden="true"><b></b>Watch it run <i>1:39</i></span></button>
+          <button class="case-poster" type="button" aria-label="Play video: Invoice Reconciliation"><span class="th" aria-hidden="true"><span class="th-screen"><span class="pn l "><span class="pn-top">Vendor invoice</span><span class="pn-body"><span class="tr th-row"><b>Item</b><b>Billed</b></span><span class="tr"><b>Lumber</b><b>$4,200</b></span><span class="tr bad"><b>Drywall</b><b>$2,430</b></span><span class="tr"><b>Labour</b><b>$3,100</b></span><span class="tr"><b>Delivery</b><b>$240</b></span></span></span><span class="pn r out flag"><span class="pn-top">Quote check</span><span class="pn-body"><span class="tag bad">Mismatch</span><strong>Drywall is $580 over the quote</strong><span class="cmp"><b>Quoted</b><b>$1,850</b><b>Billed</b><b>$2,430</b></span><span class="btns"><span class="b ok">Approve</span><span class="b no">Reject</span></span></span></span></span><span class="th-scrim"></span><span class="bigplay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="th-foot"><span class="th-title">An overbilled invoice, caught</span><span class="th-bar"><svg class="th-i" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span class="th-time"><em>0:00 / </em>1:39</span><span class="th-track"><span></span></span><svg class="th-i th-o" viewBox="0 0 24 24"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></svg></span></span></span></button>
         </div>
         <div class="case-touches">
           <span class="case-touches-cap">What it connects</span>
